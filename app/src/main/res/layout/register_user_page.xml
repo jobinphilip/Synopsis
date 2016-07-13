@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/register"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAlignment="center"
+        android:textSize="@dimen/Header_size"
+        android:id="@+id/headerTV"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/headerTV"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/firstname_Tv"
+        android:text="@string/first_name"
+       android:layout_alignParentTop="true"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/firstname_Tv"
+        android:id="@+id/Firstname_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/last_nameTv"
+        android:text="@string/last_name"
+        android:layout_below="@+id/Firstname_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/last_nameTv"
+        android:id="@+id/lastname_ET"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/email_Tv"
+        android:text="@string/email"
+        android:layout_below="@+id/lastname_ET"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/email_Tv"
+        android:id="@+id/email_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/mobile_Tv"
+        android:text="@string/mobile_number"
+        android:layout_below="@+id/email_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/mobile_Tv"
+        android:id="@+id/mobile_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/passwordTv"
+        android:text="@string/password"
+        android:layout_below="@+id/mobile_Et"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/passwordTv"
+        android:id="@+id/passwordET"
+        android:inputType="textPassword"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/confirm_PassTv"
+        android:text="@string/confirm_password"
+        android:layout_below="@+id/passwordET"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/confirm_PassTv"
+        android:inputType="textPassword"
+        android:id="@+id/confirm_passwordET"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content" />
+
+  </RelativeLayout>
+
+
+</RelativeLayout>
