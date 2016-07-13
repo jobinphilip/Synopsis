@@ -42,16 +42,7 @@ android:background="@drawable/rounded_rectangle_blue"
         android:layout_below="@+id/passET"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp" />
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_rectangle_blue"
-        android:text="New to Synopsis? Register and Signup"
-        android:id="@+id/Register_button"
-        android:textColor="@android:color/white"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+
 
     <EditText
         android:layout_width="300dp"
