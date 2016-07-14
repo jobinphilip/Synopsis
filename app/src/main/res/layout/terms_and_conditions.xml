@@ -16,7 +16,7 @@
 
        <TextView
             android:layout_width="wrap_content"
-             android:textSize="25sp"
+             android:textSize="15sp"
             android:layout_height="wrap_content"
             android:text="Why a Fair Usage Policy?
 While the packages have been designed to give unlimited broadband experience to the subscribers, few customers may use excessive amount of the data transfer, causing traffic congestion on the network. In order not to impair the experience of other users, a Fair Usage Policy is applied. This helps to give the desired Internet usage experience to all users, especially since broadband is a shared bandwidth experience and the over-usage of a group of customers must not affect the rest of the users.
