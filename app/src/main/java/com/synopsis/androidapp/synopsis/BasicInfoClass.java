@@ -5,19 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-
 /**
- * Created by User on 7/13/2016.
+ * Created by User on 7/15/2016.
  */
-public class RegisterUserClass extends Activity{
+public class BasicInfoClass extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_user_page);
-    }
-    public  void termsfn(View view)
-    {
-        startActivity(new Intent(getApplicationContext(),Terms_conditionsClass.class));
+        setContentView(R.layout.basic_info);
 
+    }
+    public void submitbasicinfofn(View view)
+    {
+        startActivity(new Intent(getApplicationContext(),Dash_board.class));
     }
 }

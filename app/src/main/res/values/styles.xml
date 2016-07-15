@@ -7,5 +7,6 @@
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/darkblue</item>
     </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

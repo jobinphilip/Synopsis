@@ -34,6 +34,7 @@ ACT Subscribers have the freedom of unlimited uploads on their packages as No Fa
         android:layout_alignParentBottom="true"
         android:text="@string/agreement2"
         android:layout_margin="10dp"
+        android:onClick="verify_emailfn"
         android:textColor="@color/white"
         android:background="@drawable/rounded_rectangle_blue"
         android:layout_centerHorizontal="true"

@@ -13,12 +13,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_user_page);
+        setContentView(R.layout.start_page_5);
+
 
     }
-public void registerfn(View view)
-{
-    startActivity( new Intent(MainActivity.this, RegisterUserClass.class));
 
-}
+    public void loginfn(View view)
+    {
+        startActivity(new Intent(MainActivity.this,LoginClass.class));
+    }
+    public void registerfn(View view)
+    {
+        startActivity(new Intent(MainActivity.this,RegisterUserClass.class));
+    }
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<include layout="@layout/logo_and_tagline"></include>
+    s<TextView
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Basic Information"
+        android:id="@+id/textView22" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="First Name, Middle Name"
+        android:id="@+id/textView8" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Last Name"
+        android:id="@+id/textView10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView11" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Date of Birth"
+        android:id="@+id/textView12" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Gender"
+        android:id="@+id/textView14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Country"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView17" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="State"
+        android:id="@+id/textView18" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView19" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="City"
+        android:id="@+id/textView20" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/synopsis_blue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView21" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:width="200dp"
+        android:onClick="submitbasicinfofn"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_rectangle_blue"
+        android:id="@+id/submitbasicinfoBtn"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
