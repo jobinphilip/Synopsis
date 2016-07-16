@@ -25,48 +25,31 @@
         android:layout_below="@+id/checkBox"
         android:layout_alignLeft="@+id/passET"
         android:layout_alignStart="@+id/passET" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="New to synopsis?"
-        android:layout_marginTop="20dp"
-        android:id="@+id/new_to_synopsis_tv"
-        android:layout_below="@+id/login_button"
-        android:layout_alignLeft="@+id/login_button"
-        android:layout_alignStart="@+id/login_button" />
+
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Register for free"
+        android:text="New to Synopsis? Register for free"
         android:textAllCaps="false"
         android:textAlignment="center"
         android:onClick="registerfn"
         android:background="@drawable/rounded_rectangle_blue"
         android:id="@+id/Register_button"
         android:textColor="@android:color/white"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/new_to_synopsis_tv"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/login_button"
         android:layout_alignLeft="@+id/passET"
         android:layout_alignStart="@+id/passET" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="already registered?"
-        android:id="@+id/already_registered_tv"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/uname_ET"
-        android:layout_alignStart="@+id/uname_ET"
-        android:layout_marginTop="30dp" />
+
     <EditText
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/uname_ET"
-android:layout_below="@+id/already_registered_tv"
-        android:layout_marginTop="10dp"
-        android:hint="Username/Email/Phone No"
+
+android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:hint="Synopsis ID/Email/Phone No"
 
         android:layout_centerHorizontal="true"
        />

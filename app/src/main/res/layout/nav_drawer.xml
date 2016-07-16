@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--contact us:  call me back, chat, Email us, call us, Feedback-->
+    <!--toolbar options::: chat, credits, verify-->
+    <!--settings: change password, edit profile-->
+    <!-- my synopsis, about us, settings, contact us, faq,rate us, Testimonial, log out-->
+</LinearLayout>
