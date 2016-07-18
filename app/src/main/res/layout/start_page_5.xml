@@ -8,10 +8,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/info"
-        android:text="ha ha ha"
+        android:text="facebook msg"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_marginTop="50dp"
+
+        android:text="google msg"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         />
     <FrameLayout
         android:layout_width="match_parent"
@@ -99,18 +108,11 @@ android:layout_alignParentBottom="true"
             android:id="@+id/linearLayout">
 
 
-            <Button
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_marginLeft="5dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:layout_height="25dp"
-                android:id="@+id/gplusloginbtn"
-                android:background="@drawable/googlesignin"
-
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+            <com.google.android.gms.common.SignInButton
+                android:layout_centerInParent="true"
+                android:id="@+id/sign_in_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
@@ -126,6 +128,14 @@ android:layout_alignParentBottom="true"
 
 
         </LinearLayout>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="Sign out"
+            android:layout_marginBottom="50dp"
+            android:layout_width="120dp"
+            android:layout_height="50dp" />
         <Button
             android:layout_width="350dp"
             android:id="@+id/companyBtn"
