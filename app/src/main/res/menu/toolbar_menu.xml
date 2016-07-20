@@ -6,7 +6,7 @@
 
 
         <item
-            android:id="@+id/action_search"
+            android:id="@+id/verify_user"
             android:orderInCategory="200"
             android:title="Verify"
             android:icon="@drawable/tool_bar_verify"
@@ -19,7 +19,7 @@
             android:icon="@drawable/tool_bar_credits"
             app:showAsAction="ifRoom"></item>
     <item
-        android:id="@+id/verify"
+        android:id="@+id/chat"
         android:orderInCategory="300"
         android:title="chat"
         android:icon="@drawable/tool_bar_chat"
