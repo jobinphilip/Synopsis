@@ -21,7 +21,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:hint="Last name (Sir name)"
+        android:hint="Last name (Surname)"
         android:layout_height="wrap_content"
         android:id="@+id/editText3" />
 

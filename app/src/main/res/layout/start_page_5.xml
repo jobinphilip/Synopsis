@@ -4,15 +4,7 @@
 
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/info"
-        android:text="facebook msg"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textSize="18sp"
-        />
+
     <TextView
         android:id="@+id/tv_username"
         android:layout_marginTop="50dp"
@@ -139,7 +131,7 @@ android:layout_alignParentBottom="true"
         <Button
             android:layout_width="350dp"
             android:id="@+id/companyBtn"
-
+android:onClick="company_redirectFn"
             android:textColor="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"

@@ -25,7 +25,7 @@
         android:layout_margin="10dp"
         android:textColor="@color/white"
         android:paddingLeft="20dp"
-
+android:onClick="identity_verify_fn"
         android:drawableLeft="@drawable/nav_my_synopsis"
         android:background="@drawable/gradient_blue"
         android:id="@+id/button"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Education verification"
-
+android:onClick="education_verifiy_fn"
         android:drawableRight="@drawable/drawable_edit"
         android:paddingRight="20dp"
         android:layout_margin="10dp"
@@ -53,6 +53,7 @@
         android:paddingRight="20dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+      android:onClick="employment_verify_fn"
         android:drawableLeft="@drawable/drawable_identity"
         android:textColor="@color/white"
         android:background="@drawable/gradient_blue"
@@ -64,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit and verify"
+        android:onClick="submit_verification_fn"
         android:id="@+id/button5"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

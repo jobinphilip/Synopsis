@@ -134,7 +134,20 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
         });
     }
 
+
+            public void company_redirectFn(View view)
+            {
+startActivity(new Intent(getApplicationContext(),Company_register.class));
+            }
+
+
+
+
+
             ////////////////////////////google sign in and sign out methods start///////////////////////////////////////
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -239,4 +252,6 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
             public void onConnectionFailed(ConnectionResult connectionResult) {
 
             }
+
+
         }
