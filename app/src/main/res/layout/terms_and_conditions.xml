@@ -19,10 +19,7 @@
              android:textSize="15sp"
             android:layout_height="wrap_content"
             android:text="Why a Fair Usage Policy?
-While the packages have been designed to give unlimited broadband experience to the subscribers, few customers may use excessive amount of the data transfer, causing traffic congestion on the network. In order not to impair the experience of other users, a Fair Usage Policy is applied. This helps to give the desired Internet usage experience to all users, especially since broadband is a shared bandwidth experience and the over-usage of a group of customers must not affect the rest of the users.
-What happens in Fair Usage Policy?
-Each package has been defined with a significantly large and extremely generous data transfer levels, so that most typical users will never cross these levels of data consumption. In a situation, where a user has utilized and consumed the Fair Usage Data Limit in a particular month, the speed of this user will be reduced to the Speed-Breaker speed for the remainder of the month. The Speed Breaker Speed for different packages has been designed to ensure a good usage and download experience at reasonable speeds for the remainder of the month.
-ACT Subscribers have the freedom of unlimited uploads on their packages as No Fair Usage Policy has been applied on Uploads.
+While thhe freedom of unlimited uploads on their packages as No Fair Usage Policy has been applied on Uploads.
 "
             android:id="@+id/textView2" />
 
@@ -34,7 +31,7 @@ ACT Subscribers have the freedom of unlimited uploads on their packages as No Fa
         android:layout_alignParentBottom="true"
         android:text="@string/agreement2"
         android:layout_margin="10dp"
-        android:onClick="verify_emailfn"
+
         android:textColor="@color/white"
         android:background="@drawable/rounded_rectangle_blue"
         android:layout_centerHorizontal="true"
