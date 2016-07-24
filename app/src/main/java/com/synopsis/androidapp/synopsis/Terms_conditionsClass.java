@@ -5,7 +5,9 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +41,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
         setContentView(R.layout.terms_and_conditions);
         accepttermsBtn=(Button)findViewById(R.id.agreeBtn);
         accepttermsBtn.setOnClickListener(Terms_conditionsClass.this);
+
     }
 
 
@@ -51,8 +54,12 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             final String email = prefs.getString("email", "");
             final String password = prefs.getString("password", "");
 
-            Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "");
-             String url="http://192.168.47.51/test/login4.php";
+            WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+            final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+
+            Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: "+ipAddress);
+             String url=constants.baseUrl+"submit.php";
           //  String url="http://10.0.2.2:8080/test/login4.php";
          //    String url="http://localhost/test/login4.php";
             // String url="http://10.0.2.2/test/login4.php";
@@ -82,6 +89,10 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("email", email);
                     parameters.put("password", password);
+                    parameters.put("ipAddress", ipAddress);
+                    parameters.put("device", "mobile");
+                    parameters.put("Action", "registration_form");
+
                     Log.d("jobin", "prameterd added");
                     return parameters;
                 }
