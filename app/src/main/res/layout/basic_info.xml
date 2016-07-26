@@ -28,6 +28,21 @@
         android:src="@drawable/profile_photo"
         android:id="@+id/selfyImageView"
         android:layout_gravity="center_horizontal" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/referal_id_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/referalIdET"
+            android:textColor="@color/synopsis_blue"
+            android:hint="Referal Id (Not Mandatory)"
+            />
+
+    </android.support.design.widget.TextInputLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

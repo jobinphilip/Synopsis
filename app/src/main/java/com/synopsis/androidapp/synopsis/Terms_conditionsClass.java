@@ -1,9 +1,6 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -11,7 +8,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -21,13 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by User on 7/15/2016.
- */
+
 public class Terms_conditionsClass extends Activity implements View.OnClickListener {
     public static final String Login_details = "Login_details";
 
@@ -59,7 +52,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
 
 
             Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: "+ipAddress);
-             String url=constants.baseUrl+"submit.php";
+             String url= Constants.baseUrl+"submit.php";
           //  String url="http://10.0.2.2:8080/test/login4.php";
          //    String url="http://localhost/test/login4.php";
             // String url="http://10.0.2.2/test/login4.php";

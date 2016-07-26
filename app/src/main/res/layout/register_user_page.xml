@@ -29,19 +29,36 @@
         android:id="@+id/textfieldRelativelayout">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/mobile_layout"
+            android:id="@+id/firstname_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
-            android:inputType="phone"
+            android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:id="@+id/mobile_Et"
+            android:id="@+id/firstname_ET"
 
-            android:hint="Mobile Number"
+            android:hint="First name"
             android:textColor="@color/synopsis_blue"
             android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/last_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:id="@+id/Last_nameET"
+
+                android:hint="Last name"
+                android:textColor="@color/synopsis_blue"
+                android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -92,21 +109,7 @@ android:inputType="textEmailAddress"
         android:layout_height="wrap_content" />
     </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/referal_id_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/referalIdET"
-            android:textColor="@color/synopsis_blue"
-            android:hint="Referal Id (Not Mandatory)"
-           />
-
-        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:layout_width="200dp"

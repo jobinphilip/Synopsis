@@ -7,12 +7,17 @@
 
 
 </include>
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_below="@id/header"
     android:padding="10dp"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
     android:id="@+id/relativeLayout2">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/companynamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
 android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
@@ -20,11 +25,14 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView27"
+        android:id="@+id/company_nameET"
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/firstname_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
@@ -32,10 +40,13 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView28"
-        android:layout_below="@+id/textView27"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/contactpersonET"
+         />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -44,10 +55,13 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView29"
-        android:layout_below="@+id/textView28"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_emailET"
+        />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_designation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -56,10 +70,14 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView30"
-        android:layout_below="@+id/textView29"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_designationET"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -68,10 +86,13 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView31"
-        android:layout_below="@+id/textView30"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_phoneET"
+       />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/empNo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
@@ -79,13 +100,14 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView32"
+        android:id="@+id/company_employee_numberET"
         android:layout_below="@+id/textView31"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+    </android.support.design.widget.TextInputLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
