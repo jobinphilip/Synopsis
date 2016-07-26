@@ -1,9 +1,6 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -11,7 +8,6 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -22,12 +18,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by User on 7/15/2016.
- */
+
 public class Terms_conditionsClass extends Activity implements View.OnClickListener {
     public static final String Login_details = "Login_details";
 
@@ -53,13 +50,15 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
             final String email = prefs.getString("email", "");
             final String password = prefs.getString("password", "");
+            final String firstname = prefs.getString("firstname", "");
+            final String lastname = prefs.getString("lastname", "");
 
             WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
             final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
 
             Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: "+ipAddress);
-             String url=constants.baseUrl+"submit.php";
+             String url= Constants.baseUrl+"submit.php";
           //  String url="http://10.0.2.2:8080/test/login4.php";
          //    String url="http://localhost/test/login4.php";
             // String url="http://10.0.2.2/test/login4.php";
@@ -76,6 +75,20 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                 public void onResponse(String response) {
                     Log.d("jobin", "string response is : " + response);
 
+                    try {
+                        JSONObject person = new JSONObject(response);
+                        String result = person.getString("result");
+                        String error = person.getString("error");
+                        Log.d("jobin","result from server is: "+result+"error is:"+error);
+                        finish();
+                    }
+                    catch (JSONException e)
+                    {
+                        Log.d("jobin","json errror:"+e);
+                    }
+
+
+
                 }
             }, new Response.ErrorListener() {
 
@@ -91,6 +104,9 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     parameters.put("password", password);
                     parameters.put("ipAddress", ipAddress);
                     parameters.put("device", "mobile");
+                    parameters.put("firstname", firstname);
+                    parameters.put("lastname", lastname);
+
                     parameters.put("Action", "registration_form");
 
                     Log.d("jobin", "prameterd added");

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="company_interested_in">
+        <item>recruitment</item>
+        <item>campus placementr</item>
+        <item>options</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    <string-array name="comnpany_type">
+        <item>recruitment agency</item>
+        <item>verification agency</item>
+        <item>mnc</item>
+        <item>LTD</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+</resources>

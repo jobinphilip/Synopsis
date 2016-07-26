@@ -15,13 +15,15 @@ import android.widget.Toast;
 
 public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
-    EditText  emailET, confirmEmailET, passwordET;
-    String  email_string, confirm_email_string, password_string;
+    EditText  emailET, confirmEmailET, passwordET,first_nameET,last_nameET;
+    String firstname_string,lastname_string, email_string, confirm_email_string, password_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user_page);
+        first_nameET= (EditText) findViewById(R.id.firstname_ET);
+        last_nameET= (EditText) findViewById(R.id.last_nameET);
 
         emailET = (EditText) findViewById(R.id.email_Et);
         confirmEmailET = (EditText) findViewById(R.id.confirm_email_Et);
@@ -35,9 +37,10 @@ public class RegisterUserClass extends Activity {
         email_string = emailET.getText().toString().trim();
         confirm_email_string = confirmEmailET.getText().toString().trim();
         password_string = passwordET.getText().toString().trim();
+        firstname_string= first_nameET.getText().toString().trim();
+        lastname_string = last_nameET.getText().toString().trim();
 
-
-        if ( email_string.matches("") || confirm_email_string.matches("") || password_string.matches("")) {
+        if ( email_string.matches("") || confirm_email_string.matches("") || password_string.matches("")|| firstname_string.matches("")|| lastname_string.matches("")) {
             Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG).show();
 
         } else {
@@ -45,13 +48,16 @@ public class RegisterUserClass extends Activity {
                 Toast.makeText(getApplicationContext(), "Email address do not match.", Toast.LENGTH_LONG).show();
             } else if (password_string.length() <= 5 || password_string.length() >= 12) {
                 Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG).show();
-            } else {
+            }
+            else {
                 SharedPreferences.Editor editor = getSharedPreferences(Login_details, MODE_PRIVATE).edit();
 
 
 
                 editor.putString("email", email_string);
                 editor.putString("password", password_string);
+                editor.putString("firstname", firstname_string);
+                editor.putString("lastname", lastname_string);
 
                 editor.commit();
                 startActivity(new Intent(getApplicationContext(), Terms_conditionsClass.class));

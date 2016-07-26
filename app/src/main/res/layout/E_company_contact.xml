@@ -7,12 +7,21 @@
 
 
 </include>
-<RelativeLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/header"
+        android:layout_height="wrap_content">
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_below="@id/header"
+
     android:padding="10dp"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
     android:id="@+id/relativeLayout2">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/companynamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
 android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
@@ -20,11 +29,14 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView27"
+        android:id="@+id/company_nameET"
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/firstname_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
@@ -32,10 +44,13 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView28"
-        android:layout_below="@+id/textView27"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_contactpersonET"
+         />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -43,11 +58,13 @@ android:layout_marginBottom="10dp"
         android:hint="Company Email"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-
-        android:id="@+id/textView29"
-        android:layout_below="@+id/textView28"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_emailET"
+        />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_designation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -56,10 +73,14 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView30"
-        android:layout_below="@+id/textView29"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_designationET"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/cmpny_phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:layout_marginBottom="10dp"
@@ -68,68 +89,64 @@ android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
-        android:id="@+id/textView31"
-        android:layout_below="@+id/textView30"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_phoneET"
+       />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/empNo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:hint="No of employees"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-
-        android:id="@+id/textView32"
-        android:layout_below="@+id/textView31"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/company_employee_numberET"
+       />
+    </android.support.design.widget.TextInputLayout>
 
 
-</RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:text="Interested in: "
         android:layout_centerVertical="true"
         android:id="@+id/interestedinTV"
-        android:layout_below="@+id/relativeLayout2"
+
         android:layout_height="wrap_content" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/interestedinTV"
-        android:id="@+id/spinner"
 
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    <!--background verification, Recruitment,Both-->
+        android:id="@+id/company_interested_in_spinner"
+
+      />
+
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="Interested in: "
-        android:layout_centerVertical="true"
-        android:id="@+id/companytypeTV"
-        android:layout_below="@+id/interestedinTV"
-     android:layout_toLeftOf="@+id/CompanytypeSpinner"
+        android:text="Company type: "
+
         android:layout_height="wrap_content" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/CompanytypeSpinner"
+        android:id="@+id/companytypeSpinner"
 
-        android:layout_below="@+id/spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        />
     <!-- direct hiring company, Staffing agency, Third Party Company-->
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="submit"
-        android:id="@+id/button3"
-        android:layout_alignTop="@+id/CompanytypeSpinner"
-        android:layout_toRightOf="@+id/companytypeTV"
-        android:layout_toEndOf="@+id/companytypeTV" />
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_rectangle_blue"
+        android:id="@+id/company_submitBtn"
+        />
 
-
+</LinearLayout>
+    </ScrollView>
 </RelativeLayout>
