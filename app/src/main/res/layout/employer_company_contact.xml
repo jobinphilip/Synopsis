@@ -7,11 +7,13 @@
 
 
 </include>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@id/header"
         android:layout_height="wrap_content">
-<LinearLayout
+
+    <LinearLayout
     android:layout_width="match_parent"
 
     android:padding="10dp"
@@ -23,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <EditText
-android:layout_marginBottom="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:hint="Company Name"
         android:layout_height="wrap_content"
@@ -45,6 +47,7 @@ android:layout_marginBottom="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
 
         android:id="@+id/company_contactpersonET"
+
          />
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -58,6 +61,8 @@ android:layout_marginBottom="10dp"
         android:hint="Company Email"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+
+
         android:id="@+id/company_emailET"
         />
     </android.support.design.widget.TextInputLayout>
@@ -109,6 +114,8 @@ android:layout_marginBottom="10dp"
 
 
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:text="Interested in: "
@@ -147,6 +154,6 @@ android:layout_marginBottom="10dp"
         android:id="@+id/company_submitBtn"
         />
 
-</LinearLayout>
+    </LinearLayout>
     </ScrollView>
 </RelativeLayout>
