@@ -21,13 +21,15 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent">
-    <ImageView
+    <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:background="@drawable/ic_menu_camera"
 
-        android:src="@drawable/profile_photo"
+        android:onClick="photo_actions"
         android:id="@+id/selfyImageView"
         android:layout_gravity="center_horizontal" />
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/referal_id_layout"
         android:layout_width="match_parent"

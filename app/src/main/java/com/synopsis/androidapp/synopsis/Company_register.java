@@ -43,7 +43,7 @@ public class Company_register extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.e_company_contact);
+        setContentView(R.layout.employer_company_contact);
 
         company_nameET = (EditText) findViewById(R.id.company_nameET);
         company_contact_personET = (EditText) findViewById(R.id.company_contactpersonET);
@@ -119,7 +119,7 @@ public class Company_register extends Activity {
                 }
                else
                 {
-                    Toast.makeText(getApplicationContext(),"type: "+company_type_string+"interested in:"+company_interested_in_string,Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getApplicationContext(),"type: "+company_type_string+"interested in:"+company_interested_in_string,Toast.LENGTH_LONG).show();
 
 
 
@@ -147,17 +147,23 @@ public class Company_register extends Activity {
                                 Log.d("jobin","result from server is: "+result+"error is:"+error);
                                 if(result.equals("success"))
                                 {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                                    builder.setMessage("Thank you for registering with Synopsis Solutions. We will contact you soon.")
-                                            .setCancelable(false)
-                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    startActivity(new Intent(getApplicationContext(),LoginClass.class));
-
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
+                                //   Toast.makeText(getApplicationContext(),"Thank you for registering with Synopsis. We will contact you soon.", Toast.LENGTH_LONG).show();
+                                    String message = "Thank you for registering with Synopsis. We will contact you soon.";
+                                    new AlertDialog.Builder(Company_register.this)
+                                            .setTitle("Synopsis")
+                                            .setMessage(message)
+                                            .setPositiveButton("ok", null)
+                                            .show();
+                                }
+                                else
+                                {
+                                    Log.d("jobin","error from server:  "+result.toString());
+                                    String message = "Kindly check your internet settings";
+                                    new AlertDialog.Builder(Company_register.this)
+                                            .setTitle("Synopsis")
+                                            .setMessage(message)
+                                            .setPositiveButton("ok", null)
+                                            .show();
                                 }
 
                             }
@@ -173,7 +179,13 @@ public class Company_register extends Activity {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d("jobin", "error response is : " + error);
+                            Log.d("jobin","volley error :  "+error.toString());
+                            String message = "Kindly check your internet settings";
+                            new AlertDialog.Builder(Company_register.this)
+                                    .setTitle("Synopsis")
+                                    .setMessage(message)
+                                    .setPositiveButton("ok", null)
+                                    .show();
                         }
                     }) {
                         @Override

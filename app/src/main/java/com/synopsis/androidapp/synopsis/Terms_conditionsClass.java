@@ -1,6 +1,7 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -79,8 +81,16 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                         JSONObject person = new JSONObject(response);
                         String result = person.getString("result");
                         String error = person.getString("error");
-                        Log.d("jobin","result from server is: "+result+"error is:"+error);
-                        finish();
+                     if(result.equals("success"))
+                     {
+                         startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
+                     }
+                        else if(error.equals("user_exists"))
+                     {
+                         Toast.makeText(getApplicationContext(),"your email Id is already registered. Kindly login",Toast.LENGTH_LONG).show();
+                         finish();
+                     }
+
                     }
                     catch (JSONException e)
                     {
