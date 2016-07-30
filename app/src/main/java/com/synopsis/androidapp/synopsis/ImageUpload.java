@@ -41,7 +41,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
 
     private EditText editTextName;
 
-    private Bitmap bitmap, bitmap2;
+    private  Bitmap bitmap, bitmap2;
 
     private int PICK_IMAGE_REQUEST = 1;
     //http://192.168.137.1/php_login_script/
@@ -59,7 +59,6 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
 
-        editTextName = (EditText) findViewById(R.id.imagenameET);
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
@@ -67,7 +66,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
         buttonUpload.setOnClickListener(this);
     }
 
-    public String getStringImage(Bitmap bmp) {
+    private  String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -75,7 +74,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
         return encodedImage;
     }
 
-    private void uploadImage() {
+    public  void uploadImage() {
 //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -106,15 +105,12 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
                 //Converting Bitmap to String
                 String image = getStringImage(bitmap2);
 
-                //Getting Image Name
-                String name = editTextName.getText().toString().trim();
-
                 //Creating parameters
                 Map<String, String> params = new Hashtable<String, String>();
 
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
-                params.put(KEY_NAME, name);
+
                 Log.d("jobin", "parameters added to upload image");
                 //returning parameters
                 return params;

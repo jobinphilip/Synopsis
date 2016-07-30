@@ -49,10 +49,11 @@ public class BasicInfoClass extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("jobin","in photo activityresults");
         if(resultCode==RESULT_OK){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-
+            Log.d("jobin","in photo activityresults result ok");
            //Convert to byte array
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -61,6 +62,10 @@ public class BasicInfoClass extends Activity {
             Intent I = new Intent(this, Camera_activity.class);
             I.putExtra("image",byteArray);
             startActivity(I);
+        }
+        else
+        {
+            Log.d("jobin","in photo activityresults result not  ok");
         }
     }
 

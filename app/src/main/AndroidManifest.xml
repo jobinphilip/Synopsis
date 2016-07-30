@@ -24,7 +24,10 @@
         <activity android:name=".Terms_conditionsClass"></activity>
         <activity android:name=".Testimonial"></activity>
         <activity android:name=".About_us"></activity>
+
         <activity android:name=".Contact_Us"></activity>
+        <activity android:name=".Camera_activity"></activity>
+
         <activity android:name=".ImageUpload"></activity>
         <activity android:name=".Faq_class"></activity>
         <activity android:name=".Rate_us"></activity>
