@@ -35,7 +35,7 @@ public class LoginClass extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         unameET = (EditText) findViewById(R.id.uname_ET);
-        passwordET = (EditText) findViewById(R.id.passET);
+        passwordET = (EditText) findViewById(R.id.PassET);
         sessionCheckBox = (CheckBox) findViewById(R.id.sessioncheckBox);
     }
     public void loginfn(View view) {

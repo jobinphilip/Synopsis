@@ -33,8 +33,8 @@
         <TextView
             android:text="Your Identity Has A Value"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:textColor="@color/synopsis_blue"
+            android:textSize="25sp"
+            android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_centerInParent="true"
 

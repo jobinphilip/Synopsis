@@ -133,7 +133,7 @@ android:inputType="textEmailAddress"
 
     <TextView
         android:layout_width="match_parent"
-        android:background="@color/com_facebook_share_button_text_color"
+
         android:layout_height="wrap_content"
         android:text="already registered? Click here"
         android:id="@+id/textView33"
