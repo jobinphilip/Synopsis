@@ -3,6 +3,7 @@ package com.synopsis.androidapp.synopsis;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -31,11 +32,15 @@ public class Camera_activity extends Activity{
     ImageView imageview;
     Bitmap bitmap,bitmap2;
     Button upload_image,choose_image;
+    public static final String Login_details = "Login_details";
    String UPLOAD_URL=Constants.baseUrl+"image_upload.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadphoto);
+
+
+
 imageview=(ImageView)findViewById(R.id.imageView);
         byte[] byteArray = getIntent().getByteArrayExtra("image");
          bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -57,6 +62,9 @@ imageview=(ImageView)findViewById(R.id.imageView);
 
 
     private void uploadImage() {
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        final String email = prefs.getString("email", "");
+
 //Showing the progress dialog
 
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
@@ -66,6 +74,8 @@ imageview=(ImageView)findViewById(R.id.imageView);
                     public void onResponse(String s) {
                         Log.d("jobin", "response from server" + s);
                         //Disimissing the progress dialog
+                        bitmap.recycle();
+                        bitmap2.recycle();
                         loading.dismiss();
                         //Showing toast message of the response
                         //  Toast.makeText(getApplicationContext(), s , Toast.LENGTH_LONG).show();
@@ -96,7 +106,7 @@ imageview=(ImageView)findViewById(R.id.imageView);
 
                 //Adding parameters
                 params.put("image", image);
-
+                params.put("email", email);
                 Log.d("jobin", "parameters added to upload image");
                 //returning parameters
                 return params;

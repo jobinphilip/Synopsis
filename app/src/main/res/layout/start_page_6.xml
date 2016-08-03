@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+android:weightSum="2"
+    android:layout_height="match_parent">
+<include layout="@layout/logo_and_tagline"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="employer_intentFn"
+        android:padding="20dp"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/employer_Iv"
+android:layout_centerHorizontal="true"
+            android:src="@drawable/startpage_office_circle"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="Employer "
+            android:layout_below="@+id/employer_Iv"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="individual_intentFn"
+        android:padding="20dp"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/individualIv"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/startpage_individual_circle"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="Individual "
+            android:layout_below="@+id/individualIv"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

@@ -9,6 +9,8 @@
     <item name="red" type="color">#FFFF4444</item>
     <item name="darkblue" type="color">#FF0099CC</item>
     <item name="transparent" type="color">#00000000</item>
+    <item name="light_blue" type="color">#2ECCFA</item>
+
     <item name="darkpurple" type="color">#FF9933CC</item>
     <item name="darkgreen" type="color">#FF669900</item>
     <item name="darkorange" type="color">#FFFF8800</item>
@@ -23,6 +25,7 @@
         <item>@color/red</item>
         <item>@color/darkblue</item>
         <item>@color/transparent</item>
+        <item>@color/light_blue</item>
         <item>@color/darkpurple</item>
         <item>@color/darkgreen</item>
         <item>@color/darkorange</item>

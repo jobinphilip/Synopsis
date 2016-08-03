@@ -2,19 +2,20 @@ package com.synopsis.androidapp.synopsis;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,8 +39,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
     private Button buttonUpload;
 
     private ImageView imageView;
-
-    private EditText editTextName;
+    public static final String Login_details = "Login_details";
 
     private  Bitmap bitmap, bitmap2;
 
@@ -49,7 +49,7 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
     private String UPLOAD_URL = Constants.baseUrl +"image_upload.php";
 
     private String KEY_IMAGE = "image";
-    private String KEY_NAME = "name";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,8 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
     }
 
     public  void uploadImage() {
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        final String email = prefs.getString("email", "");
 //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -82,6 +84,8 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onResponse(String s) {
                         Log.d("jobin", "response from server" + s);
+                        bitmap.recycle();
+                        bitmap2.recycle();
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
@@ -107,10 +111,9 @@ public class ImageUpload extends AppCompatActivity implements View.OnClickListen
 
                 //Creating parameters
                 Map<String, String> params = new Hashtable<String, String>();
-
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
-
+                params.put("email", email);
                 Log.d("jobin", "parameters added to upload image");
                 //returning parameters
                 return params;

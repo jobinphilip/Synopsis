@@ -1,173 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<include layout="@layout/logo_and_tagline"></include>
+    <include layout="@layout/logo_and_tagline"></include>
+
     <TextView
+        android:id="@+id/textView22"
         android:layout_width="match_parent"
-        android:textAlignment="center"
         android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Basic Information"
-        android:id="@+id/textView22" />
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/synopsis_blue" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent">
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/ic_menu_camera"
 
-        android:onClick="photo_actions"
-        android:id="@+id/selfyImageView"
-        android:layout_gravity="center_horizontal" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/referal_id_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/referalIdET"
-            android:textColor="@color/synopsis_blue"
-            android:hint="Referal Id (Not Mandatory)"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    </android.support.design.widget.TextInputLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="First Name, Middle Name  (Full Name)"
-        android:id="@+id/textView8" />
+            <Button
+                android:id="@+id/selfyButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView9" />
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_menu_camera"
+                android:onClick="photo_actions" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Last Name"
-        android:id="@+id/textView10" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView11" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Date of Birth"
-        android:id="@+id/textView12" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView13" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Gender"
-        android:id="@+id/textView14" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/referal_id_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton"
-        android:layout_gravity="" />
+                <EditText
+                    android:id="@+id/referalIdET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Referal Id (Not Mandatory)"
+                    android:textColor="@color/synopsis_blue" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Country"
-        android:id="@+id/textView16" />
+            </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView17" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/synopsis_id_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="State"
-        android:id="@+id/textView18" />
+                <EditText
+                    android:id="@+id/synopsis_idET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Enter your prefered 10 digit SynopsisID"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+            </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView19" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/firstname_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="City"
-        android:id="@+id/textView20" />
+                <EditText
+                    android:id="@+id/firstNameET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="First Name, Middle Name  (Full Name)"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+            </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/synopsis_blue"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView21" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lastname_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:width="200dp"
-        android:onClick="submitbasicinfofn"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_rectangle_blue"
-        android:id="@+id/submitbasicinfoBtn"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+                <EditText
+                    android:id="@+id/Lastname_ET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lastname"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/mobile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/Mobile_ET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile number"
+                    android:inputType="phone"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="bottom"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:text="Date of Birth"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/dob_layout"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/datepickerBtnET"
+                  android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:clickable="true"
+                    android:hint="Select date"
+                    android:onClick="date_pickerfn"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gender"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/synopsis_blue" />
+
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:checkedButton="@+id/gender_radiogroup"
+                    android:orientation="horizontal"
+                    android:weightSum="2"> <!-- Error on this line -->
+                    <RadioButton
+                        android:id="@+id/rdb_positive"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Female" />
+
+                    <RadioButton
+                        android:id="@+id/rdb_negative"
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="male" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <AutoCompleteTextView
+
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:hint="Please enter your place">
+
+
+            </AutoCompleteTextView>
+
+
+
+
+
+
+
+            <Button
+                android:id="@+id/submitbasicinfoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:width="200dp"
+                android:background="@drawable/rounded_rectangle_blue"
+                android:onClick="submitbasicinfofn"
+                android:text="Submit"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
