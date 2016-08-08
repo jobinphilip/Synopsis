@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
-    EditText  emailET, confirmEmailET, passwordET,first_nameET,last_nameET;
-    String firstname_string,lastname_string, email_string, confirm_email_string, password_string;
+    EditText  emailET, confirmEmailET, passwordET,first_nameET,last_nameET,phoneET;
+    String firstname_string,lastname_string, email_string, confirm_email_string, password_string,phone_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class RegisterUserClass extends Activity {
         setContentView(R.layout.register_user_page);
         first_nameET= (EditText) findViewById(R.id.firstname_ET);
         last_nameET= (EditText) findViewById(R.id.last_nameET);
-
+phoneET=(EditText)findViewById(R.id.phone_ET);
         emailET = (EditText) findViewById(R.id.email_Et);
         confirmEmailET = (EditText) findViewById(R.id.confirm_email_Et);
         passwordET = (EditText) findViewById(R.id.passwordET);
@@ -39,6 +39,7 @@ public class RegisterUserClass extends Activity {
         password_string = passwordET.getText().toString().trim();
         firstname_string= first_nameET.getText().toString().trim();
         lastname_string = last_nameET.getText().toString().trim();
+        phone_string=phoneET.getText().toString().trim();
 
         if ( email_string.matches("") || confirm_email_string.matches("") || password_string.matches("")|| firstname_string.matches("")|| lastname_string.matches("")) {
             Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG).show();
@@ -58,6 +59,7 @@ public class RegisterUserClass extends Activity {
                 editor.putString("password", password_string);
                 editor.putString("firstname", firstname_string);
                 editor.putString("lastname", lastname_string);
+                editor.putString("phone", phone_string);
 
                 editor.commit();
                 startActivity(new Intent(getApplicationContext(), Terms_conditionsClass.class));

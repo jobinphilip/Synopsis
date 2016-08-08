@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="10dp"
     android:layout_height="match_parent">
 
     <include
@@ -23,12 +24,14 @@
     <EditText
         android:layout_width="match_parent"
         android:hint="Employer/Consultancy Name"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_height="wrap_content"
         android:id="@+id/editText2" />
 
     <EditText
         android:layout_width="match_parent"
         android:hint="Employer Contact No (Landline/Website)"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_height="wrap_content"
         android:id="@+id/editText3" />
 
@@ -36,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText4"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Employee ID (Optional)"
         android:layout_gravity="center_horizontal" />
 
@@ -44,6 +48,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText5"
         android:inputType="date"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Period of Employment(from-to exact dates)"
         android:layout_gravity="center_horizontal" />
 
@@ -51,12 +56,14 @@
         android:layout_width="match_parent"
         android:hint="Last held designation"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:id="@+id/editText6"
         android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Compensation per annum (in INR/USD)"
         android:id="@+id/editText7"
         android:layout_gravity="center_horizontal" />
@@ -64,7 +71,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Employed Location(Country ,State, Location)"
         android:ems="10"
         android:id="@+id/editText8" />
@@ -75,6 +82,7 @@
         android:inputType="phone"
         android:hint="Alternate Phone Number (optional)"
         android:ems="10"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:id="@+id/editText9"
         android:layout_gravity="center_horizontal" />
     <EditText
@@ -83,12 +91,14 @@
         android:inputType="phone"
         android:hint="supervisor Contact No"
         android:ems="10"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:id="@+id/editText10"
         android:layout_gravity="center_horizontal" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Reason of Leaving"
         android:ems="10"
         android:id="@+id/editText11"

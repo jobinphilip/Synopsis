@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,10 +25,21 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,25 +55,27 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
 /**
  * Created by User on 7/15/2016.
  */
-public class BasicInfoClass extends Activity implements AdapterView.OnItemClickListener
-{
-    ImageView selfyImageview;
-    Button selfyButton;
+public class BasicInfoClass extends Activity implements AdapterView.OnItemClickListener {
+    public static final String Login_details = "Login_details";
+    ImageButton selfyButton;
     private int year, month, day;
     private DatePicker datePicker;
     private Calendar calendar;
-    EditText datepickerBtnET, referalIdEt, synopsisIdET, fnameET, lnameET, mobnumEt;
+    EditText datepickerBtnET, referalIdEt;
     AutoCompleteTextView autoCompView;
 
     RadioGroup genderRadioGroup;
-    String dateofbirth, referalId, synopsisId, fname, lname, mobnum,place, country, state, city, gender;
+    RadioButton radiobutton;
+    String dateofbirth, referalId,   place, country, state, city, gender,email;
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
@@ -69,19 +83,16 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_info);
-        selfyButton = (Button) findViewById(R.id.selfyButton);
+        selfyButton = (ImageButton) findViewById(R.id.selfyButton);
         datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
         referalIdEt = (EditText) findViewById(R.id.referalIdET);
-        synopsisIdET = (EditText) findViewById(R.id.synopsis_idET);
-        fnameET = (EditText) findViewById(R.id.firstNameET);
-        lnameET = (EditText) findViewById(R.id.Lastname_ET);
-        mobnumEt = (EditText) findViewById(R.id.Mobile_ET);
 
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        email = prefs.getString("email", "");
         genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
 
 
@@ -91,7 +102,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         day = calendar.get(Calendar.DAY_OF_MONTH);
         datepickerBtnET.setText("" + year + "/" + month + "/" + day);
 
-      autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
         autoCompView.setOnItemClickListener(BasicInfoClass.this);
@@ -104,24 +115,89 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
         dateofbirth = datepickerBtnET.getText().toString().trim();
         referalId = referalIdEt.getText().toString().trim();
-        synopsisId = synopsisIdET.getText().toString().trim();
-        fname = fnameET.getText().toString().trim();
-        lname = lnameET.getText().toString().trim();
-        mobnum = mobnumEt.getText().toString().trim();
-        place=autoCompView.getText().toString();
-        Log.d("jobin","works till here");
+
+
+        place = autoCompView.getText().toString();
+        Log.d("jobin", "works till here");
 
         List<String> place_list = Arrays.asList(place.split(","));
-        int length=place_list.size();
-        Log.d("jobin","place passed to submit fn:"+place_list.get(length-1)+" "+place_list.get(length-2)+" "+place_list.get(length-3));
+        int length = place_list.size();
+        Log.d("jobin", "place passed to submit fn:country" + place_list.get(length - 1) + " state:" + place_list.get(length - 2) + " city: " + place_list.get(length - 3));
+
+        country = place_list.get(length - 1).toString();
+        state = place_list.get(length - 2).toString();
+        city = place_list.get(length - 3).toString();
+    /*    String radiovalue = ((RadioButton)findViewById(genderRadioGroup.getCheckedRadioButtonId())).getText().toString();
 
 
+       if (radiovalue.equals("male")) {
+            gender = "male";
+        } else {
+            gender = "female";
+        }
+*/
+        gender="male";
+        String url = Constants.baseUrl + "submit_basic_info.php";
 
+//////////////////////////////volley starts  ///////////////////////////////////////////////////////////////
+        RequestQueue requestQueue = Volley.newRequestQueue(BasicInfoClass.this);
+        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d("jobin", "string response basic  info  is : " + response);
+
+                try {
+                    JSONObject person = new JSONObject(response);
+                    String result = person.getString("result");
+                    String error = person.getString("error");
+                    if (result.equals("success")) {
+                        startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
+                    } else if (error.equals("user_exists")) {
+                        Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+
+                } catch (JSONException e) {
+                    Log.d("jobin", "json errror:" + e);
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("jobin", "error response is : " + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("dateofbirth", dateofbirth);
+                parameters.put("referalId", referalId);
+                parameters.put("gender", gender);
+                parameters.put("country", country);
+                parameters.put("state", state);
+                parameters.put("city", city);
+                parameters.put("email", email);
+                parameters.put("Action", "basic_info_form");
+
+
+                return parameters;
+            }
+        };
+        requestQueue.add(stringrequest);
+
+
+        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
+
+//////////////////////////volley ends////////////////////////////////////////////////
 
 
     ////////////////////////choose from gallery or from camera option//////////////////////
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -225,7 +301,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
             URL url = new URL(sb.toString());
 
-            Log.e("jobin", "URL: "+url);
+            Log.e("jobin", "URL: " + url);
             conn = (HttpURLConnection) url.openConnection();
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
 
@@ -253,20 +329,18 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
-            Log.e("jobin", "in the try of predictions json array got is: "+predsJsonArray.toString());
+            Log.e("jobin", "in the try of predictions json array got is: " + predsJsonArray.toString());
             // Extract the Place descriptions from the results
             resultList = new ArrayList<String>(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-              //  System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
-           ///     System.out.println("============================================================");
+                //  System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
+                ///     System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
-                Log.e("jobin", "description of predictions:"+predsJsonArray.getJSONObject(i).getString("description"));
+                Log.e("jobin", "description of predictions:" + predsJsonArray.getJSONObject(i).getString("description"));
             }
         } catch (JSONException e) {
             Log.e("jobin", "Cannot process JSON results", e);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e("jobin", "error in catch of predictions", e);
         }
 

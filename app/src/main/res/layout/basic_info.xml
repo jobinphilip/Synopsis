@@ -25,13 +25,14 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <Button
+            <ImageButton
                 android:id="@+id/selfyButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
 
+                android:src="@drawable/ic_menu_camera"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/ic_menu_camera"
+
                 android:onClick="photo_actions" />
 
             <android.support.design.widget.TextInputLayout
@@ -49,65 +50,12 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/synopsis_id_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/synopsis_idET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="Enter your prefered 10 digit SynopsisID"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/firstname_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/firstNameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="First Name, Middle Name  (Full Name)"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/lastname_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/Lastname_ET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Lastname"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/mobile_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/Mobile_ET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mobile number"
-                    android:inputType="phone"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
+
+
+
 
 
             <LinearLayout
@@ -173,14 +121,14 @@
                     android:orientation="horizontal"
                     android:weightSum="2"> <!-- Error on this line -->
                     <RadioButton
-                        android:id="@+id/rdb_positive"
+                        android:id="@+id/rdb_female"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Female" />
 
                     <RadioButton
-                        android:id="@+id/rdb_negative"
+                        android:id="@+id/rdb_male"
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

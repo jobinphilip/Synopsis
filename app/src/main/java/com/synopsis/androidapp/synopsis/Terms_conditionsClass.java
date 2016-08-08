@@ -54,12 +54,13 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             final String password = prefs.getString("password", "");
             final String firstname = prefs.getString("firstname", "");
             final String lastname = prefs.getString("lastname", "");
+            final String phone = prefs.getString("phone", "");
 
             WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
             final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
 
-            Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: " + ipAddress);
+           // Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: " + ipAddress);
             String url = Constants.baseUrl + "submit.php";
             //  String url="http://10.0.2.2:8080/test/login4.php";
             //    String url="http://localhost/test/login4.php";
@@ -110,10 +111,11 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     parameters.put("device", "mobile");
                     parameters.put("firstname", firstname);
                     parameters.put("lastname", lastname);
+                    parameters.put("phone", phone);
 
                     parameters.put("Action", "registration_form");
 
-                    Log.d("jobin", "prameterd added");
+
                     return parameters;
                 }
             };
