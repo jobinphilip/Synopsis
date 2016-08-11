@@ -61,7 +61,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
 
 
            // Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: " + ipAddress);
-            String url = Constants.baseUrl + "submit.php";
+            String url = Constants.baseUrl + "register_user.php";
             //  String url="http://10.0.2.2:8080/test/login4.php";
             //    String url="http://localhost/test/login4.php";
             // String url="http://10.0.2.2/test/login4.php";

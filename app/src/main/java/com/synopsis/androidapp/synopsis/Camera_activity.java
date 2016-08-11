@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Hashtable;
@@ -77,9 +81,23 @@ imageview=(ImageView)findViewById(R.id.imageView);
                         bitmap.recycle();
                         bitmap2.recycle();
                         loading.dismiss();
-                        //Showing toast message of the response
-                        //  Toast.makeText(getApplicationContext(), s , Toast.LENGTH_LONG).show();
+                        try {
+                            JSONObject resultobj = new JSONObject(s);
+                            String result = resultobj.getString("result");
+                            String error = resultobj.getString("error");
+                            String path = resultobj.getString("path");
+                            if (result.equals("success")) {
+                                Intent I= new Intent(getApplicationContext(),BasicInfoClass.class);
+                                I.putExtra("path",path);
+                                startActivity(I);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
 
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {

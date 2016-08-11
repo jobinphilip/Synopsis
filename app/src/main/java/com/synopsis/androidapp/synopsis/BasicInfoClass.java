@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -72,7 +74,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private Calendar calendar;
     EditText datepickerBtnET, referalIdEt;
     AutoCompleteTextView autoCompView;
-
+    private  Load_image_activity load_image_activity;
     RadioGroup genderRadioGroup;
     RadioButton radiobutton;
     String dateofbirth, referalId,   place, country, state, city, gender,email;
@@ -106,6 +108,9 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
         autoCompView.setOnItemClickListener(BasicInfoClass.this);
+
+
+
 
     }
 
