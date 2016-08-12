@@ -7,11 +7,15 @@
 <include
     layout="@layout/logo_and_tagline"
     android:id="@+id/header"></include>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_below="@+id/header"
+    android:layout_above="@+id/forgotPasswordTV"
+    android:layout_height="wrap_content">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_below="@+id/header"
+
     android:layout_height="match_parent">
     <android.support.design.widget.TextInputLayout
         android:id="@+id/unamelayout"
@@ -80,13 +84,14 @@
 
 
 </LinearLayout>
+</ScrollView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="forgot password?"
 
 
-        android:id="@+id/textView"
+        android:id="@+id/forgotPasswordTV"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
 

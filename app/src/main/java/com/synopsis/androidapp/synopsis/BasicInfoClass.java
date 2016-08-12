@@ -74,9 +74,9 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private Calendar calendar;
     EditText datepickerBtnET, referalIdEt;
     AutoCompleteTextView autoCompView;
-    private  Load_image_activity load_image_activity;
+
     RadioGroup genderRadioGroup;
-    RadioButton radiobutton;
+
     String dateofbirth, referalId,   place, country, state, city, gender,email;
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -132,16 +132,17 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         country = place_list.get(length - 1).toString();
         state = place_list.get(length - 2).toString();
         city = place_list.get(length - 3).toString();
-    /*    String radiovalue = ((RadioButton)findViewById(genderRadioGroup.getCheckedRadioButtonId())).getText().toString();
+
+        int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+Log.d("jobin","radio id:"+selectedId);
+        // find the radiobutton by returned id
+    RadioButton    radioButton = (RadioButton) findViewById(selectedId);
+         gender= radioButton.getText().toString();
 
 
-       if (radiovalue.equals("male")) {
-            gender = "male";
-        } else {
-            gender = "female";
-        }
-*/
-        gender="male";
+
+
+
         String url = Constants.baseUrl + "submit_basic_info.php";
 
 //////////////////////////////volley starts  ///////////////////////////////////////////////////////////////

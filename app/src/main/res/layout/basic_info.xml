@@ -118,7 +118,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:checkedButton="@+id/gender_radiogroup"
+                    android:id="@+id/gender_radiogroup"
                     android:orientation="horizontal"
                     android:weightSum="2"> <!-- Error on this line -->
                     <RadioButton
@@ -134,7 +134,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="male" />
+                        android:text="Male" />
                 </RadioGroup>
 
             </LinearLayout>
