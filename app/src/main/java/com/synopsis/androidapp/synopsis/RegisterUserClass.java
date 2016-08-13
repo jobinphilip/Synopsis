@@ -76,9 +76,10 @@ phoneET=(EditText)findViewById(R.id.phone_ET);
 
                 editor.putString("email", email_string);
                 editor.putString("password", password_string);
-                editor.putString("firstname", firstname_string);
-                editor.putString("lastname", lastname_string);
-                editor.putString("phone", phone_string);
+                editor.putString("first_name", firstname_string);
+                editor.putString("last_name", lastname_string);
+                editor.putString("mobile", phone_string);
+
 
                 editor.commit();
                 startActivity(new Intent(getApplicationContext(), Terms_conditionsClass.class));

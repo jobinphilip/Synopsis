@@ -70,14 +70,14 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     public static final String Login_details = "Login_details";
     ImageButton selfyButton;
     private int year, month, day;
-    private DatePicker datePicker;
+
     private Calendar calendar;
     EditText datepickerBtnET, referalIdEt;
     AutoCompleteTextView autoCompView;
 
     RadioGroup genderRadioGroup;
 
-    String dateofbirth, referalId,   place, country, state, city, gender,email;
+    String dateofbirth, referalId, place, country, state, city, gender, email;
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
@@ -110,8 +110,6 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         autoCompView.setOnItemClickListener(BasicInfoClass.this);
 
 
-
-
     }
 
 
@@ -134,13 +132,10 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         city = place_list.get(length - 3).toString();
 
         int selectedId = genderRadioGroup.getCheckedRadioButtonId();
-Log.d("jobin","radio id:"+selectedId);
+        Log.d("jobin", "radio id:" + selectedId);
         // find the radiobutton by returned id
-    RadioButton    radioButton = (RadioButton) findViewById(selectedId);
-         gender= radioButton.getText().toString();
-
-
-
+        RadioButton radioButton = (RadioButton) findViewById(selectedId);
+        gender = radioButton.getText().toString();
 
 
         String url = Constants.baseUrl + "submit_basic_info.php";

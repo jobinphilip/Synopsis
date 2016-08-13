@@ -59,7 +59,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceLarge"
-               android:text="Large Text"
+
 
                android:layout_margin="10dp"
                android:id="@+id/dashboard_nameTV"
@@ -71,7 +71,7 @@
                android:layout_margin="5dp"
 
                android:textAppearance="?android:attr/textAppearanceMedium"
-               android:text="Medium Text"
+
                android:id="@+id/dashboard_synopsis_idTV"
                android:layout_gravity="center_horizontal" />
 
@@ -79,7 +79,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceMedium"
-               android:text="Medium Text"
+
                android:layout_margin="5dp"
                android:id="@+id/dashboard_designationTV"
                android:layout_gravity="center_horizontal" />
@@ -89,7 +89,7 @@
                android:layout_height="wrap_content"
                android:layout_margin="5dp"
                android:textAppearance="?android:attr/textAppearanceMedium"
-               android:text="Medium Text"
+
                android:id="@+id/dashboard_companyTV"
                android:layout_gravity="center_horizontal" />
            <TextView
@@ -97,7 +97,7 @@
                android:layout_height="wrap_content"
                android:layout_margin="5dp"
                android:textAppearance="?android:attr/textAppearanceMedium"
-               android:text="Medium Text"
+
                android:id="@+id/dashboard_educationTV"
                android:layout_gravity="center_horizontal" />
 

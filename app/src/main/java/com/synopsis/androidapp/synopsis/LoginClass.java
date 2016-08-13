@@ -35,7 +35,7 @@ public class LoginClass extends Activity {
     EditText unameET, passwordET;
     CheckBox sessionCheckBox;
     public static final String user_status = "user_status";
-
+    public static final String Login_details = "Login_details";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class LoginClass extends Activity {
         boolean sessionchecking = sessionCheckBox.isChecked();
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
         final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        Log.d("jobin", "inside login fn  email:" + uname + "password:" + password + "session:" + sessionchecking);
+
         String url = Constants.baseUrl + "login.php";
         RequestQueue requestQueue = Volley.newRequestQueue(LoginClass.this);
 
@@ -66,29 +66,56 @@ public class LoginClass extends Activity {
 
 
                 try {
-                    JSONObject person = new JSONObject(response);
-                    String result = person.getString("result");
-                    String error = person.getString("error");
+                    JSONObject jobject = new JSONObject(response);
+                    String result = jobject.getString("result");
+                    String error = jobject.getString("error");
                     if (result.equals("success"))
                     {
-                        String status = person.getString("status").trim();
-                        Log.d("jobin","status is:"+status);
-                        String transaction_id = person.getString("transaction_id").trim();
-                        Log.d("jobin","trans is:"+transaction_id);
+                        String status = jobject.getString("status").trim();
+
+                        String transaction_id = jobject.getString("transaction_id").trim();
+
+                        String email = jobject.getString("email").trim();
+                        String first_name = jobject.getString("first_name").trim();
+                        String last_name = jobject.getString("last_name").trim();
+                        String date_of_birth = jobject.getString("date_of_birth").trim();
+                        String city = jobject.getString("city").trim();
+                        String state = jobject.getString("state").trim();
+                        String country = jobject.getString("country").trim();
+                        String mobile = jobject.getString("mobile").trim();
+                        String gender = jobject.getString("gender").trim();
+
+
+
+
+                        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = prefs.edit();
+                        editor2.putString("email", email);
+                        editor2.putString("password", password);
+                        editor2.putString("first_name", first_name);
+                        editor2.putString("last_name", last_name);
+                        editor2.putString("date_of_birth", date_of_birth);
+                        editor2.putString("gender", gender);
+                        editor2.putString("city", city);
+                        editor2.putString("state", state);
+                        editor2.putString("country", country);
+                        editor2.putString("mobile", mobile);
+                        editor2.putString("transaction_id", transaction_id);
+                        editor2.putString("status", status);
+
+                        editor2.commit();
+
+
                         SharedPreferences.Editor editor = getSharedPreferences(user_status, MODE_PRIVATE).edit();
 
 
-
-
-
-                        editor.commit();
 
                         switch (status)
                         {
                             case( "email_verification_pending"):
 
                             {
-                                editor.putString("email", "email_verification_pending");
+                                editor.putString("status", "email_verification_pending");
 
                                 String message = "Kindly verify your Email Id to proceed ";
                                 new AlertDialog.Builder(LoginClass.this)
@@ -105,61 +132,61 @@ public class LoginClass extends Activity {
                         case( "basic_info_pending"):
 
                         {
-                            editor.putString("email", "basic_info_pending");
+                            editor.putString("status", "basic_info_pending");
                             startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
                             break;
                         }
                         case( "user_photo_invalid"):
 
                         {
-                            editor.putString("email", "user_photo_invalid");
+                            editor.putString("status", "user_photo_invalid");
                             startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
                             break;
                         }
                         case( "identity_verification_pending"):
 
                         {
-                            editor.putString("email", "identity_verification_pending");
+                            editor.putString("status", "identity_verification_pending");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                         case( "education_verification_pending"):
 
                         {
-                            editor.putString("email", "education_verification_pending");
+                            editor.putString("status", "education_verification_pending");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                         case( "employment_verification_pending"):
 
                         {
-                            editor.putString("email", "employment_verification_pending");
+                            editor.putString("status", "employment_verification_pending");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                         case( "verified"):
 
                         {
-                            editor.putString("email", "verified");
+                            editor.putString("status", "verified");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                         case( "employment_semiverified"):
 
                         {
-                            editor.putString("email", "employment_semiverified");
+                            editor.putString("status", "employment_semiverified");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                         case( "education_semiverified"):
 
                         {
-                            editor.putString("email", "education_semiverified");
+                            editor.putString("status", "education_semiverified");
                             startActivity(new Intent(getApplicationContext(),Dash_board.class));
                             break;
                         }
                     }
-
+                    editor.commit();
 
                     } else   {
 

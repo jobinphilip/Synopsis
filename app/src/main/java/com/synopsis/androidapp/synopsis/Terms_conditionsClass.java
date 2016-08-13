@@ -52,9 +52,9 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
             final String email = prefs.getString("email", "");
             final String password = prefs.getString("password", "");
-            final String firstname = prefs.getString("firstname", "");
-            final String lastname = prefs.getString("lastname", "");
-            final String phone = prefs.getString("phone", "");
+            final String firstname = prefs.getString("first_name", "");
+            final String lastname = prefs.getString("last_name", "");
+            final String phone = prefs.getString("mobile", "");
 
             WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
             final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());

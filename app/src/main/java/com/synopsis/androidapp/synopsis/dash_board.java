@@ -59,7 +59,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
-        url = Constants.baseUrl + "image_download.php";
+        url = Constants.baseUrl + "dashboard_details.php";
         requestQueue = Volley.newRequestQueue(Dash_board.this);
 
         setContentView(R.layout.home_layout);
@@ -103,7 +103,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
                         Picasso.with(Dash_board.this).load(img_url).into(profile_image);
                         nameTV.setText(first_name);
-                        if(!(synopsis_id.equals("0")))
+                        if(!(synopsis_id.equals("null")))
                         {
                             synopsis_idTV.setVisibility(View.VISIBLE);
                             synopsis_idTV.setText(synopsis_id);

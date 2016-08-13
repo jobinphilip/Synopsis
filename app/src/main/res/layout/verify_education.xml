@@ -21,38 +21,62 @@
     <EditText
         android:layout_width="match_parent"
         android:hint="Register No (Hall Ticket, Roll No)"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_height="wrap_content"
         android:id="@+id/editText2" />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/schoolLO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:hint="College/Institute/School Name"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_height="wrap_content"
         android:id="@+id/editText3" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/universityLO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText4"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+
         android:hint="University"
         android:layout_gravity="center_horizontal" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/yearpassLO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText5"
-
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:hint="Month and Year of Passing"
         android:layout_gravity="center_horizontal" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/percentLO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:hint="Percentage/GPA(Grade point average)"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:id="@+id/editText6"
         android:layout_gravity="center_horizontal" />
-
+</android.support.design.widget.TextInputLayout>
 
 
     <Button

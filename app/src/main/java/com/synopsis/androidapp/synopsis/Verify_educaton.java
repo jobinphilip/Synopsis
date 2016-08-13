@@ -11,5 +11,6 @@ public class Verify_educaton extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verify_education);
+
     }
 }
