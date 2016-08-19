@@ -108,13 +108,13 @@ public class Verify_Identity extends Activity {
         // find the radiobutton by returned id
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         gender2 = radioButton.getText().toString();
-        if(firstname2.equals("")||lastname2.equals("")||fathername2.equals("")||mobile2.equals("")||alternatemobile2.equals("")||dateofbirth2.equals(""))
+        if(firstname2.equals("")||lastname2.equals("")||fathername2.equals("")||mobile2.equals("")||dateofbirth2.equals(""))
         {
             Toast.makeText(getApplicationContext(),"Kindly fill all the missing fields",Toast.LENGTH_LONG).show();
         }
         else
         {
-            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+            ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
             RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
             StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -149,6 +149,7 @@ public class Verify_Identity extends Activity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("email", email);
+                    parameters.put("password", password);
                     parameters.put("first_name", firstname2);
                     parameters.put("last_name", lastname2);
                     parameters.put("father_name", fathername2);

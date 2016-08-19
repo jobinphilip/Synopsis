@@ -72,12 +72,12 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private int year, month, day;
 
     private Calendar calendar;
-    EditText datepickerBtnET, referalIdEt;
+    EditText datepickerBtnET, referorIdEt;
     AutoCompleteTextView autoCompView;
 
     RadioGroup genderRadioGroup;
 
-    String dateofbirth, referalId, place, country, state, city, gender, email;
+    String dateofbirth, referorId, place, country, state, city, gender, email;
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
@@ -91,7 +91,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         setContentView(R.layout.basic_info);
         selfyButton = (ImageButton) findViewById(R.id.selfyButton);
         datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
-        referalIdEt = (EditText) findViewById(R.id.referalIdET);
+        referorIdEt = (EditText) findViewById(R.id.referorIdET);
 
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         email = prefs.getString("email", "");
@@ -117,7 +117,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
 
         dateofbirth = datepickerBtnET.getText().toString().trim();
-        referalId = referalIdEt.getText().toString().trim();
+        referorId = referorIdEt.getText().toString().trim();
 
 
         place = autoCompView.getText().toString();
@@ -176,7 +176,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("dateofbirth", dateofbirth);
-                parameters.put("referalId", referalId);
+                parameters.put("referorId", referorId);
                 parameters.put("gender", gender);
                 parameters.put("country", country);
                 parameters.put("state", state);

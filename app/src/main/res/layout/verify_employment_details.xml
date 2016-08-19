@@ -1,118 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <include
-        layout="@layout/logo_and_tagline"  ></include>
+    <include layout="@layout/logo_and_tagline"></include>
+
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Employment Verification"
-        android:textColor="@color/darkblue"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
         android:textAlignment="center"
-        android:layout_height="wrap_content" />
+
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/darkblue" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Employer/Consultancy Name"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Employer Contact No (Landline/Website)"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText3" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText4"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Employee ID (Optional)"
-        android:layout_gravity="center_horizontal" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/consultancyLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText5"
-        android:inputType="date"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Period of Employment(from-to exact dates)"
-        android:layout_gravity="center_horizontal" />
+                <EditText
+                    android:id="@+id/employment_verification_employerET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Employer/Consultancy Name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Last held designation"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:id="@+id/editText6"
-        android:layout_gravity="center_horizontal" />
+            </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Compensation per annum (in INR/USD)"
-        android:id="@+id/editText7"
-        android:layout_gravity="center_horizontal" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/contactLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Employed Location(Country ,State, Location)"
-        android:ems="10"
-        android:id="@+id/editText8" />
+                <EditText
+                    android:id="@+id/employment_verification_employer_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="Employer Contact No (Landline/Website)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="Alternate Phone Number (optional)"
-        android:ems="10"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:id="@+id/editText9"
-        android:layout_gravity="center_horizontal" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="supervisor Contact No"
-        android:ems="10"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:id="@+id/editText10"
-        android:layout_gravity="center_horizontal" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Reason of Leaving"
-        android:ems="10"
-        android:id="@+id/editText11"
-        android:layout_gravity="center_horizontal" />
+            </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:layout_margin="20dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:textColor="@color/white"
-        android:background="@drawable/gradient_blue"
-        android:id="@+id/button6"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/empidLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_employee_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Employee ID (Optional)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/join_dateLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_joining_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Joining date"
+                    android:inputType="date"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/resigndateLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_resignation_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Resignation date"
+                    android:inputType="date"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/designationLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Last held designation"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/compensationlO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_compensation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Compensation per annum (in INR/USD)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/locationLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Employed Location(Country ,State, Location)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/alternateNoLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_alternate_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Alternate phone number (optional)"
+                    android:inputType="phone"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/supervisornmaeLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_supervisor_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Supervisor name and designation (optional)"
+                    android:inputType="text"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/supervisorLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_supervisor_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="supervisor Contact Number (optional)"
+                    android:inputType="phone"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/resonLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/employment_verification_reason_for_leaving"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Reason of Leaving"
+                 android:inputType="text"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="verifyEmploymentFn"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:background="@drawable/gradient_blue"
+                android:text="Next"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

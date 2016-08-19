@@ -1,91 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/logo_and_tagline"  ></include>
+    <include layout="@layout/logo_and_tagline"></include>
+
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Education Verification"
-        android:textColor="@color/darkblue"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
         android:textAlignment="center"
-        android:layout_height="wrap_content" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/registerno_text_Input_Layout"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/darkblue" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Register No (Hall Ticket, Roll No)"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_height="wrap_content"
-        android:id="@+id/regNoET" />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/schoolLO"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="College/Institute/School Name"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_height="wrap_content"
-        android:id="@+id/collegeET" />
-    </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/universityLO"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/universityET"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/registerno_text_Input_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        android:hint="University"
-        android:layout_gravity="center_horizontal" />
-    </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/regNoET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Register No (Hall Ticket, Roll No)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/yearpassLO"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/month_andYearOfpassET"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:hint="Month and Year of Passing"
-        android:layout_gravity="center_horizontal" />
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/schoolLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/percentLO"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <EditText
-        android:layout_width="match_parent"
-        android:hint="Percentage/GPA(Grade point average)"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        android:id="@+id/percentET"
-        android:layout_gravity="center_horizontal" />
-</android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/collegeET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="College/Institute/School Name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/courseLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/courseET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Course name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/courseTypeLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/courseTypeET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Course type (Regular/Distance education)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/universityLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/universityET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+
+                    android:hint="University"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/yearpassLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/month_andYearOfpassET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Month and Year of Passing"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/percentLO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/percentET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Percentage/GPA(Grade point average)"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+    </ScrollView>S
 
     <Button
-        android:layout_margin="20dp"
+        android:id="@+id/education_verificationSubmitBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
         android:background="@drawable/gradient_blue"
-        android:id="@+id/education_verificationSubmitBtn"
-        android:layout_gravity="center_horizontal" />
+        android:onClick="veriifyEducationFn"
+        android:text="Next"
+        android:textColor="@color/white" />
 </LinearLayout>
