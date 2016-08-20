@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.format.Formatter;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.TransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,9 +47,41 @@ public class LoginClass extends Activity {
         setContentView(R.layout.login_page);
         unameET = (EditText) findViewById(R.id.uname_ET);
         passwordET = (EditText) findViewById(R.id.PassET);
+        passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        passwordET.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent. ACTION_DOWN) {
+                    if(event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                     //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
+                      //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+                        passwordET.setTransformationMethod(null);
+                        return true;
+                    }
+                }
+                else
+                {
+
+                        if(event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
+                            //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+                            passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            return true;
+                        }
+
+                }
+                return false;
+            }
+        });
         sessionCheckBox = (CheckBox) findViewById(R.id.sessioncheckBox);
 
     }
+
     public void loginfn(View view) {
         final String uname = unameET.getText().toString().trim();
         final String password = passwordET.getText().toString().trim();
@@ -69,8 +105,7 @@ public class LoginClass extends Activity {
                     JSONObject jobject = new JSONObject(response);
                     String result = jobject.getString("result");
                     String error = jobject.getString("error");
-                    if (result.equals("success"))
-                    {
+                    if (result.equals("success")) {
                         String status = jobject.getString("status").trim();
 
                         String transaction_id = jobject.getString("transaction_id").trim();
@@ -84,8 +119,6 @@ public class LoginClass extends Activity {
                         String country = jobject.getString("country").trim();
                         String mobile = jobject.getString("mobile").trim();
                         String gender = jobject.getString("gender").trim();
-
-
 
 
                         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
@@ -109,10 +142,8 @@ public class LoginClass extends Activity {
                         SharedPreferences.Editor editor = getSharedPreferences(user_status, MODE_PRIVATE).edit();
 
 
-
-                        switch (status)
-                        {
-                            case( "email_verification_pending"):
+                        switch (status) {
+                            case ("email_verification_pending"):
 
                             {
                                 editor.putString("status", "email_verification_pending");
@@ -128,69 +159,68 @@ public class LoginClass extends Activity {
                             }
 
 
+                            case ("basic_info_pending"):
 
-                        case( "basic_info_pending"):
+                            {
+                                editor.putString("status", "basic_info_pending");
+                                startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
+                                break;
+                            }
+                            case ("user_photo_invalid"):
 
-                        {
-                            editor.putString("status", "basic_info_pending");
-                            startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
-                            break;
+                            {
+                                editor.putString("status", "user_photo_invalid");
+                                startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
+                                break;
+                            }
+                            case ("identity_verification_pending"):
+
+                            {
+                                editor.putString("status", "identity_verification_pending");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
+                            case ("education_verification_pending"):
+
+                            {
+                                editor.putString("status", "education_verification_pending");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
+                            case ("employment_verification_pending"):
+
+                            {
+                                editor.putString("status", "employment_verification_pending");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
+                            case ("verified"):
+
+                            {
+                                editor.putString("status", "verified");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
+                            case ("employment_semiverified"):
+
+                            {
+                                editor.putString("status", "employment_semiverified");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
+                            case ("education_semiverified"):
+
+                            {
+                                editor.putString("status", "education_semiverified");
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                break;
+                            }
                         }
-                        case( "user_photo_invalid"):
+                        editor.commit();
 
-                        {
-                            editor.putString("status", "user_photo_invalid");
-                            startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
-                            break;
-                        }
-                        case( "identity_verification_pending"):
+                    } else {
 
-                        {
-                            editor.putString("status", "identity_verification_pending");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                        case( "education_verification_pending"):
-
-                        {
-                            editor.putString("status", "education_verification_pending");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                        case( "employment_verification_pending"):
-
-                        {
-                            editor.putString("status", "employment_verification_pending");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                        case( "verified"):
-
-                        {
-                            editor.putString("status", "verified");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                        case( "employment_semiverified"):
-
-                        {
-                            editor.putString("status", "employment_semiverified");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                        case( "education_semiverified"):
-
-                        {
-                            editor.putString("status", "education_semiverified");
-                            startActivity(new Intent(getApplicationContext(),Dash_board.class));
-                            break;
-                        }
-                    }
-                    editor.commit();
-
-                    } else   {
-
-                        Log.d("jobin","result  is:"+result+"error is :"+error);
+                        Log.d("jobin", "result  is:" + result + "error is :" + error);
 
                         Toast.makeText(getApplicationContext(), "Invalid login credentials", Toast.LENGTH_LONG).show();
 
@@ -198,8 +228,6 @@ public class LoginClass extends Activity {
 
                 } catch (JSONException e) {
                     Log.d("jobin", "json errror:" + e);
-
-
 
 
                 }
@@ -240,4 +268,10 @@ public class LoginClass extends Activity {
 
     }
 
+    public void forgot_passfn(View v)
+
+    {
+        startActivity(new Intent(getApplicationContext(),Forgot_password.class));
+
+}
 }

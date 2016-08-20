@@ -10,7 +10,7 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_below="@+id/header"
-    android:layout_above="@+id/forgotPasswordTV"
+
     android:layout_height="wrap_content">
 <LinearLayout
     android:orientation="vertical"
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/uname_ET"
         android:layout_marginTop="40dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:hint="Synopsis ID/Email/Phone No"
        android:layout_gravity="center"
        />
@@ -38,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
         android:layout_marginTop="20dp"
         android:hint="Password"
         android:drawableRight="@drawable/show_password"
@@ -81,20 +83,23 @@
 
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="forgot_passfn"
+        android:layout_height="wrap_content"
+        android:text="forgot password?"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:gravity="center"
+        android:id="@+id/forgotPasswordTV"
+        android:layout_marginBottom="10dp"
 
+
+       />
 
 </LinearLayout>
 </ScrollView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="forgot password?"
 
-
-        android:id="@+id/forgotPasswordTV"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
