@@ -2,6 +2,7 @@ package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
@@ -40,6 +41,8 @@ public class LoginClass extends Activity {
     CheckBox sessionCheckBox;
     public static final String user_status = "user_status";
     public static final String Login_details = "Login_details";
+    ProgressDialog progress;
+    boolean visibility=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,31 @@ public class LoginClass extends Activity {
         setContentView(R.layout.login_page);
         unameET = (EditText) findViewById(R.id.uname_ET);
         passwordET = (EditText) findViewById(R.id.PassET);
+        sessionCheckBox = (CheckBox) findViewById(R.id.sessioncheckBox);
+
+        try {
+            SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+            String uname = prefs.getString("uname", "");
+            String password = prefs.getString("password", "");
+            boolean session = prefs.getBoolean("session", false);
+            if (session) {
+                unameET.setText(uname);
+                passwordET.setText(password);
+                sessionCheckBox.setChecked(true);
+            } else {
+                unameET.setText("");
+                passwordET.setText("");
+                sessionCheckBox.setChecked(false);
+            }
+
+
+        } catch (NullPointerException e) {
+
+        }
+
+
         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
         passwordET.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -56,36 +83,44 @@ public class LoginClass extends Activity {
                 final int DRAWABLE_RIGHT = 2;
                 final int DRAWABLE_BOTTOM = 3;
 
-                if(event.getAction() == MotionEvent. ACTION_DOWN) {
-                    if(event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                     //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
-                      //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    if( (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()))&&visibility==false) {
+                        //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
+                        //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
                         passwordET.setTransformationMethod(null);
+                        visibility=true;
                         return true;
                     }
-                }
-                else
-                {
-
-                        if(event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
-                            //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
-                            passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            return true;
-                        }
+                    else  if( (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()))&&visibility==true) {
+                        //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
+                        //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+                        passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        visibility=false;
+                        return true;
+                    }
 
                 }
+
                 return false;
             }
         });
-        sessionCheckBox = (CheckBox) findViewById(R.id.sessioncheckBox);
+
 
     }
 
     public void loginfn(View view) {
         final String uname = unameET.getText().toString().trim();
         final String password = passwordET.getText().toString().trim();
-        boolean sessionchecking = sessionCheckBox.isChecked();
+
+        progress = new ProgressDialog(this);
+        progress.setMessage("Please wait");
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
+
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
         final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
@@ -124,6 +159,7 @@ public class LoginClass extends Activity {
                         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
                         SharedPreferences.Editor editor2 = prefs.edit();
                         editor2.putString("email", email);
+                        editor2.putString("uname", uname);
                         editor2.putString("password", password);
                         editor2.putString("first_name", first_name);
                         editor2.putString("last_name", last_name);
@@ -135,6 +171,12 @@ public class LoginClass extends Activity {
                         editor2.putString("mobile", mobile);
                         editor2.putString("transaction_id", transaction_id);
                         editor2.putString("status", status);
+                        boolean sessioncheck = sessionCheckBox.isChecked();
+                        if (sessioncheck) {
+                            editor2.putBoolean("session", true);
+                        } else {
+                            editor2.putBoolean("session", false);
+                        }
 
                         editor2.commit();
 
@@ -231,6 +273,7 @@ public class LoginClass extends Activity {
 
 
                 }
+                progress.dismiss();
 
             }
         }, new Response.ErrorListener() {
@@ -271,7 +314,7 @@ public class LoginClass extends Activity {
     public void forgot_passfn(View v)
 
     {
-        startActivity(new Intent(getApplicationContext(),Forgot_password.class));
+        startActivity(new Intent(getApplicationContext(), Forgot_password.class));
 
-}
+    }
 }

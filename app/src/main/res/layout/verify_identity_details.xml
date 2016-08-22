@@ -30,6 +30,7 @@
         <EditText
             android:id="@+id/identity_fnameET"
             android:layout_width="match_parent"
+            android:inputType="textCapWords"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_height="wrap_content"
             android:hint="First name,Middle name (Full Name)" />
@@ -43,6 +44,7 @@
         <EditText
             android:id="@+id/identity_lastnameET"
             android:layout_width="match_parent"
+            android:inputType="textCapWords"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_height="wrap_content"
             android:hint="Last name (Surname)" />
@@ -57,6 +59,7 @@
         <EditText
             android:id="@+id/identity_fathernameET"
             android:layout_width="match_parent"
+            android:inputType="textCapWords"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

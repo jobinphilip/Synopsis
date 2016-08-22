@@ -46,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by User on 7/15/2016.
  */
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView nameTV, synopsis_idTV, companyTV, educationTV,designationTV;
+    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, cityTV, countryTV, stateTV, emailTV, mobileTV;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
     String email, password, url, image_base64string;
@@ -67,12 +67,19 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         synopsis_idTV = (TextView) findViewById(R.id.dashboard_synopsis_idTV);
         synopsis_idTV.setVisibility(View.INVISIBLE);
         companyTV = (TextView) findViewById(R.id.dashboard_companyTV);
-        companyTV. setVisibility(View.INVISIBLE);
+        companyTV.setVisibility(View.INVISIBLE);
         educationTV = (TextView) findViewById(R.id.dashboard_educationTV);
         educationTV.setVisibility(View.INVISIBLE);
-        designationTV= (TextView) findViewById(R.id.dashboard_designationTV);
+        designationTV = (TextView) findViewById(R.id.dashboard_designationTV);
         designationTV.setVisibility(View.INVISIBLE);
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
+        cityTV = (TextView) findViewById(R.id.dashboard_cityTV);
+        stateTV = (TextView) findViewById(R.id.dashboard_staeTV);
+
+        countryTV = (TextView) findViewById(R.id.dashboard_countryTV);
+
+        emailTV = (TextView) findViewById(R.id.dashboard_emailTV);
+        mobileTV = (TextView) findViewById(R.id.dashboard_mobileTV);
 
 
         ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
@@ -90,23 +97,30 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     String img_url = jobj.getString("img_url");
                     String first_name = jobj.getString("first_name");
                     String synopsis_id = jobj.getString("synopsis_id");
+                    String city = jobj.getString("city");
+                    String state = jobj.getString("state");
+                    String country = jobj.getString("country");
+                    String mobile = jobj.getString("mobile");
 
 
                     //    image_base64string=jobj.getString("image");
                     //     Log.d("jobin","image:"+image_base64string);
 
-                    Log.d("jobin", "result" + result);
-                    Log.d("jobin", "img_url: " + img_url);
-                    Log.d("jobin", "error" + error);
-                    Log.d("jobin", "sid" + synopsis_id);
+
                     if (result.equals("success")) {
 
                         Picasso.with(Dash_board.this).load(img_url).into(profile_image);
                         nameTV.setText(first_name);
-                        if(!(synopsis_id.equals("null")))
-                        {
+                        cityTV.setText(city);
+                        countryTV.setText(country);
+                        stateTV.setText(state);
+                        mobileTV.setText(mobile);
+                        emailTV.setText(email);
+                        if (!(synopsis_id.equals("null"))) {
                             synopsis_idTV.setVisibility(View.VISIBLE);
                             synopsis_idTV.setText(synopsis_id);
+
+
                         }
 
                     } else {

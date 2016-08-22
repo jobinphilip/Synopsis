@@ -42,6 +42,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,8 @@ import java.util.Map;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by User on 7/15/2016.
  */
@@ -70,14 +73,14 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     public static final String Login_details = "Login_details";
     ImageButton selfyButton;
     private int year, month, day;
-
+    CircleImageView basic_info_image;
     private Calendar calendar;
     EditText datepickerBtnET, referorIdEt;
     AutoCompleteTextView autoCompView;
 
     RadioGroup genderRadioGroup;
 
-    String dateofbirth, referorId, place, country, state, city, gender, email;
+    String dateofbirth, referorId, place, country, state, city, gender, email, password;
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
@@ -88,14 +91,79 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.basic_info);
         selfyButton = (ImageButton) findViewById(R.id.selfyButton);
         datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
         referorIdEt = (EditText) findViewById(R.id.referorIdET);
-
+        String url = Constants.baseUrl + "basic_info_image.php";
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         email = prefs.getString("email", "");
+        password = prefs.getString("password", "");
         genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
+        basic_info_image = (CircleImageView) findViewById(R.id.basic_info_image);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
+        try {
+            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    Log.d("jobin", "string response is : " + response);
+
+                    try {
+                        JSONObject jobj = new JSONObject(response);
+                        String result = jobj.getString("result");
+                        String error = jobj.getString("error");
+                        String img_url = jobj.getString("img_url");
+
+
+                        //    image_base64string=jobj.getString("image");
+                        //     Log.d("jobin","image:"+image_base64string);
+
+
+                        if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
+                            selfyButton.setVisibility(View.INVISIBLE);
+                            Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
+
+
+                        }
+                    } catch (JSONException e) {
+                        Log.d("jobin", "json errror:" + e);
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("jobin", "error response is : " + error);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("email", email);
+                    parameters.put("password", password);
+                    parameters.put("Action", "image_download");
+
+
+                    return parameters;
+                }
+            };
+            requestQueue2.add(stringrequest);
+
+
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+        } catch (NullPointerException e) {
+
+        }
 
 
         calendar = Calendar.getInstance();
@@ -117,82 +185,85 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
 
         dateofbirth = datepickerBtnET.getText().toString().trim();
-        referorId = referorIdEt.getText().toString().trim();
+        String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
+        if (Integer.parseInt(year_ofbirth) > year - 16) {
+            Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG).show();
+        } else {
+
+            referorId = referorIdEt.getText().toString().trim();
 
 
-        place = autoCompView.getText().toString();
-        Log.d("jobin", "works till here");
+            place = autoCompView.getText().toString();
+            Log.d("jobin", "works till here");
 
-        List<String> place_list = Arrays.asList(place.split(","));
-        int length = place_list.size();
-        Log.d("jobin", "place passed to submit fn:country" + place_list.get(length - 1) + " state:" + place_list.get(length - 2) + " city: " + place_list.get(length - 3));
+            List<String> place_list = Arrays.asList(place.split(","));
+            int length = place_list.size();
+            Log.d("jobin", "place passed to submit fn:country" + place_list.get(length - 1) + " state:" + place_list.get(length - 2) + " city: " + place_list.get(length - 3));
 
-        country = place_list.get(length - 1).toString();
-        state = place_list.get(length - 2).toString();
-        city = place_list.get(length - 3).toString();
+            country = place_list.get(length - 1).toString();
+            state = place_list.get(length - 2).toString();
+            city = place_list.get(length - 3).toString();
 
-        int selectedId = genderRadioGroup.getCheckedRadioButtonId();
-        Log.d("jobin", "radio id:" + selectedId);
-        // find the radiobutton by returned id
-        RadioButton radioButton = (RadioButton) findViewById(selectedId);
-        gender = radioButton.getText().toString();
+            int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+            Log.d("jobin", "radio id:" + selectedId);
+            // find the radiobutton by returned id
+            RadioButton radioButton = (RadioButton) findViewById(selectedId);
+            gender = radioButton.getText().toString();
 
 
-        String url = Constants.baseUrl + "submit_basic_info.php";
+            String url = Constants.baseUrl + "submit_basic_info.php";
 
 //////////////////////////////volley starts  ///////////////////////////////////////////////////////////////
-        RequestQueue requestQueue = Volley.newRequestQueue(BasicInfoClass.this);
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            RequestQueue requestQueue = Volley.newRequestQueue(BasicInfoClass.this);
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response basic  info  is : " + response);
+                @Override
+                public void onResponse(String response) {
+                    Log.d("jobin", "string response basic  info  is : " + response);
 
-                try {
-                    JSONObject person = new JSONObject(response);
-                    String result = person.getString("result");
-                    String error = person.getString("error");
-                    if (result.equals("success")) {
-                        startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
-                    } else if (error.equals("user_exists")) {
-                        Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG).show();
-                        finish();
+                    try {
+                        JSONObject person = new JSONObject(response);
+                        String result = person.getString("result");
+                        String error = person.getString("error");
+                        if (result.equals("success")) {
+                            startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                        }
+
+                    } catch (JSONException e) {
+                        Log.d("jobin", "json errror:" + e);
                     }
 
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
+
                 }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("jobin", "error response is : " + error);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("dateofbirth", dateofbirth);
+                    parameters.put("referorId", referorId);
+                    parameters.put("gender", gender);
+                    parameters.put("country", country);
+                    parameters.put("state", state);
+                    parameters.put("city", city);
+                    parameters.put("email", email);
+                    parameters.put("Action", "basic_info_form");
 
 
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("dateofbirth", dateofbirth);
-                parameters.put("referorId", referorId);
-                parameters.put("gender", gender);
-                parameters.put("country", country);
-                parameters.put("state", state);
-                parameters.put("city", city);
-                parameters.put("email", email);
-                parameters.put("Action", "basic_info_form");
+                    return parameters;
+                }
+            };
+            requestQueue.add(stringrequest);
 
 
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
-
-
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        }
     }
 
 //////////////////////////volley ends////////////////////////////////////////////////

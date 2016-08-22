@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by User on 7/21/2016.
@@ -109,19 +112,46 @@ public class Company_register extends Activity {
                 company_name_string=company_nameET.getText().toString().trim();
                          company_contact_person_string=company_contact_personET.getText().toString().trim();
                          company_email_string=company_emailET.getText().toString().trim();
-
-                                 company_designation_string=company_designationET.getText().toString().trim();
+                              company_designation_string=company_designationET.getText().toString().trim();
                 company_mobile_string=company_mobileET.getText().toString().trim();
+
                         company_employee_number_string=company_employee_numberET.getText().toString().trim();
-                if(company_name_string.matches("")|| company_contact_person_string.matches("")||  company_email_string.matches("")||  company_designation_string.matches("")||  company_mobile_string.matches("")||  company_employee_number_string.matches("")||  company_interested_in_string.matches("")||  company_type_string.matches(""))
+
+
+
+
+
+                String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+                CharSequence inputStr = company_email_string;
+
+                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(inputStr);
+                if (!(matcher.matches()) )
+                {
+                    Toast.makeText(getApplicationContext(),"Invalid email id",Toast.LENGTH_LONG).show();
+                }
+
+            else if(company_name_string.matches("")|| company_contact_person_string.matches("")||  company_email_string.matches("")||  company_designation_string.matches("")||  company_mobile_string.matches("")||  company_employee_number_string.matches("")||  company_interested_in_string.matches("")||  company_type_string.matches(""))
                 {
                     Toast.makeText(getApplicationContext(),"Kindly fill all the fields",Toast.LENGTH_LONG).show();
                 }
+                else if(company_mobile_string.length()<10)
+                {
+                    Toast.makeText(getApplicationContext(),"invalid phone Number",Toast.LENGTH_LONG).show();
+                }
+                else if(!(company_mobile_string.matches("[0-9]+") ))
+                {
+                    Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
+                }
+
                else
                 {
                   //  Toast.makeText(getApplicationContext(),"type: "+company_type_string+"interested in:"+company_interested_in_string,Toast.LENGTH_LONG).show();
 
-
+                    if(company_mobile_string.length()>10)
+                    {
+                        company_mobile_string=company_mobile_string.substring(company_mobile_string.length()-10,company_mobile_string.length());
+                    }
 
                     String url= Constants.baseUrl+"company_registration.php";
                     //  String url="http://10.0.2.2:8080/test/login4.php";

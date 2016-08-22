@@ -1,172 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/logo_and_tagline"></include>
-
-    <TextView
-        android:id="@+id/textView22"
+    <include
+        android:id="@+id/taglin"
+        layout="@layout/logo_and_tagline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Basic Information"
+        android:layout_alignParentTop="true"></include>
+
+    <TextView
+        android:id="@+id/textheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:layout_below="@+id/taglin"
+        android:text="@string/basic_info"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/synopsis_blue" />
 
     <ScrollView
+        android:id="@+id/scrollbasic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textheader">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/selfyButton"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+
+            android:background="@color/transparent"
+            android:onClick="photo_actions"
+            android:padding="20dp"
+
+            android:src="@drawable/ic_menu_camera" />
+
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
 
-            <ImageButton
-                android:id="@+id/selfyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal">
 
-                android:src="@drawable/ic_menu_camera"
-                android:layout_gravity="center_horizontal"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/basic_info_image"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:onClick="photo_actions"
+                android:clickable="true"
 
-                android:onClick="photo_actions" />
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/referal_id_layout"
+                app:border_color="@color/light_blue" />
+        </FrameLayout>
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_below="@id/frame"
+                android:orientation="vertical"
+                android:padding="10dp">
 
 
-                <EditText
-                    android:id="@+id/referorIdET"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/referal_id_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <EditText
+                        android:id="@+id/referorIdET"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ReferalIdoptional"
+                        android:inputType="textEmailSubject"
+                        android:textColor="@color/synopsis_blue" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Referal Id (Not Mandatory)"
-                    android:textColor="@color/synopsis_blue" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-
-
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:gravity="bottom"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="5">
-
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-
-                    android:text="Date of Birth"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/dob_layout"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/datepickerBtnET"
-                  android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:focusableInTouchMode="false"
-                    android:clickable="true"
-                    android:hint="Select date"
-                    android:onClick="date_pickerfn"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Gender"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/synopsis_blue" />
-
-                <RadioGroup
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:id="@+id/gender_radiogroup"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
                     android:orientation="horizontal"
-                    android:weightSum="2"> <!-- Error on this line -->
-                    <RadioButton
-                        android:id="@+id/rdb_female"
+                    android:weightSum="5">
+
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+
+                        android:text="@string/date_of_birth"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/synopsis_blue" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/dob_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3">
+
+                        <EditText
+                            android:id="@+id/datepickerBtnET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:clickable="true"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/Select_date"
+                            android:onClick="date_pickerfn"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/synopsis_blue" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/textView14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Female" />
+                        android:text="@string/Gender"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/synopsis_blue" />
 
-                    <RadioButton
-                        android:id="@+id/rdb_male"
-
+                    <RadioGroup
+                        android:id="@+id/gender_radiogroup"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Male" />
-                </RadioGroup>
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:weightSum="2"> <!-- Error on this line -->
+                        <RadioButton
+                            android:id="@+id/rdb_female"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Female" />
 
+                        <RadioButton
+                            android:id="@+id/rdb_male"
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Male" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
+                <AutoCompleteTextView
+
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Please_enter_your_city"
+                    android:textAppearance="?android:attr/textAppearanceMedium">
+
+
+                </AutoCompleteTextView>
+
+
+                <Button
+                    android:id="@+id/submitbasicinfoBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:width="200dp"
+                    android:background="@drawable/rounded_rectangle_blue"
+                    android:onClick="submitbasicinfofn"
+                    android:text="@string/Submit"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
 
-            <AutoCompleteTextView
-
-                android:id="@+id/autoCompleteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:hint="Please enter your place">
-
-
-            </AutoCompleteTextView>
-
-
-
-
-
-
-
-            <Button
-                android:id="@+id/submitbasicinfoBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:width="200dp"
-                android:background="@drawable/rounded_rectangle_blue"
-                android:onClick="submitbasicinfofn"
-                android:text="Submit"
-                android:textColor="@color/white" />
-        </LinearLayout>
+    </RelativeLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

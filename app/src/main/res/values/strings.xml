@@ -17,6 +17,54 @@
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="action_settings">Settings</string>
 
+    <string name="ReferalIdoptional"> Referal Id (optional)</string>
+
+
+
+    <string name="basic_info"> Basic Information </string>
+    Date_of_birth<string name="date_of_birth"> Date of birth</string>
+    <string name="Select_date">Select date </string>
+
+    <string name="Gender"> Gender</string>
+    <string name="Female">Female </string>
+    <string name="Male">Male </string>
+    <string name="Please_enter_your_city">Please enter your City</string>
+    <string name="Submit"> Submit</string>
+
+
+    <string name="Company_Name">Company Name* </string>
+    <string name="Contact_Person"> Contact Person*</string>
+    <string name="Company_Email">Company Email* </string>
+    <string name="Designation">Designation* </string>
+    <string name="Mobile_Landline_No"> Mobile/Landline No*</string>
+    <string name="No_of_employees">No of employees* </string>
+    <string name="Interested_in">Interested in:* </string>
+    <string name="Company_type"> Company type:</string>
+
+  <!--  <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+    <string name=""> </string>
+
+
+-->
+
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

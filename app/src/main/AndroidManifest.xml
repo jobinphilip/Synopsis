@@ -17,32 +17,28 @@
 
         </activity>
 
-        <activity android:name=".BasicInfoClass"></activity>
-        <activity android:name=".MainActivity"></activity>
-
-        <activity android:name=".Dash_board"></activity>
-        <activity android:name=".LoginClass"></activity>
-        <activity android:name=".RegisterUserClass"></activity>
-        <activity android:name=".Terms_conditionsClass"></activity>
-        <activity android:name=".Testimonial"></activity>
-        <activity android:name=".About_us"></activity>
-        <activity android:name=".Verified_referals_list"></activity>
-        <activity android:name=".Referals_list"></activity>
-
-        <activity android:name=".Contact_Us"></activity>
-        <activity android:name=".Camera_activity"></activity>
-
-
-        <activity android:name=".ImageUpload"></activity>
-        <activity android:name=".Faq_class"></activity>
-        <activity android:name=".Rate_us"></activity>
-        <activity android:name=".Settings_class"></activity>
-        <activity android:name=".VerifyClass"></activity>
-        <activity android:name=".Verify_educaton"></activity>
-        <activity android:name=".Verify_employment"></activity>
-        <activity android:name=".Verify_Identity"></activity>
-        <activity android:name=".Credits"></activity>
-        <activity android:name=".Company_register"></activity>
+        <activity android:name=".BasicInfoClass" android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Dash_board" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".LoginClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".RegisterUserClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Terms_conditionsClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Testimonial" android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".About_us" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verified_referals_list"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Referals_list"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Forgot_password"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Contact_Us"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Camera_activity"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".ImageUpload"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Faq_class"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Rate_us"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Settings_class"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".VerifyClass"   android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_educaton"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_employment"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_Identity"  android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Credits"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Company_register"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
 
 
 

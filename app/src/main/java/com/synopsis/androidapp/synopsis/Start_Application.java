@@ -26,7 +26,7 @@ public class Start_Application extends Activity
 
     public  void individual_intentFn(View v)
     {
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        startActivity(new Intent(getApplicationContext(),LoginClass.class));
 
     }
 }
