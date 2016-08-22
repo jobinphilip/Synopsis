@@ -4,43 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-/**
- * Created by User on 7/13/2016.
- */
+
 
 public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
    boolean visibility=false;
-    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET;
-    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string;
+    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET,country_codeET;
+    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string,country_code_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +34,7 @@ public class RegisterUserClass extends Activity {
         emailET = (EditText) findViewById(R.id.email_Et);
         confirmEmailET = (EditText) findViewById(R.id.confirm_email_Et);
         passwordET = (EditText) findViewById(R.id.passwordET);
-
+        country_codeET= (EditText) findViewById(R.id.Country_code_reg_user);
 
         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
@@ -87,6 +69,56 @@ public class RegisterUserClass extends Activity {
 
 
 
+        phoneET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                {
+                    InputFilter[] filterArray = new InputFilter[1];
+                    String code = country_codeET.getText().toString().trim();
+                    if (code.length() > 3) {
+
+                        filterArray[0] = new InputFilter.LengthFilter(9);
+                        phoneET.setFilters(filterArray);
+
+                    } else {
+
+                        filterArray[0] = new InputFilter.LengthFilter(10);
+                        phoneET.setFilters(filterArray);
+                    }
+
+
+                }
+                else
+                {
+
+                    if(country_codeET.getText().length() <3 && phoneET.getText().toString().trim().length() !=10)
+                     {
+                          phoneET.setError("Phone number should be 10 digits for this country code ");
+                     }
+                }
+            }
+        });
+
+        country_codeET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String code = country_codeET.getText().toString().trim();
+                    if (code.length() > 3 && phoneET.getText().toString().trim().length() != 9) {
+
+                        phoneET.setError("Phone number should be 9 digits for this country code ");
+
+                    }
+
+
+                    else {
+                        phoneET.setError(null);
+                    }
+                }
+            }
+        });
+
     }
 
     public void termsfn(View view) {
@@ -98,7 +130,7 @@ public class RegisterUserClass extends Activity {
         firstname_string = first_nameET.getText().toString().trim();
         lastname_string = last_nameET.getText().toString().trim();
         phone_string = phoneET.getText().toString().trim();
-
+        country_code_string=country_codeET.getText().toString().trim();
 
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         CharSequence inputStr = email_string;
@@ -115,17 +147,25 @@ public class RegisterUserClass extends Activity {
                 Toast.makeText(getApplicationContext(), "Email address do not match.", Toast.LENGTH_LONG).show();
             } else if (password_string.length() <= 5 || password_string.length() >= 12) {
                 Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG).show();
-            } else if (phone_string.length() < 10) {
+            }
+
+            /* else if (phone_string.length() < 10) {
                 Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
             }
+            */
             else if(!(phone_string.matches("[0-9]+") ))
             {
                 Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
             }
             else {
 
-                if (phone_string.length() > 10) {
+           /*     if (phone_string.length() > 10) {
                     phone_string = phone_string.substring(phone_string.length() - 10, phone_string.length());
+                }
+             */
+
+                if (country_code_string.equals(null)||country_code_string.matches("")) {
+                    country_code_string = "+91";
                 }
 
 
@@ -137,6 +177,7 @@ public class RegisterUserClass extends Activity {
                 editor.putString("first_name", firstname_string);
                 editor.putString("last_name", lastname_string);
                 editor.putString("mobile", phone_string);
+                editor.putString("country_code", country_code_string);
 
 
                 editor.commit();

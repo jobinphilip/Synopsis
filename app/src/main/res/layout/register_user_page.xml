@@ -21,8 +21,8 @@
         android:textSize="@dimen/Header_size" />
 
     <ScrollView
-        android:layout_width="match_parent"
         android:id="@+id/scrollViewRegister_page"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/headerTV">
 
@@ -33,109 +33,149 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/firstname_layout"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/First_name_and_Middle_name"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/firstname_ET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="textCapWords"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/last_name"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/last_nameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:inputType="textCapWords"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
+
+            <!--
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/phone_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <EditText
+                                android:id="@+id/phone_ET"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:hint="Mobile number"
+
+
+                                android:inputType="phone"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/synopsis_blue" />
+                        </android.support.design.widget.TextInputLayout>
+            -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_number"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="14">
+
 
                 <EditText
-                    android:id="@+id/firstname_ET"
-                    android:layout_width="match_parent"
+                    android:id="@+id/Country_code_reg_user"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="First name and Middle name"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="3"
+                    android:inputType="phone"
+                    android:maxLength="4"
+                   android:hint="@string/default_countrycode"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@drawable/text_colors"
 
-                    android:inputType="textCapWords"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/last_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <EditText
-                    android:id="@+id/last_nameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:hint="Last name"
-
-
-                    android:inputType="textCapWords"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/phone_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                    android:textColorHint="@color/text_color" />
 
                 <EditText
                     android:id="@+id/phone_ET"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
-                    android:hint="Mobile number"
-
-
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="11"
                     android:inputType="phone"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
+                    android:maxLength="10"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/email_layout"
+                    android:textColor="@drawable/text_colors" />
+
+
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="12sp" />
 
-                <EditText
-                    android:id="@+id/email_Et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/confirm_email_layout"
+            <EditText
+                android:id="@+id/email_Et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
 
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
 
-                <EditText
-                    android:id="@+id/confirm_email_Et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/confirm_email"
-                    android:inputType="textEmailAddress"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/password_layout"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_email"
+                android:textSize="12sp" />
 
-                <EditText
-                    android:id="@+id/passwordET"
-                    android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/confirm_email_Et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/show_password"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/synopsis_blue" />
-            </android.support.design.widget.TextInputLayout>
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/passwordET"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/show_password"
+                android:drawableRight="@drawable/show_password"
+                android:inputType="textPassword"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
 
 
             <Button
@@ -146,8 +186,9 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/rounded_rectangle_blue"
                 android:onClick="termsfn"
-                android:text="Register for free"
+                android:text="@string/Register_for_free"
                 android:textColor="@color/white" />
+
             <TextView
                 android:id="@+id/textView33"
 
@@ -155,15 +196,13 @@
                 android:layout_height="wrap_content"
 
 
-                android:gravity="center"
                 android:layout_marginBottom="10dp"
-                android:text="already registered? Click here" />
+                android:gravity="center"
+                android:text="@string/already_registered" />
 
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 </RelativeLayout>

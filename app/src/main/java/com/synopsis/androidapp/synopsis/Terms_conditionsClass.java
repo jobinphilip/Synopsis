@@ -55,6 +55,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             final String firstname = prefs.getString("first_name", "");
             final String lastname = prefs.getString("last_name", "");
             final String phone = prefs.getString("mobile", "");
+            final String country_code = prefs.getString("country_code", "");
 
             WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
             final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
@@ -112,6 +113,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     parameters.put("firstname", firstname);
                     parameters.put("lastname", lastname);
                     parameters.put("phone", phone);
+                    parameters.put("country_code", country_code);
 
                     parameters.put("Action", "registration_form");
 

@@ -41,12 +41,14 @@
     <string name="Interested_in">Interested in:* </string>
     <string name="Company_type"> Company type:</string>
 
-  <!--  <string name=""> </string>
-    <string name=""> </string>
-    <string name=""> </string>
-    <string name=""> </string>
-    <string name=""> </string>
-    <string name=""> </string>
+  <string name="First_name_and_Middle_name">First name and Middle name </string>
+
+
+    <string name="Register_for_free">Register for free </string>
+    <string name="already_registered">already registered? Click here </string>
+    <string name="default_countrycode">+91 </string>
+
+   <!--
     <string name=""> </string>
     <string name=""> </string>
     <string name=""> </string>

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,11 +38,11 @@ import java.util.regex.Pattern;
  */
 public class Company_register extends Activity {
 
-    EditText company_nameET, company_contact_personET, company_emailET, company_designationET, company_mobileET, company_employee_numberET;
+    EditText company_nameET, company_contact_personET, company_emailET, company_designationET, company_mobileET, company_employee_numberET, company_country_codeET;
     Spinner company_interested_in_spinner;
     Spinner company_type_spinner;
     Button company_submitBtn;
-    String company_name_string, company_contact_person_string, company_email_string, company_designation_string, company_mobile_string, company_employee_number_string, company_interested_in_string, company_type_string;
+    String company_country_code_string, company_name_string, company_contact_person_string, company_email_string, company_designation_string, company_mobile_string, company_employee_number_string, company_interested_in_string, company_type_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +54,57 @@ public class Company_register extends Activity {
         company_emailET = (EditText) findViewById(R.id.company_emailET);
         company_designationET = (EditText) findViewById(R.id.company_designationET);
         company_mobileET = (EditText) findViewById(R.id.company_phoneET);
+        company_country_codeET = (EditText) findViewById(R.id.Country_code);
         company_employee_numberET = (EditText) findViewById(R.id.company_employee_numberET);
-         company_interested_in_spinner=(Spinner)findViewById(R.id.company_interested_in_spinner);
-      company_type_spinner=(Spinner)findViewById(R.id.companytypeSpinner);
+        company_interested_in_spinner = (Spinner) findViewById(R.id.company_interested_in_spinner);
+        company_type_spinner = (Spinner) findViewById(R.id.companytypeSpinner);
+
+
+        company_mobileET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputFilter[] filterArray = new InputFilter[1];
+                    String code = company_country_codeET.getText().toString().trim();
+                    if (code.length() > 3) {
+
+                        filterArray[0] = new InputFilter.LengthFilter(9);
+                        company_mobileET.setFilters(filterArray);
+
+                    } else {
+
+                        filterArray[0] = new InputFilter.LengthFilter(10);
+                        company_mobileET.setFilters(filterArray);
+                    }
+
+
+                }
+                else
+                {
+
+                    if(company_country_codeET.getText().length() <3 && company_mobileET.getText().toString().trim().length() !=10)
+                    {
+                        company_mobileET.setError("Phone number should be 10 digits for this country code ");
+                    }
+                }
+            }
+        });
+
+        company_country_codeET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String code = company_country_codeET.getText().toString().trim();
+                    if (code.length() > 3 && company_mobileET.getText().toString().trim().length() != 9) {
+
+                        company_mobileET.setError("Phone length should be 9 digits for this country code ");
+
+                    } else {
+                        company_mobileET.setError(null);
+                    }
+                }
+            }
+        });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
@@ -69,15 +118,14 @@ public class Company_register extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                company_type_string=parent.getItemAtPosition(position).toString();
-                Log.d("jobin","selected company_type_string :"+company_type_string);
+                company_type_string = parent.getItemAtPosition(position).toString();
+                Log.d("jobin", "selected company_type_string :" + company_type_string);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,8 +142,8 @@ public class Company_register extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                company_interested_in_string=parent.getItemAtPosition(position).toString();
-                Log.d("jobin","selected interested in  :"+company_interested_in_string);
+                company_interested_in_string = parent.getItemAtPosition(position).toString();
+                Log.d("jobin", "selected interested in  :" + company_interested_in_string);
             }
 
             @Override
@@ -105,20 +153,21 @@ public class Company_register extends Activity {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        company_submitBtn=(Button)findViewById(R.id.company_submitBtn);
+        company_submitBtn = (Button) findViewById(R.id.company_submitBtn);
         company_submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                company_name_string=company_nameET.getText().toString().trim();
-                         company_contact_person_string=company_contact_personET.getText().toString().trim();
-                         company_email_string=company_emailET.getText().toString().trim();
-                              company_designation_string=company_designationET.getText().toString().trim();
-                company_mobile_string=company_mobileET.getText().toString().trim();
+                company_name_string = company_nameET.getText().toString().trim();
+                company_contact_person_string = company_contact_personET.getText().toString().trim();
+                company_email_string = company_emailET.getText().toString().trim();
+                company_designation_string = company_designationET.getText().toString().trim();
+                company_country_code_string = company_country_codeET.getText().toString().trim();
+                if (company_country_code_string.equals(null)||company_country_code_string.matches("")) {
+                    company_country_code_string = "+91";
+                }
+                company_mobile_string = company_mobileET.getText().toString().trim();
 
-                        company_employee_number_string=company_employee_numberET.getText().toString().trim();
-
-
-
+                company_employee_number_string = company_employee_numberET.getText().toString().trim();
 
 
                 String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -126,40 +175,29 @@ public class Company_register extends Activity {
 
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
-                if (!(matcher.matches()) )
-                {
-                    Toast.makeText(getApplicationContext(),"Invalid email id",Toast.LENGTH_LONG).show();
+                if (!(matcher.matches())) {
+                    Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG).show();
+                } else if (company_name_string.matches("") || company_contact_person_string.matches("") || company_email_string.matches("") || company_designation_string.matches("") || company_mobile_string.matches("") || company_employee_number_string.matches("") || company_interested_in_string.matches("") || company_type_string.matches("")) {
+                    Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG).show();
                 }
 
-            else if(company_name_string.matches("")|| company_contact_person_string.matches("")||  company_email_string.matches("")||  company_designation_string.matches("")||  company_mobile_string.matches("")||  company_employee_number_string.matches("")||  company_interested_in_string.matches("")||  company_type_string.matches(""))
-                {
-                    Toast.makeText(getApplicationContext(),"Kindly fill all the fields",Toast.LENGTH_LONG).show();
-                }
-                else if(company_mobile_string.length()<10)
-                {
-                    Toast.makeText(getApplicationContext(),"invalid phone Number",Toast.LENGTH_LONG).show();
-                }
-                else if(!(company_mobile_string.matches("[0-9]+") ))
-                {
+                /* else if (company_mobile_string.length() < 10) {
                     Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
                 }
+                */
+                 else if (!(company_mobile_string.matches("[0-9]+"))) {
+                    Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
+                }
+                else {
+             /*
 
-               else
-                {
-                  //  Toast.makeText(getApplicationContext(),"type: "+company_type_string+"interested in:"+company_interested_in_string,Toast.LENGTH_LONG).show();
-
-                    if(company_mobile_string.length()>10)
-                    {
-                        company_mobile_string=company_mobile_string.substring(company_mobile_string.length()-10,company_mobile_string.length());
+                    if (company_mobile_string.length() > 10) {
+                        company_mobile_string = company_mobile_string.substring(company_mobile_string.length() - 10, company_mobile_string.length());
                     }
+*/
+                    String url = Constants.baseUrl + "company_registration.php";
 
-                    String url= Constants.baseUrl+"company_registration.php";
-                    //  String url="http://10.0.2.2:8080/test/login4.php";
-                    //    String url="http://localhost/test/login4.php";
-                    // String url="http://10.0.2.2/test/login4.php";
-                    //  String url = "http://127.0.0.1/test/login3.php";
                     RequestQueue requestQueue = Volley.newRequestQueue(Company_register.this);
-                    // String url="http:// 192.168.1.19/test/login3.php";
 
 
 ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
@@ -174,20 +212,17 @@ public class Company_register extends Activity {
                                 JSONObject jobject = new JSONObject(response);
                                 String result = jobject.getString("result").trim();
                                 String error = jobject.getString("error").trim();
-                                Log.d("jobin","result from server is: "+result+"error is:"+error);
-                                if(result.equals("success"))
-                                {
-                                //   Toast.makeText(getApplicationContext(),"Thank you for registering with Synopsis. We will contact you soon.", Toast.LENGTH_LONG).show();
+                                Log.d("jobin", "result from server is: " + result + "error is:" + error);
+                                if (result.equals("success")) {
+                                    //   Toast.makeText(getApplicationContext(),"Thank you for registering with Synopsis. We will contact you soon.", Toast.LENGTH_LONG).show();
                                     String message = "Thank you for registering with Synopsis. We will contact you soon.";
                                     new AlertDialog.Builder(Company_register.this)
                                             .setTitle("Synopsis")
                                             .setMessage(message)
                                             .setPositiveButton("ok", null)
                                             .show();
-                                }
-                                else
-                                {
-                                    Log.d("jobin","error from server:  "+result.toString());
+                                } else {
+                                    Log.d("jobin", "error from server:  " + result.toString());
                                     String message = "Kindly check your internet settings";
                                     new AlertDialog.Builder(Company_register.this)
                                             .setTitle("Synopsis")
@@ -196,12 +231,9 @@ public class Company_register extends Activity {
                                             .show();
                                 }
 
+                            } catch (JSONException e) {
+                                Log.d("jobin", "json errror:" + e);
                             }
-                            catch (JSONException e)
-                            {
-                                Log.d("jobin","json errror:"+e);
-                            }
-
 
 
                         }
@@ -209,7 +241,7 @@ public class Company_register extends Activity {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d("jobin","volley error :  "+error.toString());
+                            Log.d("jobin", "volley error :  " + error.toString());
                             String message = "Kindly check your internet settings";
                             new AlertDialog.Builder(Company_register.this)
                                     .setTitle("Synopsis")
@@ -226,6 +258,7 @@ public class Company_register extends Activity {
                             parameters.put("company_contact_person", company_contact_person_string);
                             parameters.put("company_email", company_email_string);
                             parameters.put("company_designation", company_designation_string);
+                            parameters.put("company_mobile_country_code", company_country_code_string);
                             parameters.put("company_mobile", company_mobile_string);
                             parameters.put("company_employee_number", company_employee_number_string);
                             parameters.put("company_interested_in", company_interested_in_string);
@@ -246,8 +279,6 @@ public class Company_register extends Activity {
                 }
 
             }
-
-
 
 
         });
