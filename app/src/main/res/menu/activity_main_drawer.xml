@@ -31,9 +31,14 @@
             android:icon="@drawable/nav_testimonial"
             android:title="Testimonial" />
         <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/nav_logout"
+            android:title="Share" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/nav_logout"
             android:title="Logout" />
+
     </group>
 
 

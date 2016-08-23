@@ -2,6 +2,8 @@ package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,12 +80,9 @@ public class Company_register extends Activity {
                     }
 
 
-                }
-                else
-                {
+                } else {
 
-                    if(company_country_codeET.getText().length() <3 && company_mobileET.getText().toString().trim().length() !=10)
-                    {
+                    if (company_country_codeET.getText().length() < 3 && company_mobileET.getText().toString().trim().length() != 10) {
                         company_mobileET.setError("Phone number should be 10 digits for this country code ");
                     }
                 }
@@ -162,7 +161,7 @@ public class Company_register extends Activity {
                 company_email_string = company_emailET.getText().toString().trim();
                 company_designation_string = company_designationET.getText().toString().trim();
                 company_country_code_string = company_country_codeET.getText().toString().trim();
-                if (company_country_code_string.equals(null)||company_country_code_string.matches("")) {
+                if (company_country_code_string.equals(null) || company_country_code_string.matches("")) {
                     company_country_code_string = "+91";
                 }
                 company_mobile_string = company_mobileET.getText().toString().trim();
@@ -185,10 +184,9 @@ public class Company_register extends Activity {
                     Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
                 }
                 */
-                 else if (!(company_mobile_string.matches("[0-9]+"))) {
+                else if (!(company_mobile_string.matches("[0-9]+"))) {
                     Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
              /*
 
                     if (company_mobile_string.length() > 10) {
@@ -216,11 +214,21 @@ public class Company_register extends Activity {
                                 if (result.equals("success")) {
                                     //   Toast.makeText(getApplicationContext(),"Thank you for registering with Synopsis. We will contact you soon.", Toast.LENGTH_LONG).show();
                                     String message = "Thank you for registering with Synopsis. We will contact you soon.";
-                                    new AlertDialog.Builder(Company_register.this)
-                                            .setTitle("Synopsis")
-                                            .setMessage(message)
-                                            .setPositiveButton("ok", null)
-                                            .show();
+
+
+                                    final AlertDialog.Builder builder = new AlertDialog.Builder(Company_register.this);
+                                    builder.setTitle("Message");
+                                    builder.setMessage(message);
+
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    builder.create().show();
+
+
                                 } else {
                                     Log.d("jobin", "error from server:  " + result.toString());
                                     String message = "Kindly check your internet settings";

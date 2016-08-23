@@ -29,13 +29,17 @@
         </android.support.design.widget.AppBarLayout>
 
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/dashboard_content_layout"
+    android:layout_below="@+id/appbar_topLayout"
+    android:layout_height="wrap_content">
                 <FrameLayout
                     android:id="@+id/frame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+android:layout_alignParentTop="true"
 
-                    android:layout_below="@+id/appbar_topLayout"
                     android:layout_gravity="center_horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -93,26 +97,9 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
-                    <TextView
-                        android:id="@+id/dashboard_cityTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
-                        android:id="@+id/dashboard_staeTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <TextView
-                        android:id="@+id/dashboard_countryTV"
+                        android:id="@+id/dashboard_placeTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -171,6 +158,7 @@
 
             </RelativeLayout>
         </ScrollView>
+</RelativeLayout>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/bottom_toolbar"

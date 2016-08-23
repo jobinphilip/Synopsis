@@ -1,15 +1,17 @@
 package com.synopsis.androidapp.synopsis;
 
+import android.app.AlertDialog;
+import android.support.v4.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.ActionMenuView;
-import android.util.Base64;
+
+import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,7 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Handler;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by User on 7/15/2016.
  */
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, cityTV, countryTV, stateTV, emailTV, mobileTV;
+    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
     String email, password, url, image_base64string;
@@ -73,10 +75,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         designationTV = (TextView) findViewById(R.id.dashboard_designationTV);
         designationTV.setVisibility(View.INVISIBLE);
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
-        cityTV = (TextView) findViewById(R.id.dashboard_cityTV);
-        stateTV = (TextView) findViewById(R.id.dashboard_staeTV);
 
-        countryTV = (TextView) findViewById(R.id.dashboard_countryTV);
+        placeTV = (TextView) findViewById(R.id.dashboard_placeTV);
 
         emailTV = (TextView) findViewById(R.id.dashboard_emailTV);
         mobileTV = (TextView) findViewById(R.id.dashboard_mobileTV);
@@ -100,6 +100,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     String city = jobj.getString("city");
                     String state = jobj.getString("state");
                     String country = jobj.getString("country");
+                    String place = city + ", " + state + ", " + country;
                     String mobile = jobj.getString("mobile");
 
 
@@ -111,9 +112,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
                         Picasso.with(Dash_board.this).load(img_url).into(profile_image);
                         nameTV.setText(first_name);
-                        cityTV.setText(city);
-                        countryTV.setText(country);
-                        stateTV.setText(state);
+
+                        placeTV.setText(place);
                         mobileTV.setText(mobile);
                         emailTV.setText(email);
                         if (!(synopsis_id.equals("null"))) {
@@ -205,7 +205,23 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+
+            String message = "Exit Synopsis?";
+
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+            builder.setTitle("Warning");
+            builder.setMessage(message);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //    getApplicationContext().finishAffinity();
+
+                    finish();
+                }
+            });
+            builder.create().show();
         }
     }
 
@@ -213,38 +229,71 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
-
+        android.support.v4.app.Fragment fragment = null;
         if (id == R.id.nav_my_synopsis) {
-            startActivity(new Intent(getApplicationContext(), Dash_board.class));
-            // Handle the camera action
-        } else if (id == R.id.nav_about_us) {
-            startActivity(new Intent(getApplicationContext(), About_us.class));
+            DrawerLayout mDrawerLayout;
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerLayout.closeDrawers();
+
+        }
+        else if(id == R.id.nav_share)
+        {
+
+        }
 
 
-        } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(getApplicationContext(), Settings_class.class));
+        else {
+            switch (id) {
 
-        } else if (id == R.id.nav_faq) {
-            startActivity(new Intent(getApplicationContext(), Faq_class.class));
+                case R.id.nav_about_us: {
+                    fragment = new Nav_about_usFragment();
+                    break;
+                }
+                case R.id.nav_settings: {
+                    fragment = new Nav_settingsFragment();
+                    break;
+                }
+                case R.id.nav_faq: {
+                    fragment = new Nav_FaqFragment();
+                    break;
+                } case R.id.nav_contact_us: {
+                    fragment = new Nav_ContactUsFragment();
+                    break;
+                }
+                case R.id.nav_rate_us: {
+                    fragment = new Nav_Rate_usFragment();
+                    break;
+                }
+                case R.id.nav_testimonial: {
+                    fragment = new Nav_Testimonial_Fragment();
+                    break;
+                }
+                case R.id.nav_logout: {
+                    fragment = new Nav_LogoutFragment();
+                    break;
+                }
 
-        } else if (id == R.id.nav_contact_us) {
-            startActivity(new Intent(getApplicationContext(), Contact_Us.class));
 
-        } else if (id == R.id.nav_rate_us) {
+                default:
+                    fragment = new Nav_about_usFragment();
+                    break;
 
-            startActivity(new Intent(getApplicationContext(), Rate_us.class));
-        } else if (id == R.id.nav_testimonial) {
-            startActivity(new Intent(getApplicationContext(), Testimonial.class));
 
-        } else if (id == R.id.nav_logout) {
-            startActivity(new Intent(getApplicationContext(), LoginClass.class));
+            }
 
+
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment);
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

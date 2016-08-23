@@ -17,6 +17,8 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -470,5 +472,30 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
     ////////////////////////////auto complete place ends////////////////////////////////////////////////
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+
+
+            String message = "Exit Synopsis?";
+
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(BasicInfoClass.this);
+            builder.setTitle("Warning");
+            builder.setMessage(message);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    System.exit(0);
+
+                }
+            });
+            builder.create().show();
+        }
+    }
 
 }
