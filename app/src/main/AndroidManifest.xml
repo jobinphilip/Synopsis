@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Start_Application" >
+        <activity android:name=".Start_Application"   android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,26 +17,25 @@
 
         </activity>
 
-        <activity android:name=".BasicInfoClass" android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".BasicInfoClass"   android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Dash_board" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".LoginClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".LoginClass"  android:noHistory="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".RegisterUserClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Terms_conditionsClass" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Terms_conditionsClass"  android:noHistory="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Verified_referals_list"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Referals_list"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Forgot_password"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Camera_activity"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".ImageUpload"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".VerifyClass"   android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Verify_educaton"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Verify_employment"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Verify_Identity"  android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Camera_activity"   android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".VerifyClass"    android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_educaton"  android:noHistory="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_employment"  android:noHistory="true"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".Verify_Identity"  android:noHistory="true"  android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Credits"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".Company_register"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
-
+        <activity android:name=".Company_register"  android:noHistory="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
 
 
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

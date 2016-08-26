@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -22,54 +25,73 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
 /**
  * Created by Kumar on 7/29/2016.
  */
-public class Camera_activity extends Activity{
-    ImageView imageview;
-    Bitmap bitmap,bitmap2;
-    Button upload_image,choose_image;
+public class Camera_activity extends Activity {
+    ImageView preview;
+    CropImageView arthurhub_imageView;
+    Bitmap bitmap, bitmap2, cropped;
+    Button upload_image, choose_image;
     public static final String Login_details = "Login_details";
-   String UPLOAD_URL=Constants.baseUrl+"image_upload.php";
+    String UPLOAD_URL = Constants.baseUrl + "image_upload.php";
+Button crop_button, upload_image_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadphoto);
+        arthurhub_imageView = (CropImageView) findViewById(R.id.arthurhub_imagecropper);
+        preview = (ImageView) findViewById(R.id.croppedimageview);
+        preview.setVisibility(View.INVISIBLE);
+
+      String url_to_profile_picutre=   getIntent().getStringExtra("url_to_profile");
+Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_to_profile_picutre);
+
+    //    byte[] byteArray = getIntent().getByteArrayExtra("image");
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), file_url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     //  bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+      // bitmap2 = getResizedBitmap(bitmap, 1000);
+ //   preview.setIm/ageBitmap(bitmap2);
 
 
 
-imageview=(ImageView)findViewById(R.id.imageView);
-        byte[] byteArray = getIntent().getByteArrayExtra("image");
-         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        bitmap2=getResizedBitmap(bitmap,500);
-        imageview.setImageBitmap(bitmap);
-        choose_image=(Button)findViewById(R.id.buttonChoose);
+        crop_button=(Button)findViewById(R.id.cropBtn) ;
+        upload_image_button=(Button)findViewById(R.id.buttonUpload) ;
+        upload_image_button.setVisibility(View.INVISIBLE);
+        arthurhub_imageView.setImageBitmap(bitmap);
+        choose_image = (Button) findViewById(R.id.buttonChoose);
         choose_image.setVisibility(View.INVISIBLE);
-        upload_image=(Button)findViewById(R.id.buttonUpload);
+        upload_image = (Button) findViewById(R.id.buttonUpload);
         upload_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage();
             }
         });
-
-
     }
-
 
 
     private void uploadImage() {
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         final String email = prefs.getString("email", "");
 
-//Showing the progress dialog
+        //Showing the progress dialog
 
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -78,8 +100,7 @@ imageview=(ImageView)findViewById(R.id.imageView);
                     public void onResponse(String s) {
                         Log.d("jobin", "response from server" + s);
                         //Disimissing the progress dialog
-                        bitmap.recycle();
-                        bitmap2.recycle();
+
                         loading.dismiss();
                         try {
                             JSONObject resultobj = new JSONObject(s);
@@ -87,8 +108,11 @@ imageview=(ImageView)findViewById(R.id.imageView);
                             String error = resultobj.getString("error");
                             String path = resultobj.getString("path");
                             if (result.equals("success")) {
-                                Intent I= new Intent(getApplicationContext(),BasicInfoClass.class);
-                                I.putExtra("path",path);
+                                Log.d("jobin", "in the camera activity success and intent is called");
+
+                                finish();
+                                Intent I = new Intent(getApplicationContext(), BasicInfoClass.class);
+
                                 startActivity(I);
                             } else {
                                 Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG).show();
@@ -108,13 +132,12 @@ imageview=(ImageView)findViewById(R.id.imageView);
                         loading.dismiss();
 
 
-
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //Converting Bitmap to String
-                String image = getStringImage(bitmap2);
+                String image = getStringImage(cropped);
 
                 //Getting Image Name
 
@@ -146,6 +169,8 @@ imageview=(ImageView)findViewById(R.id.imageView);
         return encodedImage;
     }
 
+ /*
+///////////////////////////resize image/////////////////////////////////////
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -161,5 +186,19 @@ imageview=(ImageView)findViewById(R.id.imageView);
         Log.d("jobin", "image resized");
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
+*/
+    /////////////////////////crop image/////////////////////////////////////
+    public void cropfn(View view) {
+        cropped = arthurhub_imageView.getCroppedImage();
+        preview.setImageBitmap(cropped);
+        preview.setVisibility(View.VISIBLE);
+        arthurhub_imageView.setVisibility(View.INVISIBLE);
+
+        upload_image_button.setVisibility(View.VISIBLE);
+        crop_button.setVisibility(View.INVISIBLE);
+
+    }
+    ///////////////////////////crop image ends///////////////////////////////////
+
 
 }

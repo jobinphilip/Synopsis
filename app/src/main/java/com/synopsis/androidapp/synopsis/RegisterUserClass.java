@@ -53,10 +53,12 @@ public class RegisterUserClass extends Activity {
 
                         passwordET.setTransformationMethod(null);
                         visibility=true;
+                        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide_password, 0);
                         return true;
                     }
                     else  if( (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()))&&visibility==true) {
                          passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.show_password, 0);
                         visibility=false;
                         return true;
                     }

@@ -90,6 +90,7 @@ public class LoginClass extends Activity {
                         //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
                         //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
                         passwordET.setTransformationMethod(null);
+                        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide_password, 0);
                         visibility=true;
                         return true;
                     }
@@ -97,6 +98,7 @@ public class LoginClass extends Activity {
                         //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
                         //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
                         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.show_password, 0);
                         visibility=false;
                         return true;
                     }

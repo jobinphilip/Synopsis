@@ -1,33 +1,84 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 
-    tools:context=".ImageUpload">
+    tools:context=".Camera_activity">
 
-
-    <Button
+    <ScrollView
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose Image"
-        android:id="@+id/buttonChoose" />
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonChoose"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Image" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/imageLayout"
+    android:layout_below="@+id/buttonChoose"
+    android:layout_height="wrap_content">
+            <com.theartofdev.edmodo.cropper.CropImageView
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/arthurhub_imagecropper"
+                android:layout_centerInParent="true"
+                android:layout_width="300dp"
+                android:fitsSystemWindows="true"
+                custom:cropGuidelines="on"
+                android:layout_alignParentTop="true"
+                custom:cropFixAspectRatio="true"
+
+                android:layout_height="300dp"
+                />
+            <ImageView
+                android:id="@+id/croppedimageview"
+                android:layout_width="300dp"
+                android:layout_centerInParent="true"
+             android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:fitsSystemWindows="true"
+                android:layout_height="300dp"
+                android:layout_weight="1" />
+
+</RelativeLayout>
+
+<!--
+            <com.edmodo.cropper.CropImageView xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/CropImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/imageView" />
+                 />
 
+-->
+            <Button
+                android:id="@+id/cropBtn"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/imageLayout"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="cropfn"
+                android:text="crop" />
 
+            <Button
+                android:id="@+id/buttonUpload"
 
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload Image"
-        android:id="@+id/buttonUpload" />
-
-
-</LinearLayout>
+                android:layout_below="@+id/imageLayout"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="Upload Image" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

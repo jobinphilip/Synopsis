@@ -8,32 +8,31 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ResolveInfo;
+
 import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
+
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
+
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,8 +50,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -63,14 +66,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
+import java.util.Random;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by User on 7/15/2016.
- */
+
 public class BasicInfoClass extends Activity implements AdapterView.OnItemClickListener {
     public static final String Login_details = "Login_details";
     ImageButton selfyButton;
@@ -87,105 +88,117 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
     private static final String API_KEY = "AIzaSyCQHYiVSoaKudLpualnCGZNBQ-yWnlyu5s";
-
+private  int PICK_IMAGE_REQUEST=1;
+    private int CAMERA_PIC_REQUEST=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
 
-
-        setContentView(R.layout.basic_info);
-        selfyButton = (ImageButton) findViewById(R.id.selfyButton);
-        datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
-        referorIdEt = (EditText) findViewById(R.id.referorIdET);
-        String url = Constants.baseUrl + "basic_info_image.php";
-        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
-        email = prefs.getString("email", "");
-        password = prefs.getString("password", "");
-        genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
-        basic_info_image = (CircleImageView) findViewById(R.id.basic_info_image);
-        RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
-        try {
-            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    Log.d("jobin", "string response is : " + response);
-
-                    try {
-                        JSONObject jobj = new JSONObject(response);
-                        String result = jobj.getString("result");
-                        String error = jobj.getString("error");
-                        String img_url = jobj.getString("img_url");
+            setContentView(R.layout.basic_info);
 
 
-                        //    image_base64string=jobj.getString("image");
-                        //     Log.d("jobin","image:"+image_base64string);
+            selfyButton = (ImageButton) findViewById(R.id.selfyButton);
+            datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
+            referorIdEt = (EditText) findViewById(R.id.referorIdET);
+            String url = Constants.baseUrl + "basic_info_image.php";
+            SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+            email = prefs.getString("email", "");
+            password = prefs.getString("password", "");
+            genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
+            basic_info_image = (CircleImageView) findViewById(R.id.basic_info_image);
+            RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
+            try {
+                ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            String result = jobj.getString("result");
+                            String error = jobj.getString("error");
+                            String img_url = jobj.getString("img_url");
 
 
-                        if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
-                            selfyButton.setVisibility(View.INVISIBLE);
-                            Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
+                            //    image_base64string=jobj.getString("image");
+                            //     Log.d("jobin","image:"+image_base64string);
 
 
+                            if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
+                                selfyButton.setVisibility(View.INVISIBLE);
+                                basic_info_image.setVisibility(View.VISIBLE);
+
+                                Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
+
+
+                            } else {
+                                selfyButton.setVisibility(View.VISIBLE);
+                                basic_info_image.setVisibility(View.INVISIBLE);
+                            }
+
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
                         }
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
+                        calendar = Calendar.getInstance();
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH) + 1;
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        datepickerBtnET.setText("" + day + "/" + month + "/" + year);
+
+                        autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+
+                        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
+                        autoCompView.setOnItemClickListener(BasicInfoClass.this);
+
                     }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("jobin", "error response is : " + error);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("email", email);
+                        parameters.put("password", password);
+                        parameters.put("Action", "image_download");
 
 
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("jobin", "error response is : " + error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-                    parameters.put("Action", "image_download");
+                        return parameters;
+                    }
+                };
+                requestQueue2.add(stringrequest);
 
 
-                    return parameters;
-                }
-            };
-            requestQueue2.add(stringrequest);
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            } catch (NullPointerException e) {
+                Log.d("jobin", "null pointer");
+                selfyButton.setVisibility(View.VISIBLE);
+                basic_info_image.setVisibility(View.INVISIBLE);
+            }
 
 
-        } catch (NullPointerException e) {
-
-        }
-
-
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH) + 1;
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        datepickerBtnET.setText("" + year + "/" + month + "/" + day);
-
-        autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-
-        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
-        autoCompView.setOnItemClickListener(BasicInfoClass.this);
+            Log.d("jobin", "on create complete");
 
 
     }
 
 
+
+
     public void submitbasicinfofn(View view) {
-
-
+        Log.d("jobin","submit basic info fn");
         dateofbirth = datepickerBtnET.getText().toString().trim();
         String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
         if (Integer.parseInt(year_ofbirth) > year - 16) {
@@ -270,39 +283,17 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
 //////////////////////////volley ends////////////////////////////////////////////////
 
-
-    ////////////////////////choose from gallery or from camera option//////////////////////
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("jobin", "in photo activityresults");
-        if (resultCode == RESULT_OK) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-
-            Log.d("jobin", "in photo activityresults result ok");
-            //Convert to byte array
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            Intent I = new Intent(this, Camera_activity.class);
-            I.putExtra("image", byteArray);
-            startActivity(I);
-        } else {
-            Log.d("jobin", "in photo activityresults result not  ok");
-        }
-    }
+///////////////////////////image opoerations start/////////////////////////////////
 
     public void photo_actions(View v) {
-        Log.d("jobin", "in photo actions");
+        Log.d("jobin", " photo actions");
         final AlertDialog alertDialog = new AlertDialog.Builder(BasicInfoClass.this).create();
         alertDialog.setTitle("Title");
         alertDialog.setMessage("Message");
         alertDialog.setButton("camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                int CAMERA_PIC_REQUEST = 0;
-                Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(camera_intent, CAMERA_PIC_REQUEST);
 
 
@@ -314,24 +305,152 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         alertDialog.setButton2("gallery", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), ImageUpload.class));
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+
                     }
-
-
                 }
         );
         alertDialog.show();
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("jobin", "activityresults");
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CAMERA_PIC_REQUEST &&resultCode == RESULT_OK) {
+            Log.d("jobin", "trying to load  camera to bitmap");
+
+          Bitmap   bitmap = (Bitmap) data.getExtras().get("data");
+            Log.d("jobin", "ibitmap loaded");
+            Bitmap Bitmap2=getResizedBitmap(bitmap,500);
+
+
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/synopsis");
+            myDir.mkdirs();
+            Random generator = new Random();
+            int n = 10000;
+            n = generator.nextInt(n);
+            String profilename = "Image-"+ n +".jpg";
+            File file = new File (myDir, profilename);
+            if (file.exists ()) file.delete ();
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                Bitmap2.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                out.flush();
+                out.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String url_to_profile=root+ "/synopsis/" + profilename;
+
+
+            Intent I = new Intent(this, Camera_activity.class);
+            I.putExtra("url_to_profile", url_to_profile);
+            startActivity(I);
+            finish();
+        }
+        else   if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+
+                Log.d("jobin", "trying to load  file chooder to bitmap");
+                //Getting the Bitmap from Gallery
+                 Bitmap   bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Log.d("jobin", "bitmap loaded");
+                Bitmap Bitmap2=getResizedBitmap(bitmap,500);
+
+
+
+
+
+
+                String root = Environment.getExternalStorageDirectory().toString();
+                File myDir = new File(root + "/synopsis");
+                myDir.mkdirs();
+                Random generator = new Random();
+                int n = 10000;
+                n = generator.nextInt(n);
+                String profilename = "Image-"+ n +".jpg";
+                File file = new File (myDir, profilename);
+                if (file.exists ()) file.delete ();
+                try {
+
+                    FileOutputStream out = new FileOutputStream(file);
+                    Bitmap2.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    out.flush();
+                    out.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String url_to_profile=root+ "/synopsis/" + profilename;
+
+
+
+                Intent I = new Intent(this, Camera_activity.class);
+                I.putExtra("url_to_profile", url_to_profile);
+                startActivity(I);
+                finish();
+
+            } catch (IOException e) {
+
+                Log.d("jobin", "exception in setting bitmap to imageview:" + e.toString());
+            }
+
+
+        }
+
+        else {
+            Log.d("jobin", "in photo activityresults result not  ok");
+        }
+    }
+    ////////////////////////choose from gallery or from camera ends//////////////////////
+
+
+
+    ///////////////////////////resize image/////////////////////////////////////
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        Log.d("jobin", "image resized");
+        return Bitmap.createScaledBitmap(image, width, height, true);
+
+    }
+
+    /////////////////////////////resize image ends///////////////////////////////////
     ///////////////////////////date picker fn////////////////////////////////////////////////////////////
 
     public void date_pickerfn(View v) {
+        Log.d("jobin", "date picker");
         showDialog(999);
     }
 
     @Nullable
     @Override
     protected Dialog onCreateDialog(int id, Bundle args) {
+        Log.d("jobin", "idate pick2");
         if (id == 999) {
             return new DatePickerDialog(this, myDateListener, year, month, day);
         }
@@ -341,7 +460,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker arg0, int year, int month, int date) {
-
+            Log.d("jobin", "datepick3");
             // arg1 = year
             // arg2 = month
             month = month + 1;
@@ -356,6 +475,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 ///////////////////////////auto complete place starts/////////////////////////////////////////////////////
 
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Log.d("jobin", "item click");
         String str = (String) adapterView.getItemAtPosition(position);
 
 
@@ -363,6 +483,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     }
 
     public static ArrayList<String> autocomplete(String input) {
+        Log.d("jobin", "auto complete");
         ArrayList<String> resultList = null;
 
         HttpURLConnection conn = null;
@@ -422,9 +543,12 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     }
 
     class GooglePlacesAutocompleteAdapter extends ArrayAdapter<String> implements Filterable {
+
         private ArrayList<String> resultList;
 
+
         public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
+
             super(context, textViewResourceId);
         }
 
@@ -447,7 +571,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                     if (constraint != null) {
                         // Retrieve the autocomplete results.
 
-                        Log.e("jobin", "auto complete called");
+                        Log.e("jobin", "google auto complete");
                         resultList = autocomplete(constraint.toString());
 
                         // Assign the data to the FilterResults
@@ -474,12 +598,9 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
 
 
+        Log.d("jobin", "back press");
             String message = "Exit Synopsis?";
 
 
@@ -495,7 +616,8 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                 }
             });
             builder.create().show();
-        }
+
     }
+
 
 }

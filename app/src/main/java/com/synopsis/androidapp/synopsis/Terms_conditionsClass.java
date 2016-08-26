@@ -84,7 +84,11 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                         String result = person.getString("result");
                         String error = person.getString("error");
                         if (result.equals("success")) {
-                            startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
+
+                            Intent I=new Intent(getApplicationContext(), BasicInfoClass.class);
+
+
+                            startActivity(I);
                         } else if (error.equals("user_exists")) {
                             Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG).show();
                             finish();
