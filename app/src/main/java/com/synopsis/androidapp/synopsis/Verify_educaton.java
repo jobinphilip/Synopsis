@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.opengl.EGLDisplay;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,7 +59,11 @@ public class Verify_educaton extends Activity {
         courseType = courseTypeET.getText().toString().trim();
 
         if (register_number.equals("") || collegename.equals("") || university.equals("") || month_and_year_of_pass.equals("") || percentage.equals("")|| courseName.equals("")|| courseType.equals("")) {
-            Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
         } else {
             SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
              email = prefs.getString("email", "");

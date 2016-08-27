@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,7 +42,10 @@ public class Forgot_password  extends Activity{
         uname=forgot_passET.getText().toString();
         if(uname.equals(""))
         {
-            Toast.makeText(getApplicationContext(), "Kindly fill the required field",Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill the required field", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
        else
         {
@@ -62,10 +66,12 @@ public class Forgot_password  extends Activity{
                     String result = person.getString("result");
                     String error = person.getString("error");
                     if (result.equals("success")) {
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "We have sent recovery link to your email", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+
                         startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
-                    } else if (error.equals("user_exists")) {
-                        Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG).show();
-                        finish();
                     }
 
                 } catch (JSONException e) {

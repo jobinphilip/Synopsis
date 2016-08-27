@@ -3,12 +3,14 @@ package com.synopsis.androidapp.synopsis;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.method.PasswordTransformationMethod;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -103,69 +105,64 @@ public class RegisterUserClass extends Activity {
                    else {
 
 
-                        final Handler handler = new Handler();
+                        /////////////////////////////////////////////////server check phone number already registered//////////////////////
+                        RequestQueue requestQueue = Volley.newRequestQueue(RegisterUserClass.this);
+                        String url = Constants.baseUrl + "email_check.php";
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                        final Runnable r = new Runnable() {
-                            public void run() {
-                                /////////////////////////////////////////////////server check phone number already registered//////////////////////
-                                RequestQueue requestQueue = Volley.newRequestQueue(RegisterUserClass.this);
-                                String url = Constants.baseUrl + "email_check.php";
-                                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
 
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("jobin", "string response is : " + response);
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
 
-                                        try {
-                                            JSONObject person = new JSONObject(response);
-                                            String result = person.getString("result");
+                                    if (result.equals("user_exists")) {
+                                        emailET.setError("Email ID already registered. Please Login ");
+                                        return;
 
-                                            if (result.equals("user_exists")) {
-                                                emailET.setError("Email ID already registered. Please Login ");
-
-                                            }
-
-                                        } catch (JSONException e) {
-                                            Log.d("jobin", "json errror:" + e);
-                                        }
-
+                                    } else {
+                                        emailET.setError(null);
+                                        return;
 
                                     }
-                                }, new Response.ErrorListener() {
 
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("jobin", "error response is : " + error);
-                                    }
-                                }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> parameters = new HashMap<String, String>();
-
-                                        parameters.put("email", email_string);
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
+                                }
 
 
-                                        parameters.put("Action", "email_check_form");
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "error response is : " + error);
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+
+                                parameters.put("email", email_string);
 
 
-                                        return parameters;
-                                    }
-                                };
-                                requestQueue.add(stringrequest);
+                                parameters.put("Action", "email_check_form");
 
 
-                                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-                                /////////////////////////////////////////////////server check phone number already registered ends//////////////////////
-
-                                handler.postDelayed(this, 1000);
+                                return parameters;
                             }
                         };
+                        requestQueue.add(stringrequest);
 
-                        handler.postDelayed(r, 1000);
+
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                     }
+                    /////////////////////////////////////////////////server check phone number already registered ends//////////////////////
+
                 }
             }
         });
@@ -201,77 +198,63 @@ public class RegisterUserClass extends Activity {
                         }
 
 
+                        /////////////////////////////////////////////////server check phone number already registered//////////////////////
+                        RequestQueue requestQueue = Volley.newRequestQueue(RegisterUserClass.this);
+                        String url = Constants.baseUrl + "phone_number_check.php";
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
+
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
+
+                                    if (result.equals("user_exists")) {
+                                        phoneET.setError("Phone number already registered. Please Login ");
 
 
-
-
-
-
-
-
-
-                        final Handler handler = new Handler();
-
-                        final Runnable r = new Runnable() {
-                            public void run() {
-                                /////////////////////////////////////////////////server check phone number already registered//////////////////////
-                                RequestQueue requestQueue = Volley.newRequestQueue(RegisterUserClass.this);
-                                String url = Constants.baseUrl + "phone_number_check.php";
-                                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("jobin", "string response is : " + response);
-
-                                        try {
-                                            JSONObject person = new JSONObject(response);
-                                            String result = person.getString("result");
-
-                                            if (result.equals("user_exists")) {
-                                                phoneET.setError("Phone number already registered. Please Login ");
-
-                                            }
-
-                                        } catch (JSONException e) {
-                                            Log.d("jobin", "json errror:" + e);
-                                        }
-
+                                    } else {
+                                        phoneET.setError(null);
 
                                     }
-                                }, new Response.ErrorListener() {
 
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("jobin", "error response is : " + error);
-                                    }
-                                }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> parameters = new HashMap<String, String>();
-
-                                        parameters.put("phone", phone_string);
-                                        parameters.put("country_code", country_code_string);
-
-                                        parameters.put("Action", "phone_check_form");
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
+                                }
 
 
-                                        return parameters;
-                                    }
-                                };
-                                requestQueue.add(stringrequest);
-
-
-                                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-                                /////////////////////////////////////////////////server check phone number already registered ends//////////////////////
-
-                                handler.postDelayed(this, 1000);
                             }
-                        };
+                        }, new Response.ErrorListener() {
 
-                        handler.postDelayed(r, 1000);
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "error response is : " + error);
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+
+                                parameters.put("phone", phone_string);
+                                parameters.put("country_code", country_code_string);
+
+                                parameters.put("Action", "phone_check_form");
+
+
+                                return parameters;
+                                        }
+                        };
+                        requestQueue.add(stringrequest);
+
+
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+                        /////////////////////////////////////////////////server check phone number already registered ends//////////////////////
+
                     }
                 }
             }
@@ -313,15 +296,29 @@ public class RegisterUserClass extends Activity {
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(inputStr);
         if (!(matcher.matches())) {
-            Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
         } else if (email_string.matches("") || confirm_email_string.matches("") || password_string.matches("") || firstname_string.matches("") || lastname_string.matches("")) {
-            Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
 
         } else {
             if (!(email_string.matches(confirm_email_string))) {
-                Toast.makeText(getApplicationContext(), "Email address do not match.", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "mail address do not match", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
             } else if (password_string.length() <= 5 || password_string.length() >= 12) {
-                Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
 
             /* else if (phone_string.length() < 10) {
@@ -329,7 +326,10 @@ public class RegisterUserClass extends Activity {
             }
             */
             else if (!(phone_string.matches("[0-9]+"))) {
-                Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             } else {
 
            /*     if (phone_string.length() > 10) {
@@ -337,7 +337,7 @@ public class RegisterUserClass extends Activity {
                 }
              */
 
-                if (country_code_string.equals(null) || country_code_string.matches("")) {
+                if (country_code_string.matches("")) {
                     country_code_string = "+91";
                 }
 
@@ -362,4 +362,22 @@ public class RegisterUserClass extends Activity {
         }
 
     }
+
+    public void login_intent(View v) {
+        startActivity(new Intent(getApplicationContext(), LoginClass.class));
+        finish();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

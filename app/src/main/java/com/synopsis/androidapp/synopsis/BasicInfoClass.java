@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,7 +81,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private Calendar calendar;
     EditText datepickerBtnET, referorIdEt;
     AutoCompleteTextView autoCompView;
-
+    boolean image_uploaded = false;
     RadioGroup genderRadioGroup;
 
     String dateofbirth, referorId, place, country, state, city, gender, email, password;
@@ -88,8 +89,8 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
     private static final String API_KEY = "AIzaSyCQHYiVSoaKudLpualnCGZNBQ-yWnlyu5s";
-private  int PICK_IMAGE_REQUEST=1;
-    private int CAMERA_PIC_REQUEST=0;
+    private int PICK_IMAGE_REQUEST = 1;
+    private int CAMERA_PIC_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,130 +98,139 @@ private  int PICK_IMAGE_REQUEST=1;
 
         super.onCreate(savedInstanceState);
 
-            setContentView(R.layout.basic_info);
+        setContentView(R.layout.basic_info);
 
 
-            selfyButton = (ImageButton) findViewById(R.id.selfyButton);
-            datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
-            referorIdEt = (EditText) findViewById(R.id.referorIdET);
-            String url = Constants.baseUrl + "basic_info_image.php";
-            SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
-            email = prefs.getString("email", "");
-            password = prefs.getString("password", "");
-            genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
-            basic_info_image = (CircleImageView) findViewById(R.id.basic_info_image);
-            RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
-            try {
-                ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+        selfyButton = (ImageButton) findViewById(R.id.selfyButton);
+        datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
+        referorIdEt = (EditText) findViewById(R.id.referorIdET);
+        String url = Constants.baseUrl + "basic_info_image.php";
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        email = prefs.getString("email", "");
+        password = prefs.getString("password", "");
+        genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
+        basic_info_image = (CircleImageView) findViewById(R.id.basic_info_image);
 
-                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
+        try {
+            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
 
-                    @Override
-                    public void onResponse(String response) {
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                        try {
-                            JSONObject jobj = new JSONObject(response);
-                            String result = jobj.getString("result");
-                            String error = jobj.getString("error");
-                            String img_url = jobj.getString("img_url");
+                @Override
+                public void onResponse(String response) {
 
-
-                            //    image_base64string=jobj.getString("image");
-                            //     Log.d("jobin","image:"+image_base64string);
+                    try {
+                        JSONObject jobj = new JSONObject(response);
+                        String result = jobj.getString("result");
+                        String error = jobj.getString("error");
+                        String img_url = jobj.getString("img_url");
 
 
-                            if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
-                                selfyButton.setVisibility(View.INVISIBLE);
-                                basic_info_image.setVisibility(View.VISIBLE);
-
-                                Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
+                        //    image_base64string=jobj.getString("image");
+                        //     Log.d("jobin","image:"+image_base64string);
 
 
-                            } else {
-                                selfyButton.setVisibility(View.VISIBLE);
-                                basic_info_image.setVisibility(View.INVISIBLE);
-                            }
+                        if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
+                            selfyButton.setVisibility(View.INVISIBLE);
+                            basic_info_image.setVisibility(View.VISIBLE);
+                            image_uploaded = true;
+                            Log.d("jobin", "condition check is not right");
+                            Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
 
 
-                        } catch (JSONException e) {
-                            Log.d("jobin", "json errror:" + e);
+                        } else {
+                            image_uploaded = false;
+                            selfyButton.setVisibility(View.VISIBLE);
+                            basic_info_image.setVisibility(View.INVISIBLE);
                         }
-                        calendar = Calendar.getInstance();
-                        year = calendar.get(Calendar.YEAR);
-                        month = calendar.get(Calendar.MONTH) + 1;
-                        day = calendar.get(Calendar.DAY_OF_MONTH);
-                        datepickerBtnET.setText("" + day + "/" + month + "/" + year);
 
-                        autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
-                        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
-                        autoCompView.setOnItemClickListener(BasicInfoClass.this);
-
+                    } catch (JSONException e) {
+                        Log.d("jobin", "json errror:" + e);
                     }
-                }, new Response.ErrorListener() {
+                    calendar = Calendar.getInstance();
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH) + 1;
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+                    datepickerBtnET.setText("" + day + "/" + month + "/" + year);
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("jobin", "error response is : " + error);
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("email", email);
-                        parameters.put("password", password);
-                        parameters.put("Action", "image_download");
+                    autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
+                    autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
+                    autoCompView.setOnItemClickListener(BasicInfoClass.this);
 
-                        return parameters;
-                    }
-                };
-                requestQueue2.add(stringrequest);
+                }
+            }, new Response.ErrorListener() {
 
-
-                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-            } catch (NullPointerException e) {
-                Log.d("jobin", "null pointer");
-                selfyButton.setVisibility(View.VISIBLE);
-                basic_info_image.setVisibility(View.INVISIBLE);
-            }
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("jobin", "error response is : " + error);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("email", email);
+                    parameters.put("password", password);
+                    parameters.put("Action", "image_download");
 
 
-            Log.d("jobin", "on create complete");
+                    return parameters;
+                }
+            };
+            requestQueue2.add(stringrequest);
+
+
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+        } catch (NullPointerException e) {
+            Log.d("jobin", "null pointer");
+            selfyButton.setVisibility(View.VISIBLE);
+            basic_info_image.setVisibility(View.INVISIBLE);
+        }
+
+
+        Log.d("jobin", "on create complete");
 
 
     }
 
 
-
-
     public void submitbasicinfofn(View view) {
-        Log.d("jobin","submit basic info fn");
+
+        Log.d("jobin", "submit basic info fn");
         dateofbirth = datepickerBtnET.getText().toString().trim();
         String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
-        if (Integer.parseInt(year_ofbirth) > year - 16) {
-            Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG).show();
+
+        if (image_uploaded == false) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly upload your Photo", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else if (Integer.parseInt(year_ofbirth) > year - 16) {
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         } else {
 
             referorId = referorIdEt.getText().toString().trim();
 
 
             place = autoCompView.getText().toString();
-            Log.d("jobin", "works till here");
+
 
             List<String> place_list = Arrays.asList(place.split(","));
             int length = place_list.size();
-            Log.d("jobin", "place passed to submit fn:country" + place_list.get(length - 1) + " state:" + place_list.get(length - 2) + " city: " + place_list.get(length - 3));
 
             country = place_list.get(length - 1).toString();
             state = place_list.get(length - 2).toString();
             city = place_list.get(length - 3).toString();
 
             int selectedId = genderRadioGroup.getCheckedRadioButtonId();
-            Log.d("jobin", "radio id:" + selectedId);
+
             // find the radiobutton by returned id
             RadioButton radioButton = (RadioButton) findViewById(selectedId);
             gender = radioButton.getText().toString();
@@ -234,7 +244,7 @@ private  int PICK_IMAGE_REQUEST=1;
 
                 @Override
                 public void onResponse(String response) {
-                    Log.d("jobin", "string response basic  info  is : " + response);
+
 
                     try {
                         JSONObject person = new JSONObject(response);
@@ -286,7 +296,7 @@ private  int PICK_IMAGE_REQUEST=1;
 ///////////////////////////image opoerations start/////////////////////////////////
 
     public void photo_actions(View v) {
-        Log.d("jobin", " photo actions");
+
         final AlertDialog alertDialog = new AlertDialog.Builder(BasicInfoClass.this).create();
         alertDialog.setTitle("Title");
         alertDialog.setMessage("Message");
@@ -326,12 +336,12 @@ private  int PICK_IMAGE_REQUEST=1;
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_PIC_REQUEST &&resultCode == RESULT_OK) {
+        if (requestCode == CAMERA_PIC_REQUEST && resultCode == RESULT_OK) {
             Log.d("jobin", "trying to load  camera to bitmap");
 
-          Bitmap   bitmap = (Bitmap) data.getExtras().get("data");
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             Log.d("jobin", "ibitmap loaded");
-            Bitmap Bitmap2=getResizedBitmap(bitmap,500);
+            Bitmap Bitmap2 = getResizedBitmap(bitmap, 500);
 
 
             String root = Environment.getExternalStorageDirectory().toString();
@@ -340,9 +350,9 @@ private  int PICK_IMAGE_REQUEST=1;
             Random generator = new Random();
             int n = 10000;
             n = generator.nextInt(n);
-            String profilename = "Image-"+ n +".jpg";
-            File file = new File (myDir, profilename);
-            if (file.exists ()) file.delete ();
+            String profilename = "Image-" + n + ".jpg";
+            File file = new File(myDir, profilename);
+            if (file.exists()) file.delete();
             try {
                 FileOutputStream out = new FileOutputStream(file);
                 Bitmap2.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -353,27 +363,22 @@ private  int PICK_IMAGE_REQUEST=1;
                 e.printStackTrace();
             }
 
-            String url_to_profile=root+ "/synopsis/" + profilename;
+            String url_to_profile = root + "/synopsis/" + profilename;
 
 
             Intent I = new Intent(this, Camera_activity.class);
             I.putExtra("url_to_profile", url_to_profile);
             startActivity(I);
             finish();
-        }
-        else   if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
 
                 Log.d("jobin", "trying to load  file chooder to bitmap");
                 //Getting the Bitmap from Gallery
-                 Bitmap   bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 Log.d("jobin", "bitmap loaded");
-                Bitmap Bitmap2=getResizedBitmap(bitmap,500);
-
-
-
-
+                Bitmap Bitmap2 = getResizedBitmap(bitmap, 500);
 
 
                 String root = Environment.getExternalStorageDirectory().toString();
@@ -382,9 +387,9 @@ private  int PICK_IMAGE_REQUEST=1;
                 Random generator = new Random();
                 int n = 10000;
                 n = generator.nextInt(n);
-                String profilename = "Image-"+ n +".jpg";
-                File file = new File (myDir, profilename);
-                if (file.exists ()) file.delete ();
+                String profilename = "Image-" + n + ".jpg";
+                File file = new File(myDir, profilename);
+                if (file.exists()) file.delete();
                 try {
 
                     FileOutputStream out = new FileOutputStream(file);
@@ -396,8 +401,7 @@ private  int PICK_IMAGE_REQUEST=1;
                     e.printStackTrace();
                 }
 
-                String url_to_profile=root+ "/synopsis/" + profilename;
-
+                String url_to_profile = root + "/synopsis/" + profilename;
 
 
                 Intent I = new Intent(this, Camera_activity.class);
@@ -411,14 +415,11 @@ private  int PICK_IMAGE_REQUEST=1;
             }
 
 
-        }
-
-        else {
+        } else {
             Log.d("jobin", "in photo activityresults result not  ok");
         }
     }
     ////////////////////////choose from gallery or from camera ends//////////////////////
-
 
 
     ///////////////////////////resize image/////////////////////////////////////
@@ -479,7 +480,6 @@ private  int PICK_IMAGE_REQUEST=1;
         String str = (String) adapterView.getItemAtPosition(position);
 
 
-        Toast.makeText(BasicInfoClass.this, str, Toast.LENGTH_SHORT).show();
     }
 
     public static ArrayList<String> autocomplete(String input) {
@@ -601,21 +601,21 @@ private  int PICK_IMAGE_REQUEST=1;
 
 
         Log.d("jobin", "back press");
-            String message = "Exit Synopsis?";
+        String message = "Exit Synopsis?";
 
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(BasicInfoClass.this);
-            builder.setTitle("Warning");
-            builder.setMessage(message);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(BasicInfoClass.this);
+        builder.setTitle("Warning");
+        builder.setMessage(message);
 
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
-                    System.exit(0);
+                System.exit(0);
 
-                }
-            });
-            builder.create().show();
+            }
+        });
+        builder.create().show();
 
     }
 

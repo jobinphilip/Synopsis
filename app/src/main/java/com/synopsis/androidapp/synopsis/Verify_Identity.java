@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -75,6 +76,7 @@ public class Verify_Identity extends Activity {
         final String date_of_birth = prefs.getString("date_of_birth", "");
         final String gender = prefs.getString("gender", "");
 
+
         Log.d("jobin", "here:" + first_name + "," + last_name + "," + mobile + "," + date_of_birth + "," + gender);
         firstnameET.setText(first_name);
         LastnameET.setText(last_name);
@@ -108,13 +110,15 @@ public class Verify_Identity extends Activity {
         // find the radiobutton by returned id
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         gender2 = radioButton.getText().toString();
-        if(firstname2.equals("")||lastname2.equals("")||fathername2.equals("")||mobile2.equals("")||dateofbirth2.equals(""))
+        if (firstname2.equals("") || lastname2.equals("") || fathername2.equals("") || mobile2.equals("") || dateofbirth2.equals(""))
         {
-            Toast.makeText(getApplicationContext(),"Kindly fill all the missing fields",Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the missing fields", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
-        else
-        {
-            ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
+
+        ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
             RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
             StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -170,8 +174,6 @@ public class Verify_Identity extends Activity {
 
             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        }
 
 
     }

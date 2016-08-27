@@ -7,6 +7,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -62,17 +63,18 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
 
 
            // Log.d("jobin", "inside verifyemailfn email:" + email + "password:" + password + "ip address: " + ipAddress);
-            String url = Constants.baseUrl + "register_user.php";
+
             //  String url="http://10.0.2.2:8080/test/login4.php";
             //    String url="http://localhost/test/login4.php";
             // String url="http://10.0.2.2/test/login4.php";
             //  String url = "http://127.0.0.1/test/login3.php";
-            RequestQueue requestQueue = Volley.newRequestQueue(Terms_conditionsClass.this);
+
             // String url="http:// 192.168.1.19/test/login3.php";
 
 
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-
+            String url = Constants.baseUrl + "register_user.php";
+            RequestQueue requestQueue = Volley.newRequestQueue(Terms_conditionsClass.this);
             StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
                 @Override
@@ -90,7 +92,11 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
 
                             startActivity(I);
                         } else if (error.equals("user_exists")) {
-                            Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG).show();
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+
                             finish();
                         }
 

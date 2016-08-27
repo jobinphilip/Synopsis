@@ -30,7 +30,7 @@ import java.util.Map;
  * Created by User on 7/21/2016.
  */
 public class Credits extends Activity {
-    TextView credits_self_verify_amnt_tv, credits_self_verify_number_tv, credits_self_verify_total_tv, credits_verified_referal_amount_tv, credits_verified_referal_number_tv, credits_verified_referal_total_tv, credits_referal_bonus_amount_tv, credits_referal_bonus_number_tv, credits_referal_bonus_total_tv, credits_total_tv;
+    TextView credits_self_verify_amnt_tv, credits_self_verify_total_tv, credits_verified_referal_amount_tv, credits_verified_referal_number_tv, credits_verified_referal_total_tv, credits_referal_bonus_amount_tv, credits_referal_bonus_number_tv, credits_referal_bonus_total_tv, credits_total_tv;
     String  email, password;
 float credits_self_verify_amnt,    credits_verified_referal_number, credits_verified_referal_total,  credits_referal_bonus_number, credits_referal_bonus_total, credits_total;
    // List<String> veriried_referals_list,referance_list;
@@ -42,7 +42,7 @@ float credits_self_verify_amnt,    credits_verified_referal_number, credits_veri
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credits);
         credits_self_verify_amnt_tv = (TextView) findViewById(R.id.credits_self_verify_amnt_tv);
-        credits_self_verify_number_tv = (TextView) findViewById(R.id.credits_self_verify_number_tv);
+
         credits_self_verify_total_tv = (TextView) findViewById(R.id.credits_self_verify_total_tv);
         credits_verified_referal_amount_tv = (TextView) findViewById(R.id.credits_verified_referal_amount_tv);
         credits_verified_referal_number_tv = (TextView) findViewById(R.id.credits_verified_referal_number_tv);
@@ -125,16 +125,24 @@ float credits_self_verify_amnt,    credits_verified_referal_number, credits_veri
 
                         }
 
+                        int credits_total2, credits_self_verify_amnt2, credits_verified_referal_number2, credits_verified_referal_total2, credits_referal_bonus_number2, credits_referal_bonus_total2;
+
+                        credits_total = 50 + credits_self_verify_amnt + credits_referal_bonus_total + credits_verified_referal_total;
+                        credits_total2 = Math.round(credits_total);
+                        credits_self_verify_amnt2 = Math.round(credits_self_verify_amnt);
+                        credits_verified_referal_number2 = Math.round(credits_verified_referal_number);
+                        credits_verified_referal_total2 = Math.round(credits_verified_referal_total);
+                        credits_referal_bonus_number2 = Math.round(credits_referal_bonus_number);
+                        credits_referal_bonus_total2 = Math.round(credits_referal_bonus_total);
 
 
-                        credits_total=50+credits_self_verify_amnt+credits_referal_bonus_total+credits_verified_referal_total;
-                        credits_self_verify_amnt_tv.setText(credits_self_verify_amnt+"");
-                        credits_self_verify_total_tv.setText(credits_self_verify_amnt+"");
-                        credits_verified_referal_number_tv.setText(credits_verified_referal_number+"");
-                        credits_verified_referal_total_tv.setText(credits_verified_referal_total+"");
-                        credits_referal_bonus_number_tv.setText(credits_referal_bonus_number+"");
-                        credits_referal_bonus_total_tv.setText(credits_referal_bonus_total+"");
-                        credits_total_tv.setText(credits_total+"");
+                        credits_self_verify_amnt_tv.setText(credits_self_verify_amnt2 + "");
+                        credits_self_verify_total_tv.setText(credits_self_verify_amnt2 + "");
+                        credits_verified_referal_number_tv.setText(credits_verified_referal_number2 + "");
+                        credits_verified_referal_total_tv.setText(credits_verified_referal_total2 + "");
+                        credits_referal_bonus_number_tv.setText(credits_referal_bonus_number2 + "");
+                        credits_referal_bonus_total_tv.setText(credits_referal_bonus_total2 + "");
+                        credits_total_tv.setText(credits_total2 + "");
 
                     } else {
                         Log.d("jobin", "it happened again..! errror:" + error);

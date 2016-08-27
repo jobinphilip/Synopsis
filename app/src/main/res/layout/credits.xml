@@ -32,6 +32,18 @@
             android:layout_weight="2"
             android:text="" />
 
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white" />
+
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="0dp"
@@ -41,17 +53,6 @@
             android:text="Amount"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="No"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="@color/white" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="0dp"
@@ -72,13 +73,13 @@
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="5">
+        android:weightSum="11">
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="7"
             android:text="Sign up bonus"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textColor="@color/white" />
@@ -87,19 +88,9 @@
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="50"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
@@ -107,7 +98,7 @@
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="50"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
@@ -125,15 +116,15 @@
         android:background="@color/light_blue"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="5">
+            android:weightSum="11">
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_weight="2"
-            android:text="Self verify"
+            android:layout_weight="7"
+            android:text="Self verify discount"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textColor="@color/white" />
 
@@ -143,30 +134,18 @@
             android:layout_height="wrap_content"
 
 
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text=""
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/credits_self_verify_number_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-
-            android:gravity="center"
-            android:text="1"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="@color/white" />
-
-        <TextView
+            <TextView
             android:id="@+id/credits_self_verify_total_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_weight="1"
+                android:layout_weight="2"
             android:gravity="center"
             android:text=""
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
@@ -183,45 +162,56 @@
         android:onClick="verified_referals_fn"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="5">
+        android:weightSum="11">
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:text="Verified referals"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/credits_verified_referal_amount_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:text="100"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/credits_verified_referal_number_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
 
             android:gravity="center"
             android:text=""
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/refamtX"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:gravity="center"
+            android:text="X"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/credits_verified_referal_amount_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+
+            android:gravity="center"
+            android:text="100"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white" />
+
 
         <TextView
             android:id="@+id/credits_verified_referal_total_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text=""
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
@@ -238,15 +228,35 @@
         android:onClick="referal_bonus_fn"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="5">
-
+        android:weightSum="11">
         <TextView
             android:id="@+id/textView17"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:text="Referal bonus"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/credits_referal_bonus_number_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/refBonusX"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="X"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
         <TextView
@@ -254,28 +264,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="25"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/credits_referal_bonus_number_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text=""
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-
-            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/credits_referal_bonus_total_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
 
             android:gravity="center"
             android:text=""
@@ -291,7 +291,7 @@
         android:background="@color/darkblue"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="5">
+        android:weightSum="7">
 
         <TextView
             android:id="@+id/textView21"
@@ -304,10 +304,20 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/credits_total_tv"
+            android:id="@+id/creditINRTXT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
+            android:gravity="center"
+            android:text="INR"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/credits_total_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
 
             android:gravity="center"
             android:text=""

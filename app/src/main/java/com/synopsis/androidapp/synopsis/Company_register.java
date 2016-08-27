@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.text.InputFilter;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -175,9 +176,16 @@ public class Company_register extends Activity {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(inputStr);
                 if (!(matcher.matches())) {
-                    Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG).show();
+
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 } else if (company_name_string.matches("") || company_contact_person_string.matches("") || company_email_string.matches("") || company_designation_string.matches("") || company_mobile_string.matches("") || company_employee_number_string.matches("") || company_interested_in_string.matches("") || company_type_string.matches("")) {
-                    Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
 
                 /* else if (company_mobile_string.length() < 10) {
@@ -185,7 +193,11 @@ public class Company_register extends Activity {
                 }
                 */
                 else if (!(company_mobile_string.matches("[0-9]+"))) {
-                    Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
+
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 } else {
              /*
 
@@ -212,7 +224,6 @@ public class Company_register extends Activity {
                                 String error = jobject.getString("error").trim();
                                 Log.d("jobin", "result from server is: " + result + "error is:" + error);
                                 if (result.equals("success")) {
-                                    //   Toast.makeText(getApplicationContext(),"Thank you for registering with Synopsis. We will contact you soon.", Toast.LENGTH_LONG).show();
                                     String message = "Thank you for registering with Synopsis. We will contact you soon.";
 
 

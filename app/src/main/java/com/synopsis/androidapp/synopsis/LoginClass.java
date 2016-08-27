@@ -12,6 +12,7 @@ import android.text.format.Formatter;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
@@ -87,16 +88,14 @@ public class LoginClass extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     if( (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()))&&visibility==false) {
-                        //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
-                        //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+
                         passwordET.setTransformationMethod(null);
                         passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide_password, 0);
                         visibility=true;
                         return true;
                     }
                     else  if( (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()))&&visibility==true) {
-                        //   Toast.makeText(getApplicationContext(),"works",Toast.LENGTH_LONG).show();
-                        //  passwordET.setInputType( InputType.TYPE_CLASS_TEXT);
+
                         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
                         passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.show_password, 0);
                         visibility=false;
@@ -264,9 +263,10 @@ public class LoginClass extends Activity {
 
                     } else {
 
-                        Log.d("jobin", "result  is:" + result + "error is :" + error);
 
-                        Toast.makeText(getApplicationContext(), "Invalid login credentials", Toast.LENGTH_LONG).show();
+                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid login credentials", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
 
                     }
 

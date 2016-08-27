@@ -5,13 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,17 +37,15 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
-/**
- * Created by Kumar on 7/29/2016.
- */
+
 public class Camera_activity extends Activity {
     ImageView preview;
     CropImageView arthurhub_imageView;
     Bitmap bitmap, bitmap2, cropped;
-    Button upload_image, choose_image;
+
     public static final String Login_details = "Login_details";
     String UPLOAD_URL = Constants.baseUrl + "image_upload.php";
-Button crop_button, upload_image_button;
+    Button crop_button, upload_image_button, choose_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +57,12 @@ Button crop_button, upload_image_button;
       String url_to_profile_picutre=   getIntent().getStringExtra("url_to_profile");
 Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_to_profile_picutre);
 
-    //    byte[] byteArray = getIntent().getByteArrayExtra("image");
 
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), file_url);
         } catch (IOException e) {
             e.printStackTrace();
         }
-     //  bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-      // bitmap2 = getResizedBitmap(bitmap, 1000);
- //   preview.setIm/ageBitmap(bitmap2);
 
 
 
@@ -77,8 +72,8 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
         arthurhub_imageView.setImageBitmap(bitmap);
         choose_image = (Button) findViewById(R.id.buttonChoose);
         choose_image.setVisibility(View.INVISIBLE);
-        upload_image = (Button) findViewById(R.id.buttonUpload);
-        upload_image.setOnClickListener(new View.OnClickListener() {
+
+        upload_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage();
@@ -105,7 +100,7 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
                         try {
                             JSONObject resultobj = new JSONObject(s);
                             String result = resultobj.getString("result");
-                            String error = resultobj.getString("error");
+
                             String path = resultobj.getString("path");
                             if (result.equals("success")) {
                                 Log.d("jobin", "in the camera activity success and intent is called");
@@ -115,7 +110,11 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
 
                                 startActivity(I);
                             } else {
-                                Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG).show();
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+
                                 finish();
                             }
 
@@ -169,24 +168,7 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
         return encodedImage;
     }
 
- /*
-///////////////////////////resize image/////////////////////////////////////
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
 
-        float bitmapRatio = (float) width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        Log.d("jobin", "image resized");
-        return Bitmap.createScaledBitmap(image, width, height, true);
-    }
-*/
     /////////////////////////crop image/////////////////////////////////////
     public void cropfn(View view) {
         cropped = arthurhub_imageView.getCroppedImage();

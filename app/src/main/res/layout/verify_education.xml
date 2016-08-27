@@ -119,18 +119,20 @@
                     android:hint="Percentage/GPA(Grade point average)"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
             </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/education_verificationSubmitBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:background="@drawable/gradient_blue"
+                android:onClick="veriifyEducationFn"
+                android:text="Next"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </ScrollView>S
 
-    <Button
-        android:id="@+id/education_verificationSubmitBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:background="@drawable/gradient_blue"
-        android:onClick="veriifyEducationFn"
-        android:text="Next"
-        android:textColor="@color/white" />
+
 </LinearLayout>
