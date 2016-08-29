@@ -36,6 +36,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/ReferalIdoptional"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/referorIdET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/text_colors" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/First_name_and_Middle_name"
                 android:textSize="12sp" />
 

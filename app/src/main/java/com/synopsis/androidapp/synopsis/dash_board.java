@@ -62,6 +62,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
         url = Constants.baseUrl + "dashboard_details.php";
+
+
         requestQueue = Volley.newRequestQueue(Dash_board.this);
 
         setContentView(R.layout.home_layout);
@@ -109,8 +111,11 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
 
                     if (result.equals("success")) {
-
-                        Picasso.with(Dash_board.this).load(img_url).into(profile_image);
+                        if (img_url.matches("")) {
+                            Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
+                        } else {
+                            Picasso.with(Dash_board.this).load(img_url).into(profile_image);
+                        }
                         nameTV.setText(first_name);
 
                         placeTV.setText(place);
@@ -130,6 +135,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
                 } catch (JSONException e) {
                     Log.d("jobin", "json errror:" + e);
+                } catch (NullPointerException e) {
+                    Log.d("jobin", "null pointer error fetching image:" + e);
                 }
 
 
@@ -268,6 +275,14 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                 }
                 case R.id.nav_testimonial: {
                     fragment = new Nav_Testimonial_Fragment();
+                    break;
+                }
+                case R.id.nav_share: {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
                     break;
                 }
                 case R.id.nav_logout: {

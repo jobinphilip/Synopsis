@@ -114,7 +114,7 @@ public class Verify_Identity extends Activity {
         {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the missing fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         }
 

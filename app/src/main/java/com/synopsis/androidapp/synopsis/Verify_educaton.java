@@ -1,13 +1,17 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.opengl.EGLDisplay;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,16 +27,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by User on 7/21/2016.
- */
-public class Verify_educaton extends Activity {
-    EditText register_number_ET, college_nameET, universityET, month_andyear_of_passET, percentageET,courseNameET,courseTypeET;
-    String register_number, collegename, university, month_and_year_of_pass, percentage, url,email,password,courseName,courseType;
 
+public class Verify_educaton extends Activity {
+    EditText register_number_ET, college_nameET, universityET, percentageET, courseNameET, courseTypeET, verify_education_datepickerBtnET;
+    String register_number, collegename, university, date_of_pass, percentage, url, email, password, courseName, courseType;
+    private int year, month, day;
+    private Calendar calendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,17 @@ public class Verify_educaton extends Activity {
         register_number_ET = (EditText) findViewById(R.id.regNoET);
         college_nameET = (EditText) findViewById(R.id.collegeET);
         universityET = (EditText) findViewById(R.id.universityET);
-        month_andyear_of_passET = (EditText) findViewById(R.id.month_andYearOfpassET);
+
         percentageET = (EditText) findViewById(R.id.percentET);
         courseNameET = (EditText) findViewById(R.id.courseET);
         courseTypeET = (EditText) findViewById(R.id.courseTypeET);
+        verify_education_datepickerBtnET = (EditText) findViewById(R.id.verify_education_datepickerBtnET);
+
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        verify_education_datepickerBtnET.setText("" + day + "/" + month + "/" + year);
 
         url = Constants.baseUrl + "education_verification_submit.php";
 
@@ -53,15 +64,15 @@ public class Verify_educaton extends Activity {
         register_number = register_number_ET.getText().toString().trim();
         collegename = college_nameET.getText().toString().trim();
         university = universityET.getText().toString().trim();
-        month_and_year_of_pass = month_andyear_of_passET.getText().toString().trim();
+        date_of_pass = verify_education_datepickerBtnET.getText().toString().trim();
         percentage = percentageET.getText().toString().trim();
         courseName = courseNameET.getText().toString().trim();
         courseType = courseTypeET.getText().toString().trim();
 
-        if (register_number.equals("") || collegename.equals("") || university.equals("") || month_and_year_of_pass.equals("") || percentage.equals("")|| courseName.equals("")|| courseType.equals("")) {
+        if (register_number.equals("") || collegename.equals("") || university.equals("") || date_of_pass.equals("") || percentage.equals("") || courseName.equals("") || courseType.equals("")) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
 
         } else {
@@ -106,7 +117,7 @@ public class Verify_educaton extends Activity {
                     parameters.put("register_number", register_number);
                     parameters.put("collegename", collegename);
                     parameters.put("university", university);
-                    parameters.put("month_and_year_of_pass", month_and_year_of_pass);
+                    parameters.put("month_and_year_of_pass", date_of_pass);
                     parameters.put("percentage", percentage);
                     parameters.put("course_name", courseName);
                     parameters.put("course_type", courseType);
@@ -129,4 +140,36 @@ public class Verify_educaton extends Activity {
 
         }
     }
+
+
+/////////////////////////////date picer fn//////////////////////////////////////
+
+    public void verify_edu_date_pickerfn(View v) {
+        Log.d("jobin", "date picker");
+        showDialog(999);
+    }
+
+    @Nullable
+    @Override
+    protected Dialog onCreateDialog(int id, Bundle args) {
+        Log.d("jobin", "idate pick2");
+        if (id == 999) {
+            return new DatePickerDialog(this, myDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int year, int month, int date) {
+            Log.d("jobin", "datepick3");
+            // arg1 = year
+            // arg2 = month
+            month = month + 1;
+            // arg3 = day
+
+            verify_education_datepickerBtnET.setText("" + date + "/" + month + "/" + year);
+        }
+    };
+/////////////////////////////////date picker ends//////////////////////////////
 }

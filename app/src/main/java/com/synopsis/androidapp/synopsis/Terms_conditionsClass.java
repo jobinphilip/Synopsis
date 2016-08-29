@@ -57,6 +57,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
             final String lastname = prefs.getString("last_name", "");
             final String phone = prefs.getString("mobile", "");
             final String country_code = prefs.getString("country_code", "");
+            final String referor_id = prefs.getString("referor_id", "");
 
             WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
             final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
@@ -94,7 +95,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                         } else if (error.equals("user_exists")) {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                             toast.show();
 
                             finish();
@@ -124,6 +125,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     parameters.put("lastname", lastname);
                     parameters.put("phone", phone);
                     parameters.put("country_code", country_code);
+                    parameters.put("referor_id", referor_id);
 
                     parameters.put("Action", "registration_form");
 

@@ -44,7 +44,7 @@ public class Forgot_password  extends Activity{
         {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill the required field", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         }
        else
@@ -68,7 +68,7 @@ public class Forgot_password  extends Activity{
                     if (result.equals("success")) {
 
                         Toast toast = Toast.makeText(getApplicationContext(), "We have sent recovery link to your email", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
 
                         startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));

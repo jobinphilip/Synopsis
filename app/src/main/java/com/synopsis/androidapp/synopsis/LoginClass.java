@@ -265,7 +265,7 @@ public class LoginClass extends Activity {
 
 
                         Toast toast = Toast.makeText(getApplicationContext(), "Invalid login credentials", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
 
                     }

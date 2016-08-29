@@ -8,32 +8,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.graphics.Bitmap;
-
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import android.support.annotation.Nullable;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -50,13 +42,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -69,26 +58,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+//
 public class BasicInfoClass extends Activity implements AdapterView.OnItemClickListener {
     public static final String Login_details = "Login_details";
     ImageButton selfyButton;
     private int year, month, day;
     CircleImageView basic_info_image;
     private Calendar calendar;
-    EditText datepickerBtnET, referorIdEt;
+    EditText datepickerBtnET;
     AutoCompleteTextView autoCompView;
-    boolean image_uploaded = false;
+
     RadioGroup genderRadioGroup;
 
-    String dateofbirth, referorId, place, country, state, city, gender, email, password;
-    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
-    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
-    private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyCQHYiVSoaKudLpualnCGZNBQ-yWnlyu5s";
+    String dateofbirth, place, country, state, city, gender, email, password;
+    /*  private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+      private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+      private static final String OUT_JSON = "/json";
+      private static final String API_KEY = "AIzaSyCQHYiVSoaKudLpualnCGZNBQ-yWnlyu5s";
+      */
     private int PICK_IMAGE_REQUEST = 1;
     private int CAMERA_PIC_REQUEST = 0;
 
@@ -103,7 +92,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
         selfyButton = (ImageButton) findViewById(R.id.selfyButton);
         datepickerBtnET = (EditText) findViewById(R.id.datepickerBtnET);
-        referorIdEt = (EditText) findViewById(R.id.referorIdET);
+
         String url = Constants.baseUrl + "basic_info_image.php";
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         email = prefs.getString("email", "");
@@ -134,13 +123,13 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                         if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
                             selfyButton.setVisibility(View.INVISIBLE);
                             basic_info_image.setVisibility(View.VISIBLE);
-                            image_uploaded = true;
+
                             Log.d("jobin", "condition check is not right");
                             Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
 
 
                         } else {
-                            image_uploaded = false;
+
                             selfyButton.setVisibility(View.VISIBLE);
                             basic_info_image.setVisibility(View.INVISIBLE);
                         }
@@ -204,19 +193,12 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         Log.d("jobin", "submit basic info fn");
         dateofbirth = datepickerBtnET.getText().toString().trim();
         String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
-
-        if (image_uploaded == false) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Kindly upload your Photo", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        } else if (Integer.parseInt(year_ofbirth) > year - 16) {
+        if (Integer.parseInt(year_ofbirth) > year - 16) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         } else {
-
-            referorId = referorIdEt.getText().toString().trim();
 
 
             place = autoCompView.getText().toString();
@@ -271,7 +253,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("dateofbirth", dateofbirth);
-                    parameters.put("referorId", referorId);
+
                     parameters.put("gender", gender);
                     parameters.put("country", country);
                     parameters.put("state", state);
@@ -481,6 +463,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
 
     }
+    /*
 
     public static ArrayList<String> autocomplete(String input) {
         Log.d("jobin", "auto complete");
@@ -593,8 +576,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
             return filter;
         }
     }
-
-    ////////////////////////////auto complete place ends////////////////////////////////////////////////
+*/    ////////////////////////////auto complete place ends////////////////////////////////////////////////
 
     @Override
     public void onBackPressed() {

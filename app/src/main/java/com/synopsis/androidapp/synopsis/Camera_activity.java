@@ -101,7 +101,7 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
                             JSONObject resultobj = new JSONObject(s);
                             String result = resultobj.getString("result");
 
-                            String path = resultobj.getString("path");
+
                             if (result.equals("success")) {
                                 Log.d("jobin", "in the camera activity success and intent is called");
 
@@ -112,7 +112,7 @@ Uri file_url=   Uri.fromFile(new File(url_to_profile_picutre)); //Uri.parse(url_
                             } else {
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                                 toast.show();
 
                                 finish();

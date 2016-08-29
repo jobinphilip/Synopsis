@@ -32,7 +32,7 @@
             android:title="Testimonial" />
         <item
             android:id="@+id/nav_share"
-            android:icon="@drawable/nav_logout"
+            android:icon="@drawable/nav_share"
             android:title="Share" />
         <item
             android:id="@+id/nav_logout"

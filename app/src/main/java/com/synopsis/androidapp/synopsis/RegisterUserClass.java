@@ -37,8 +37,8 @@ import java.util.regex.Pattern;
 public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
     boolean visibility = false;
-    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET;
-    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string;
+    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt;
+    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class RegisterUserClass extends Activity {
         confirmEmailET = (EditText) findViewById(R.id.confirm_email_Et);
         passwordET = (EditText) findViewById(R.id.passwordET);
         country_codeET = (EditText) findViewById(R.id.Country_code_reg_user);
-
+        referorIdEt = (EditText) findViewById(R.id.referorIdET);
         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         passwordET.setOnTouchListener(new View.OnTouchListener() {
@@ -289,7 +289,7 @@ public class RegisterUserClass extends Activity {
         lastname_string = last_nameET.getText().toString().trim();
         phone_string = phoneET.getText().toString().trim();
         country_code_string = country_codeET.getText().toString().trim();
-
+        referorId = referorIdEt.getText().toString().trim();
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         CharSequence inputStr = email_string;
 
@@ -298,26 +298,26 @@ public class RegisterUserClass extends Activity {
         if (!(matcher.matches())) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
 
         } else if (email_string.matches("") || confirm_email_string.matches("") || password_string.matches("") || firstname_string.matches("") || lastname_string.matches("")) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
 
         } else {
             if (!(email_string.matches(confirm_email_string))) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "mail address do not match", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
 
             } else if (password_string.length() <= 5 || password_string.length() >= 12) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
             }
 
@@ -328,7 +328,7 @@ public class RegisterUserClass extends Activity {
             else if (!(phone_string.matches("[0-9]+"))) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
             } else {
 
@@ -351,6 +351,7 @@ public class RegisterUserClass extends Activity {
                 editor.putString("last_name", lastname_string);
                 editor.putString("mobile", phone_string);
                 editor.putString("country_code", country_code_string);
+                editor.putString("referor_id", referorId);
 
 
                 editor.commit();

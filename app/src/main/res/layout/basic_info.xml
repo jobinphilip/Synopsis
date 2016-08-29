@@ -76,22 +76,6 @@
                 android:padding="10dp">
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/referal_id_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <EditText
-                        android:id="@+id/referorIdET"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:hint="@string/ReferalIdoptional"
-                        android:inputType="textEmailSubject"
-                        android:textColor="@color/synopsis_blue" />
-
-                </android.support.design.widget.TextInputLayout>
 
 
                 <LinearLayout

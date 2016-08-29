@@ -6,15 +6,19 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.text.InputFilter;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -45,6 +49,8 @@ public class Company_register extends Activity {
     Spinner company_interested_in_spinner;
     Spinner company_type_spinner;
     Button company_submitBtn;
+    CheckBox company_checkBox;
+
     String company_country_code_string, company_name_string, company_contact_person_string, company_email_string, company_designation_string, company_mobile_string, company_employee_number_string, company_interested_in_string, company_type_string;
 
     @Override
@@ -61,6 +67,7 @@ public class Company_register extends Activity {
         company_employee_numberET = (EditText) findViewById(R.id.company_employee_numberET);
         company_interested_in_spinner = (Spinner) findViewById(R.id.company_interested_in_spinner);
         company_type_spinner = (Spinner) findViewById(R.id.companytypeSpinner);
+        company_checkBox = (CheckBox) findViewById(R.id.company_checkBox);
 
 
         company_mobileET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -179,12 +186,12 @@ public class Company_register extends Activity {
 
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 } else if (company_name_string.matches("") || company_contact_person_string.matches("") || company_email_string.matches("") || company_designation_string.matches("") || company_mobile_string.matches("") || company_employee_number_string.matches("") || company_interested_in_string.matches("") || company_type_string.matches("")) {
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
 
@@ -196,7 +203,7 @@ public class Company_register extends Activity {
 
 
                     Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 } else {
              /*
@@ -209,6 +216,8 @@ public class Company_register extends Activity {
 
                     RequestQueue requestQueue = Volley.newRequestQueue(Company_register.this);
 
+                    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+                    final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
 ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
 
@@ -282,6 +291,7 @@ public class Company_register extends Activity {
                             parameters.put("company_employee_number", company_employee_number_string);
                             parameters.put("company_interested_in", company_interested_in_string);
                             parameters.put("company_type", company_type_string);
+                            parameters.put("ipAddress", ipAddress);
                             parameters.put("Action", "company_registration_form");
 
                             Log.d("jobin", "prameters added");
