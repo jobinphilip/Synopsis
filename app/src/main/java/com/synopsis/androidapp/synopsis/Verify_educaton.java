@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,13 +35,21 @@ import java.util.Map;
 
 public class Verify_educaton extends Activity {
     EditText register_number_ET, college_nameET, universityET, percentageET, courseNameET, courseTypeET, verify_education_datepickerBtnET;
-    String register_number, collegename, university, date_of_pass, percentage, url, email, password, courseName, courseType;
+    String register_number, collegename, university, date_of_pass, percentage, url, email, password, courseName, courseType, verification_status;
     private int year, month, day;
+    Button eduverifysubmitbtn;
     private Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.verify_education);
+
+        SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
+        email = prefs.getString("email", "");
+        password = prefs.getString("password", "");
+        eduverifysubmitbtn = (Button) findViewById(R.id.education_verificationSubmitBtn);
         register_number_ET = (EditText) findViewById(R.id.regNoET);
         college_nameET = (EditText) findViewById(R.id.collegeET);
         universityET = (EditText) findViewById(R.id.universityET);
@@ -56,7 +65,99 @@ public class Verify_educaton extends Activity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         verify_education_datepickerBtnET.setText("" + day + "/" + month + "/" + year);
 
-        url = Constants.baseUrl + "education_verification_submit.php";
+        url = Constants.baseUrl + "education_verification.php";
+
+
+        try {
+///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+
+            RequestQueue requestQueue = Volley.newRequestQueue(Verify_educaton.this);
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    Log.d("jobin", "string response is : " + response);
+
+                    try {
+                        JSONObject edu_result = new JSONObject(response);
+                        String result = edu_result.getString("result");
+                        String error = edu_result.getString("error");
+                        if (result.equals("success")) {
+
+                            register_number = edu_result.getString("register_number");
+                            collegename = edu_result.getString("collegename");
+                            university = edu_result.getString("university");
+                            date_of_pass = edu_result.getString("month_and_year_of_pass");
+                            percentage = edu_result.getString("percentage");
+                            courseName = edu_result.getString("course_name");
+                            courseType = edu_result.getString("course_type");
+                            verification_status = edu_result.getString("verification_status");
+                            register_number_ET.setText(register_number);
+                            college_nameET.setText(collegename);
+                            universityET.setText(university);
+                            percentageET.setText(percentage);
+                            courseNameET.setText(courseName);
+                            courseTypeET.setText(courseType);
+                            verify_education_datepickerBtnET.setText(date_of_pass);
+                            if (verification_status.matches("verified")) {
+                                register_number_ET.setFocusable(false);
+                                register_number_ET.setClickable(false);
+                                college_nameET.setFocusable(false);
+                                college_nameET.setClickable(false);
+                                universityET.setFocusable(false);
+                                universityET.setClickable(false);
+                                percentageET.setFocusable(false);
+                                percentageET.setClickable(false);
+                                courseNameET.setFocusable(false);
+                                courseNameET.setClickable(false);
+                                courseTypeET.setFocusable(false);
+                                courseTypeET.setClickable(false);
+                                verify_education_datepickerBtnET.setFocusable(false);
+                                verify_education_datepickerBtnET.setClickable(false);
+                                eduverifysubmitbtn.setClickable(false);
+                                eduverifysubmitbtn.setVisibility(View.INVISIBLE);
+
+
+                            }
+
+                        }
+
+                    } catch (JSONException e) {
+                        Log.d("jobin", "json errror:" + e);
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("jobin", "error response is : " + error);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("email", email);
+                    parameters.put("password", password);
+
+
+                    parameters.put("Action", "verify_education_retrieval");
+
+
+                    return parameters;
+                }
+            };
+            requestQueue.add(stringrequest);
+
+
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+        } catch (NullPointerException e) {
+
+        }
 
     }
 
@@ -76,9 +177,6 @@ public class Verify_educaton extends Activity {
             toast.show();
 
         } else {
-            SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
-             email = prefs.getString("email", "");
-            password = prefs.getString("password", "");
 
             ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
             RequestQueue requestQueue = Volley.newRequestQueue(Verify_educaton.this);

@@ -14,12 +14,13 @@ import java.util.HashMap;
 /**
  * Created by Kumar on 8/19/2016.
  */
-public class List_View_Adapter extends BaseAdapter {
+public class CreditsList_View_Adapter extends BaseAdapter {
     Activity activity;
     TextView nameTv,dateTV;
 
     public ArrayList<HashMap<String, String>> list;
-    public List_View_Adapter(Activity activity, ArrayList<HashMap<String, String>> list){
+
+    public CreditsList_View_Adapter(Activity activity, ArrayList<HashMap<String, String>> list) {
         super();
 
         this.activity=activity;
@@ -49,7 +50,7 @@ public class List_View_Adapter extends BaseAdapter {
 
         if(convertView == null){
 
-            convertView=inflater.inflate(R.layout.list_view_root_element, null);
+            convertView = inflater.inflate(R.layout.credits_list_view_root_element, null);
 
             nameTv=(TextView) convertView.findViewById(R.id.lv_name);
             dateTV=(TextView) convertView.findViewById(R.id.lv_date);

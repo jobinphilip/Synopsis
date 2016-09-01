@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -24,10 +25,11 @@ public class Verified_referals_list extends Activity {
 
         lv=(ListView)findViewById(R.id.verified_referals_LV);
 
-        List_View_Adapter adapter=new List_View_Adapter(this, referance_list);
+        CreditsList_View_Adapter adapter = new CreditsList_View_Adapter(this, referance_list);
         lv.setAdapter(adapter);
 
 
 
     }
+
 }

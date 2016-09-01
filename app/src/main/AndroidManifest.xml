@@ -35,6 +35,16 @@
         <activity android:name=".Verify_Identity"  android:noHistory="true"  android:configChanges="orientation|screenSize|keyboardHidden"  android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Credits"  android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".Company_register"  android:noHistory="true" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Verify_Education_List"
+            android:noHistory="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Verify_education_details"
+            android:noHistory="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"></activity>
 
 
     </application>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:id="@+id/edu_verification_header"
+        android:layout_alignParentTop="true"
+        android:text="Education Details"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="@color/synopsis_blue" />
+
+    <ListView
+        android:id="@+id/educ_verification_listview"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/edu_verification_header"
+        android:layout_above="@+id/verify_edu_sbmit_btn"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/verify_edu_sbmit_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_rectangle_blue"
+        android:onClick="add_educationfn"
+        android:text="Add education"
+        android:textColor="@color/white" />
+</RelativeLayout>

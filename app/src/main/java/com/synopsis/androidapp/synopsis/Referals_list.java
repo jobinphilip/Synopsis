@@ -27,7 +27,7 @@ public class Referals_list extends Activity {
 
         lv=(ListView)findViewById(R.id.referals_LV);
 
-        List_View_Adapter adapter=new List_View_Adapter(this, referance_list);
+        CreditsList_View_Adapter adapter = new CreditsList_View_Adapter(this, referance_list);
         lv.setAdapter(adapter);
 
 

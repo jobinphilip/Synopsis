@@ -73,7 +73,7 @@ float credits_self_verify_amnt,    credits_verified_referal_number, credits_veri
                     String error = credits_jobj.getString("error");
 
                     if (result.equals("success")) {
-                    Log.d("jobin","here");
+
                         String verification_status = credits_jobj.getString("verification_status");
                         float self_verification_rate = credits_jobj.getInt("self_verification_rate");
 
