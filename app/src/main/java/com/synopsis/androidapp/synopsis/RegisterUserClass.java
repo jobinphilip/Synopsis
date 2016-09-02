@@ -13,7 +13,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,13 +40,14 @@ import java.util.regex.Pattern;
 public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
     boolean visibility = false;
+    Spinner self_or_refer_spinner;
     EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt;
-    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId;
-
+    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_user_page);
+        self_or_refer_spinner = (Spinner) findViewById(R.id.self_or_refer_spinner);
         first_nameET = (EditText) findViewById(R.id.firstname_ET);
         last_nameET = (EditText) findViewById(R.id.last_nameET);
         phoneET = (EditText) findViewById(R.id.phone_ET);
@@ -52,8 +56,32 @@ public class RegisterUserClass extends Activity {
         passwordET = (EditText) findViewById(R.id.passwordET);
         country_codeET = (EditText) findViewById(R.id.Country_code_reg_user);
         referorIdEt = (EditText) findViewById(R.id.referorIdET);
+        referorIdEt.setEnabled(false);
         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.register_by, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        self_or_refer_spinner.setAdapter(adapter);
+        self_or_refer_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                referance_type = parent.getItemAtPosition(position).toString();
+                if (referance_type.matches("Referance")) {
+                    referorIdEt.setEnabled(true);
+                } else {
+                    referorIdEt.setEnabled(false);
+                    referorIdEt.setText("");
+                }
+                Log.d("jobin", "selected referrance type :" + referance_type);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         passwordET.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -188,7 +216,7 @@ public class RegisterUserClass extends Activity {
 
                 } else {
 
-                    if (country_codeET.getText().length() < 3 && phoneET.getText().toString().trim().length() != 10) {
+                    if (country_codeET.getText().length() <= 3 && phoneET.getText().toString().trim().length() != 10) {
                         phoneET.setError("Phone number should be 10 digits for this country code ");
                     } else {
                         phone_string = phoneET.getText().toString().trim();
