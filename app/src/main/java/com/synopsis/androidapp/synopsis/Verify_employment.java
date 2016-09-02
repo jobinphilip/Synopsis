@@ -39,8 +39,8 @@ import java.util.Map;
  * Created by User on 7/21/2016.
  */
 public class Verify_employment extends Activity implements AdapterView.OnItemClickListener {
-    EditText verify_emp_joindateET, verify_emp_resigndateET, employment_verify_nameET, employment_verify_contact_noET, employment_verify_employee_idET, employment_verify_designationET, employment_verify_compensationET, employment_verify_alternate_numET, employment_verify_supervisor_nameET, employment_verify_supervisor_contactET, employment_verify_reason_of_leavingET;
-    String employment_verify_name, employment_verify_contact_no, employment_verify_employee_id, employment_verify_date_ofjoin, employment_verify_date_of_resign, employment_verify_designation, employment_verify_compensation, employment_verify_location, employment_verify_alternate_num, employment_verify_supervisor_name,employment_verify_supervisor_contact, employment_verify_reason_of_leaving, url, email, password;
+    EditText verify_emp_joindateET, verify_emp_resigndateET, employment_verify_nameET, employment_verify_contact_noET, employment_verify_employee_idET, employment_verify_designationET, employment_verify_compensationET, employment_verify_supervisor_nameET, employment_verify_supervisor_contactET, employment_verify_reason_of_leavingET;
+    String employment_verify_name, employment_verify_contact_no, employment_verify_employee_id, employment_verify_date_ofjoin, employment_verify_date_of_resign, employment_verify_designation, employment_verify_compensation, employment_verify_location, employment_verify_supervisor_name, employment_verify_supervisor_contact, employment_verify_reason_of_leaving, url, email, password;
     private Calendar calendar;
     AutoCompleteTextView autoCompView;
     private int year, month, day;
@@ -56,7 +56,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
         employment_verify_designationET = (EditText) findViewById(R.id.employment_verification_designation);
         employment_verify_compensationET = (EditText) findViewById(R.id.employment_verification_compensation);
 
-        employment_verify_alternate_numET = (EditText) findViewById(R.id.employment_verification_alternate_phone);
+
         employment_verify_supervisor_nameET = (EditText) findViewById(R.id.employment_verification_supervisor_name);
         employment_verify_supervisor_contactET = (EditText) findViewById(R.id.employment_verification_supervisor_contact);
         employment_verify_reason_of_leavingET = (EditText) findViewById(R.id.employment_verification_reason_for_leaving);
@@ -88,7 +88,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
         employment_verify_designation = employment_verify_designationET.getText().toString().trim();
         employment_verify_compensation = employment_verify_compensationET.getText().toString().trim();
         employment_verify_location = autoCompView.getText().toString().trim();
-        employment_verify_alternate_num = employment_verify_alternate_numET.getText().toString().trim();
+
         employment_verify_supervisor_name = employment_verify_supervisor_nameET.getText().toString().trim();
         employment_verify_supervisor_contact = employment_verify_supervisor_contactET.getText().toString().trim();
         employment_verify_reason_of_leaving = employment_verify_reason_of_leavingET.getText().toString().trim();
@@ -179,7 +179,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
                     parameters.put("employment_verify_designation", employment_verify_designation);
                     parameters.put("employment_verify_compensation", employment_verify_compensation);
                     parameters.put("employment_verify_location", employment_verify_location);
-                    parameters.put("employment_verify_alternate_num", employment_verify_alternate_num);
+
                     parameters.put("employment_verify_supervisor_name", employment_verify_supervisor_name);
                     parameters.put("employment_verify_supervisor_contact", employment_verify_supervisor_contact);
                     parameters.put("employment_verify_reason_of_leaving", employment_verify_reason_of_leaving);

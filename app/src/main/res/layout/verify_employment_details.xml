@@ -144,21 +144,7 @@
             </AutoCompleteTextView>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/alternateNoLO"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/employment_verification_alternate_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="Alternate phone number (optional)"
-                    android:inputType="phone"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-            </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/supervisornmaeLO"
                 android:layout_width="match_parent"
@@ -207,7 +193,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/verify_employment_submitBtn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="verifyEmploymentFn"

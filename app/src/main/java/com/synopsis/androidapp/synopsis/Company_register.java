@@ -164,149 +164,155 @@ public class Company_register extends Activity {
         company_submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                company_name_string = company_nameET.getText().toString().trim();
-                company_contact_person_string = company_contact_personET.getText().toString().trim();
-                company_email_string = company_emailET.getText().toString().trim();
-                company_designation_string = company_designationET.getText().toString().trim();
-                company_country_code_string = company_country_codeET.getText().toString().trim();
-                if (company_country_code_string.equals(null) || company_country_code_string.matches("")) {
-                    company_country_code_string = "+91";
-                }
-                company_mobile_string = company_mobileET.getText().toString().trim();
+                if (company_checkBox.isChecked()) {
 
-                company_employee_number_string = company_employee_numberET.getText().toString().trim();
+                    company_name_string = company_nameET.getText().toString().trim();
+                    company_contact_person_string = company_contact_personET.getText().toString().trim();
+                    company_email_string = company_emailET.getText().toString().trim();
+                    company_designation_string = company_designationET.getText().toString().trim();
+                    company_country_code_string = company_country_codeET.getText().toString().trim();
+                    if (company_country_code_string.equals(null) || company_country_code_string.matches("")) {
+                        company_country_code_string = "+91";
+                    }
+                    company_mobile_string = company_mobileET.getText().toString().trim();
 
-
-                String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-                CharSequence inputStr = company_email_string;
-
-                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(inputStr);
-                if (!(matcher.matches())) {
+                    company_employee_number_string = company_employee_numberET.getText().toString().trim();
 
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-                } else if (company_name_string.matches("") || company_contact_person_string.matches("") || company_email_string.matches("") || company_designation_string.matches("") || company_mobile_string.matches("") || company_employee_number_string.matches("") || company_interested_in_string.matches("") || company_type_string.matches("")) {
+                    String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+                    CharSequence inputStr = company_email_string;
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-                }
+                    Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                    Matcher matcher = pattern.matcher(inputStr);
+                    if (!(matcher.matches())) {
+
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    } else if (company_name_string.matches("") || company_contact_person_string.matches("") || company_email_string.matches("") || company_designation_string.matches("") || company_mobile_string.matches("") || company_employee_number_string.matches("") || company_interested_in_string.matches("") || company_type_string.matches("")) {
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    }
 
                 /* else if (company_mobile_string.length() < 10) {
                     Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
                 }
                 */
-                else if (!(company_mobile_string.matches("[0-9]+"))) {
+                    else if (!(company_mobile_string.matches("[0-9]+"))) {
 
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-                } else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    } else {
              /*
 
                     if (company_mobile_string.length() > 10) {
                         company_mobile_string = company_mobile_string.substring(company_mobile_string.length() - 10, company_mobile_string.length());
                     }
 */
-                    String url = Constants.baseUrl + "company_registration.php";
+                        String url = Constants.baseUrl + "company_registration.php";
 
-                    RequestQueue requestQueue = Volley.newRequestQueue(Company_register.this);
+                        RequestQueue requestQueue = Volley.newRequestQueue(Company_register.this);
 
-                    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-                    final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+                        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+                        final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
 ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
 
-                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("jobin", "string response is : " + response);
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
 
-                            try {
-                                JSONObject jobject = new JSONObject(response);
-                                String result = jobject.getString("result").trim();
-                                String error = jobject.getString("error").trim();
-                                Log.d("jobin", "result from server is: " + result + "error is:" + error);
-                                if (result.equals("success")) {
-                                    String message = "Thank you for registering with Synopsis. We will contact you soon.";
-
-
-                                    final AlertDialog.Builder builder = new AlertDialog.Builder(Company_register.this);
-                                    builder.setTitle("Message");
-                                    builder.setMessage(message);
-
-                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(getApplicationContext(), Start_Application.class);
-                                            startActivity(intent);
-                                        }
-                                    });
-                                    builder.create().show();
+                                try {
+                                    JSONObject jobject = new JSONObject(response);
+                                    String result = jobject.getString("result").trim();
+                                    String error = jobject.getString("error").trim();
+                                    Log.d("jobin", "result from server is: " + result + "error is:" + error);
+                                    if (result.equals("success")) {
+                                        String message = "Thank you for registering with Synopsis. We will contact you soon.";
 
 
-                                } else {
-                                    Log.d("jobin", "error from server:  " + result.toString());
-                                    String message = "Kindly check your internet settings";
-                                    new AlertDialog.Builder(Company_register.this)
-                                            .setTitle("Synopsis")
-                                            .setMessage(message)
-                                            .setPositiveButton("ok", null)
-                                            .show();
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Company_register.this);
+                                        builder.setTitle("Message");
+                                        builder.setMessage(message);
+
+                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        builder.create().show();
+
+
+                                    } else {
+                                        Log.d("jobin", "error from server:  " + result.toString());
+                                        String message = "Kindly check your internet settings";
+                                        new AlertDialog.Builder(Company_register.this)
+                                                .setTitle("Synopsis")
+                                                .setMessage(message)
+                                                .setPositiveButton("ok", null)
+                                                .show();
+                                    }
+
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
                                 }
 
-                            } catch (JSONException e) {
-                                Log.d("jobin", "json errror:" + e);
+
                             }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "volley error :  " + error.toString());
+                                String message = "Kindly check your internet settings";
+                                new AlertDialog.Builder(Company_register.this)
+                                        .setTitle("Synopsis")
+                                        .setMessage(message)
+                                        .setPositiveButton("ok", null)
+                                        .show();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+
+                                parameters.put("company_name", company_name_string);
+                                parameters.put("company_contact_person", company_contact_person_string);
+                                parameters.put("company_email", company_email_string);
+                                parameters.put("company_designation", company_designation_string);
+                                parameters.put("company_mobile_country_code", company_country_code_string);
+                                parameters.put("company_mobile", company_mobile_string);
+                                parameters.put("company_employee_number", company_employee_number_string);
+                                parameters.put("company_interested_in", company_interested_in_string);
+                                parameters.put("company_type", company_type_string);
+                                parameters.put("ipAddress", ipAddress);
+                                parameters.put("Action", "company_registration_form");
+
+                                Log.d("jobin", "prameters added");
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(stringrequest);
 
 
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("jobin", "volley error :  " + error.toString());
-                            String message = "Kindly check your internet settings";
-                            new AlertDialog.Builder(Company_register.this)
-                                    .setTitle("Synopsis")
-                                    .setMessage(message)
-                                    .setPositiveButton("ok", null)
-                                    .show();
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> parameters = new HashMap<String, String>();
-
-                            parameters.put("company_name", company_name_string);
-                            parameters.put("company_contact_person", company_contact_person_string);
-                            parameters.put("company_email", company_email_string);
-                            parameters.put("company_designation", company_designation_string);
-                            parameters.put("company_mobile_country_code", company_country_code_string);
-                            parameters.put("company_mobile", company_mobile_string);
-                            parameters.put("company_employee_number", company_employee_number_string);
-                            parameters.put("company_interested_in", company_interested_in_string);
-                            parameters.put("company_type", company_type_string);
-                            parameters.put("ipAddress", ipAddress);
-                            parameters.put("Action", "company_registration_form");
-
-                            Log.d("jobin", "prameters added");
-                            return parameters;
-                        }
-                    };
-                    requestQueue.add(stringrequest);
-
-
-                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                            10000,
-                            1,
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000,
+                                1,
+                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    }
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly accept to contact you", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
                 }
-
             }
 
 
