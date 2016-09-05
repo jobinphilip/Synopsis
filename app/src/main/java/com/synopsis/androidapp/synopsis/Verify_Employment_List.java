@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +33,8 @@ import java.util.Map;
 public class Verify_Employment_List extends Activity {
     private ListView lv;
     int employment_details_length;
+    Button verify_employment_list_add_employerBtn;
+    String verification_status;
     ArrayList<HashMap<String, String>> employment_details;
 
     @Override
@@ -40,7 +43,13 @@ public class Verify_Employment_List extends Activity {
         setContentView(R.layout.verify_employment_list);
         lv = (ListView) findViewById(R.id.emp_verification_listview);
 
-
+        verify_employment_list_add_employerBtn = (Button) findViewById(R.id.verify_employment_list_add_employerBtn);
+        verify_employment_list_add_employerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Verify_employment.class));
+            }
+        });
 ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
         String url = Constants.baseUrl + "employment_verification_submit.php";
         RequestQueue requestQueue = Volley.newRequestQueue(Verify_Employment_List.this);
@@ -53,6 +62,7 @@ public class Verify_Employment_List extends Activity {
                 try {
                     JSONObject emp_verify_details = new JSONObject(response);
                     String result = emp_verify_details.getString("result");
+                    verification_status = emp_verify_details.getString("verification_status");
 
                     if (result.equals("success")) {
 
@@ -64,9 +74,9 @@ public class Verify_Employment_List extends Activity {
 
                         for (int i = 0; i < employment_details_length; i++) {
                             JSONObject obj = employment_detailsJsonArray.getJSONObject(i);
-/*(','designation'=>'','compensation'=>'','location'=>'','superviser_name'=>'','superviser_contact'=>'','leaving_reason'=>''));
-        */
+
                             HashMap<String, String> temp = new HashMap<String, String>();
+                            temp.put("random_code", obj.getString("emp_ver_tbl_row_referance_id"));
                             temp.put("employer_name", obj.getString("emp_ver_tbl_employer_name"));
                             temp.put("contact", obj.getString("emp_ver_tbl_contact"));
                             temp.put("employee_id", obj.getString("emp_ver_tbl_employee_id"));
@@ -134,7 +144,7 @@ public class Verify_Employment_List extends Activity {
 
                 Intent intent = new Intent(getApplicationContext(), Verify_Employment_Details.class);
                 HashMap<String, String> extracted_emp_detail = employment_details.get(position);
-
+                intent.putExtra("verification_status", verification_status);
                 intent.putExtra("extracted_emp_detail", extracted_emp_detail);
                 startActivity(intent);
             }

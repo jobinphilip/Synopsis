@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
     String employment_verify_name, employment_verify_contact_no, employment_verify_employee_id, employment_verify_date_ofjoin, employment_verify_date_of_resign, employment_verify_designation, employment_verify_compensation, employment_verify_location, employment_verify_supervisor_name, employment_verify_supervisor_contact, employment_verify_reason_of_leaving, url, email, password;
     private Calendar calendar;
     AutoCompleteTextView autoCompView;
+    Button verify_employment_submitBtn;
     private int year, month, day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,135 +74,132 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(Verify_employment.this, R.layout.list_item));
         autoCompView.setOnItemClickListener(Verify_employment.this);
 
+        verify_employment_submitBtn = (Button) findViewById(R.id.verify_employment_submitBtn);
+        verify_employment_submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                employment_verify_name = employment_verify_nameET.getText().toString().trim();
+                employment_verify_contact_no = employment_verify_contact_noET.getText().toString().trim();
+                employment_verify_employee_id = employment_verify_employee_idET.getText().toString().trim();
+                employment_verify_date_ofjoin = verify_emp_joindateET.getText().toString().trim();
+                employment_verify_date_of_resign = verify_emp_resigndateET.getText().toString().trim();
+                employment_verify_designation = employment_verify_designationET.getText().toString().trim();
+                employment_verify_compensation = employment_verify_compensationET.getText().toString().trim();
+                employment_verify_location = autoCompView.getText().toString().trim();
 
+                employment_verify_supervisor_name = employment_verify_supervisor_nameET.getText().toString().trim();
+                employment_verify_supervisor_contact = employment_verify_supervisor_contactET.getText().toString().trim();
+                employment_verify_reason_of_leaving = employment_verify_reason_of_leavingET.getText().toString().trim();
+
+
+                if (employment_verify_name.equals("") || employment_verify_date_ofjoin.equals("") || employment_verify_date_of_resign.equals("") || employment_verify_designation.equals("") || employment_verify_compensation.equals("") || employment_verify_location.equals("") || employment_verify_reason_of_leaving.equals("")) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+
+
+                } else {
+                    SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
+                    email = prefs.getString("email", "");
+                    password = prefs.getString("password", "");
+
+                    ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
+                    RequestQueue requestQueue = Volley.newRequestQueue(Verify_employment.this);
+                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            //    Log.d("jobin", "string response is : " + response);
+
+                            try {
+                                JSONObject person = new JSONObject(response);
+                                String result = person.getString("result");
+                                String error = person.getString("error");
+                                if (result.equals("success")) {
+
+                                    final AlertDialog alertDialog = new AlertDialog.Builder(Verify_employment.this).create();
+                                    alertDialog.setTitle("Title");
+                                    alertDialog.setMessage("Message");
+                                    alertDialog.setButton("exit", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+
+
+                                        }
+
+                                    });
+
+
+                                    alertDialog.setButton2("Add Employment", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    startActivity(new Intent(getApplicationContext(), Verify_employment.class));
+
+
+                                                }
+                                            }
+                                    );
+                                    alertDialog.show();
+
+
+                                } else {
+                                    Log.d("jobin", "it happened again..! errror:" + error);
+                                }
+
+                            } catch (JSONException e) {
+                                Log.d("jobin", "json errror:" + e);
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("jobin", "error response is : " + error);
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> parameters = new HashMap<String, String>();
+                            parameters.put("employment_verify_name", employment_verify_name);
+                            parameters.put("employment_verify_contact_no", employment_verify_contact_no);
+                            parameters.put("employment_verify_employee_id", employment_verify_employee_id);
+                            parameters.put("employment_verify_date_ofjoin", employment_verify_date_ofjoin);
+                            parameters.put("employment_verify_date_of_resign", employment_verify_date_of_resign);
+                            parameters.put("employment_verify_designation", employment_verify_designation);
+                            parameters.put("employment_verify_compensation", employment_verify_compensation);
+                            parameters.put("employment_verify_location", employment_verify_location);
+
+                            parameters.put("employment_verify_supervisor_name", employment_verify_supervisor_name);
+                            parameters.put("employment_verify_supervisor_contact", employment_verify_supervisor_contact);
+                            parameters.put("employment_verify_reason_of_leaving", employment_verify_reason_of_leaving);
+
+                            parameters.put("email", email);
+                            parameters.put("password", password);
+                            parameters.put("Action", "employment_verification_form");
+
+
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(stringrequest);
+
+
+                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+                }
+            }
+        });
         url = Constants.baseUrl + "employment_verification_submit.php";
 
     }
 
 
-    public void verifyEmploymentFn(View view) {
-
-        employment_verify_name = employment_verify_nameET.getText().toString().trim();
-        employment_verify_contact_no = employment_verify_contact_noET.getText().toString().trim();
-        employment_verify_employee_id = employment_verify_employee_idET.getText().toString().trim();
-        employment_verify_date_ofjoin = verify_emp_joindateET.getText().toString().trim();
-        employment_verify_date_of_resign = verify_emp_resigndateET.getText().toString().trim();
-        employment_verify_designation = employment_verify_designationET.getText().toString().trim();
-        employment_verify_compensation = employment_verify_compensationET.getText().toString().trim();
-        employment_verify_location = autoCompView.getText().toString().trim();
-
-        employment_verify_supervisor_name = employment_verify_supervisor_nameET.getText().toString().trim();
-        employment_verify_supervisor_contact = employment_verify_supervisor_contactET.getText().toString().trim();
-        employment_verify_reason_of_leaving = employment_verify_reason_of_leavingET.getText().toString().trim();
-
-
-        if (employment_verify_name.equals("") || employment_verify_date_ofjoin.equals("") || employment_verify_date_of_resign.equals("") || employment_verify_designation.equals("") || employment_verify_compensation.equals("") || employment_verify_location.equals("") || employment_verify_reason_of_leaving.equals("")) {
-
-            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-
-
-        } else {
-            SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
-            email = prefs.getString("email", "");
-            password = prefs.getString("password", "");
-
-            ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
-            RequestQueue requestQueue = Volley.newRequestQueue(Verify_employment.this);
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                //    Log.d("jobin", "string response is : " + response);
-
-                    try {
-                        JSONObject person = new JSONObject(response);
-                        String result = person.getString("result");
-                        String error = person.getString("error");
-                        if (result.equals("success")) {
-
-                            final AlertDialog alertDialog = new AlertDialog.Builder(Verify_employment.this).create();
-                            alertDialog.setTitle("Title");
-                            alertDialog.setMessage("Message");
-                            alertDialog.setButton("exit", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-
-
-                                }
-
-                            });
-
-
-                            alertDialog.setButton2("Add Employment", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            startActivity(new Intent(getApplicationContext(), Verify_employment.class));
-
-
-                                        }
-                                    }
-                            );
-                            alertDialog.show();
-
-
-
-
-
-
-
-                        } else {
-                            Log.d("jobin", "it happened again..! errror:" + error);
-                        }
-
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
-                    }
-
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("jobin", "error response is : " + error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("employment_verify_name", employment_verify_name);
-                    parameters.put("employment_verify_contact_no", employment_verify_contact_no);
-                    parameters.put("employment_verify_employee_id", employment_verify_employee_id);
-                    parameters.put("employment_verify_date_ofjoin", employment_verify_date_ofjoin);
-                    parameters.put("employment_verify_date_of_resign", employment_verify_date_of_resign);
-                    parameters.put("employment_verify_designation", employment_verify_designation);
-                    parameters.put("employment_verify_compensation", employment_verify_compensation);
-                    parameters.put("employment_verify_location", employment_verify_location);
-
-                    parameters.put("employment_verify_supervisor_name", employment_verify_supervisor_name);
-                    parameters.put("employment_verify_supervisor_contact", employment_verify_supervisor_contact);
-                    parameters.put("employment_verify_reason_of_leaving", employment_verify_reason_of_leaving);
-
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-                    parameters.put("Action", "employment_verification_form");
-
-
-                    return parameters;
-                }
-            };
-            requestQueue.add(stringrequest);
-
-
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-        }
-    }
 
     /////////////////////////////date picer fn//////////////////////////////////////
     int ETid;
