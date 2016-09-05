@@ -22,16 +22,20 @@ android:weightSum="2"
         android:layout_height="wrap_content"
         android:id="@+id/individualIv"
         android:clickable="true"
+        android:layout_above="@+id/indvidualTxt"
         android:onClick="individual_intentFn"
         android:layout_centerHorizontal="true"
         android:src="@drawable/startpage_individual_circle"
-        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+
         android:layout_gravity="center_horizontal" />
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
+            android:id="@+id/indvidualTxt"
             android:text="Individual "
-            android:layout_below="@+id/individualIv"
+            android:layout_alignParentBottom="true"
+
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
@@ -47,16 +51,18 @@ android:weightSum="2"
             android:layout_height="wrap_content"
             android:id="@+id/employer_Iv"
             android:clickable="true"
+            android:layout_above="@+id/company_txt"
             android:onClick="employer_intentFn"
             android:layout_centerHorizontal="true"
             android:src="@drawable/startpage_office_circle"
-            android:layout_weight="1"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal" />
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
-            android:text="Employer "
-            android:layout_below="@+id/employer_Iv"
+            android:id="@+id/company_txt"
+            android:text="Company"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 </LinearLayout>
