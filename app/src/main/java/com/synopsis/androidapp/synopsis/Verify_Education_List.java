@@ -36,6 +36,7 @@ public class Verify_Education_List extends Activity {
     private ListView lv;
     int education_details_length;
     ArrayList<HashMap<String, String>> education_details;
+    String verification_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class Verify_Education_List extends Activity {
                     JSONObject edu_verify_details = new JSONObject(response);
                     String result = edu_verify_details.getString("result");
                     String error = edu_verify_details.getString("error");
+                    verification_status = edu_verify_details.getString("verification_status");
+
                     if (result.equals("success")) {
 
                         String education_details_string = edu_verify_details.getString("education_details");
@@ -68,6 +71,7 @@ public class Verify_Education_List extends Activity {
                             JSONObject obj = education_detailsJsonArray.getJSONObject(i);
 
                             HashMap<String, String> temp = new HashMap<String, String>();
+                            temp.put("random_code", obj.getString("edu_ver_tbl_row_referance_id"));
                             temp.put("register_number", obj.getString("edu_ver_tbl_register_number"));
                             temp.put("collegename", obj.getString("edu_ver_tbl_college_name"));
                             temp.put("university", obj.getString("edu_ver_tbl_university_name"));
@@ -80,6 +84,7 @@ public class Verify_Education_List extends Activity {
 
 
                         }
+
 
                         Education_List_View_Adapter adapter = new Education_List_View_Adapter(Verify_Education_List.this, education_details);
                         lv.setAdapter(adapter);
@@ -132,6 +137,8 @@ public class Verify_Education_List extends Activity {
                 HashMap<String, String> extracted_edu_detail = education_details.get(position);
 
                 intent.putExtra("extracted_edu_detail", extracted_edu_detail);
+                intent.putExtra("verification_status", verification_status);
+
                 startActivity(intent);
             }
         });

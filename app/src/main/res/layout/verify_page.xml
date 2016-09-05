@@ -61,11 +61,5 @@ android:onClick="education_verifiy_fn"
         android:id="@+id/button4"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit and verify"
-        android:onClick="submit_verification_fn"
-        android:id="@+id/button5"
-        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

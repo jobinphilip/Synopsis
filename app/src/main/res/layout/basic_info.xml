@@ -11,21 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"></include>
 
-    <TextView
-        android:id="@+id/textheader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@+id/taglin"
-        android:text="@string/basic_info"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/synopsis_blue" />
 
     <ScrollView
         android:id="@+id/scrollbasic"
         android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textheader">
+        android:layout_below="@+id/taglin">
 
     <RelativeLayout
         android:layout_width="match_parent"

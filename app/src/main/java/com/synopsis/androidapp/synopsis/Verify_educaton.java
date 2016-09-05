@@ -65,8 +65,89 @@ public class Verify_educaton extends Activity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         verify_education_datepickerBtnET.setText("" + day + "/" + month + "/" + year);
 
-        url = Constants.baseUrl + "education_verification.php";
 
+        eduverifysubmitbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register_number = register_number_ET.getText().toString().trim();
+                collegename = college_nameET.getText().toString().trim();
+                university = universityET.getText().toString().trim();
+                date_of_pass = verify_education_datepickerBtnET.getText().toString().trim();
+                percentage = percentageET.getText().toString().trim();
+                courseName = courseNameET.getText().toString().trim();
+                courseType = courseTypeET.getText().toString().trim();
+
+                if (register_number.equals("") || collegename.equals("") || university.equals("") || date_of_pass.equals("") || percentage.equals("") || courseName.equals("") || courseType.equals("")) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+
+                } else {
+                    url = Constants.baseUrl + "education_verification.php";
+                    ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
+                    RequestQueue requestQueue = Volley.newRequestQueue(Verify_educaton.this);
+                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("jobin", "string response is : " + response);
+
+                            try {
+                                JSONObject person = new JSONObject(response);
+                                String result = person.getString("result");
+                                String error = person.getString("error");
+                                if (result.equals("success")) {
+                                    startActivity(new Intent(getApplicationContext(), VerifyClass.class));
+                                } else {
+                                    Log.d("jobin", "it happened again..! errror:" + error);
+                                }
+
+                            } catch (JSONException e) {
+                                Log.d("jobin", "json errror:" + e);
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("jobin", "error response is : " + error);
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> parameters = new HashMap<String, String>();
+                            parameters.put("register_number", register_number);
+                            parameters.put("collegename", collegename);
+                            parameters.put("university", university);
+                            parameters.put("month_and_year_of_pass", date_of_pass);
+                            parameters.put("percentage", percentage);
+                            parameters.put("course_name", courseName);
+                            parameters.put("course_type", courseType);
+                            parameters.put("email", email);
+                            parameters.put("password", password);
+
+
+                            parameters.put("Action", "education_verification_form");
+
+
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(stringrequest);
+
+
+                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+                }
+            }
+        });
+
+/*
 
         try {
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
@@ -158,86 +239,10 @@ public class Verify_educaton extends Activity {
         } catch (NullPointerException e) {
 
         }
+        */
 
     }
 
-    public void veriifyEducationFn(View view) {
-        register_number = register_number_ET.getText().toString().trim();
-        collegename = college_nameET.getText().toString().trim();
-        university = universityET.getText().toString().trim();
-        date_of_pass = verify_education_datepickerBtnET.getText().toString().trim();
-        percentage = percentageET.getText().toString().trim();
-        courseName = courseNameET.getText().toString().trim();
-        courseType = courseTypeET.getText().toString().trim();
-
-        if (register_number.equals("") || collegename.equals("") || university.equals("") || date_of_pass.equals("") || percentage.equals("") || courseName.equals("") || courseType.equals("")) {
-
-            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-
-        } else {
-
-            ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
-            RequestQueue requestQueue = Volley.newRequestQueue(Verify_educaton.this);
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    Log.d("jobin", "string response is : " + response);
-
-                    try {
-                        JSONObject person = new JSONObject(response);
-                        String result = person.getString("result");
-                        String error = person.getString("error");
-                        if (result.equals("success")) {
-                            startActivity(new Intent(getApplicationContext(), VerifyClass.class));
-                        } else {
-                            Log.d("jobin", "it happened again..! errror:" + error);
-                        }
-
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
-                    }
-
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("jobin", "error response is : " + error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("register_number", register_number);
-                    parameters.put("collegename", collegename);
-                    parameters.put("university", university);
-                    parameters.put("month_and_year_of_pass", date_of_pass);
-                    parameters.put("percentage", percentage);
-                    parameters.put("course_name", courseName);
-                    parameters.put("course_type", courseType);
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-
-
-                    parameters.put("Action", "education_verification_form");
-
-
-                    return parameters;
-                }
-            };
-            requestQueue.add(stringrequest);
-
-
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-        }
-    }
 
 
 /////////////////////////////date picer fn//////////////////////////////////////
