@@ -126,13 +126,13 @@
 
             <Button
                 android:id="@+id/education_verificationSubmitBtn"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="20dp"
-                android:background="@drawable/gradient_blue"
+                android:background="@drawable/rounded_rectangle_blue"
 
-                android:text="Next"
+                android:text="Save"
                 android:textColor="@color/white" />
         </LinearLayout>
 
