@@ -2,13 +2,10 @@ package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.telephony.PhoneNumberUtils;
 import android.text.InputFilter;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -16,7 +13,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,9 +36,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by User on 7/21/2016.
- */
 public class Company_register extends Activity {
 
     EditText company_nameET, company_contact_personET, company_emailET, company_designationET, company_mobileET, company_employee_numberET, company_country_codeET;
@@ -126,7 +119,6 @@ public class Company_register extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 company_type_string = parent.getItemAtPosition(position).toString();
-                Log.d("jobin", "selected company_type_string :" + company_type_string);
             }
 
             @Override
@@ -140,32 +132,24 @@ public class Company_register extends Activity {
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.company_interested_in, android.R.layout.simple_spinner_item);
-
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         company_interested_in_spinner.setAdapter(adapter2);
-
         company_interested_in_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 company_interested_in_string = parent.getItemAtPosition(position).toString();
-                Log.d("jobin", "selected interested in  :" + company_interested_in_string);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         company_submitBtn = (Button) findViewById(R.id.company_submitBtn);
         company_submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (company_checkBox.isChecked()) {
-
                     company_name_string = company_nameET.getText().toString().trim();
                     company_contact_person_string = company_contact_personET.getText().toString().trim();
                     company_email_string = company_emailET.getText().toString().trim();
@@ -185,8 +169,6 @@ public class Company_register extends Activity {
                     Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                     Matcher matcher = pattern.matcher(inputStr);
                     if (!(matcher.matches())) {
-
-
                         Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
@@ -195,25 +177,14 @@ public class Company_register extends Activity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
-                    }
-
-                /* else if (company_mobile_string.length() < 10) {
-                    Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
-                }
-                */
-                    else if (!(company_mobile_string.matches("[0-9]+"))) {
+                    } else if (!(company_mobile_string.matches("[0-9]+"))) {
 
 
                         Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                     } else {
-             /*
 
-                    if (company_mobile_string.length() > 10) {
-                        company_mobile_string = company_mobile_string.substring(company_mobile_string.length() - 10, company_mobile_string.length());
-                    }
-*/
                         String url = Constants.baseUrl + "company_registration.php";
 
                         RequestQueue requestQueue = Volley.newRequestQueue(Company_register.this);
@@ -227,13 +198,11 @@ public class Company_register extends Activity {
 
                             @Override
                             public void onResponse(String response) {
-                                Log.d("jobin", "string response is : " + response);
 
                                 try {
                                     JSONObject jobject = new JSONObject(response);
                                     String result = jobject.getString("result").trim();
                                     String error = jobject.getString("error").trim();
-                                    Log.d("jobin", "result from server is: " + result + "error is:" + error);
                                     if (result.equals("success")) {
                                         String message = "Thank you for registering with Synopsis. We will contact you soon.";
 
@@ -252,7 +221,6 @@ public class Company_register extends Activity {
 
 
                                     } else {
-                                        Log.d("jobin", "error from server:  " + result.toString());
                                         String message = "Kindly check your internet settings";
                                         new AlertDialog.Builder(Company_register.this)
                                                 .setTitle("Synopsis")
@@ -262,7 +230,6 @@ public class Company_register extends Activity {
                                     }
 
                                 } catch (JSONException e) {
-                                    Log.d("jobin", "json errror:" + e);
                                 }
 
 
@@ -271,7 +238,6 @@ public class Company_register extends Activity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("jobin", "volley error :  " + error.toString());
                                 String message = "Kindly check your internet settings";
                                 new AlertDialog.Builder(Company_register.this)
                                         .setTitle("Synopsis")
@@ -295,14 +261,10 @@ public class Company_register extends Activity {
                                 parameters.put("company_type", company_type_string);
                                 parameters.put("ipAddress", ipAddress);
                                 parameters.put("Action", "company_registration_form");
-
-                                Log.d("jobin", "prameters added");
                                 return parameters;
                             }
                         };
                         requestQueue.add(stringrequest);
-
-
                         stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                                 10000,
                                 1,
@@ -317,9 +279,5 @@ public class Company_register extends Activity {
 
 
         });
-
-
     }
-
-
 }

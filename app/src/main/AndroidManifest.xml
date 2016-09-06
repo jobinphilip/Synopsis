@@ -23,7 +23,7 @@
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".Dash_board"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".LoginClass"

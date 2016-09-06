@@ -1,6 +1,9 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +15,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentManager;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -38,19 +42,22 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by User on 7/15/2016.
- */
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
+    private int PICK_IMAGE_REQUEST = 1;
+    private int CAMERA_PIC_REQUEST = 0;
     String email, password, url, image_base64string;
     RequestQueue requestQueue;
     public static final String Login_details = "Login_details";
@@ -104,12 +111,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     String country = jobj.getString("country");
                     String place = city + ", " + state + ", " + country;
                     String mobile = jobj.getString("mobile");
-
-
-                    //    image_base64string=jobj.getString("image");
-                    //     Log.d("jobin","image:"+image_base64string);
-
-
                     if (result.equals("success")) {
                         if (img_url.matches("")) {
                             Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
@@ -124,8 +125,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                         if (!(synopsis_id.equals("null"))) {
                             synopsis_idTV.setVisibility(View.VISIBLE);
                             synopsis_idTV.setText(synopsis_id);
-
-
                         }
 
                     } else {
@@ -134,9 +133,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     }
 
                 } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
+
                 } catch (NullPointerException e) {
-                    Log.d("jobin", "null pointer error fetching image:" + e);
                 }
 
 
@@ -145,7 +143,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
             }
         }) {
             @Override
@@ -206,6 +203,145 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
+    public void camera_activityfn(View v) {
+        final AlertDialog alertDialog = new AlertDialog.Builder(Dash_board.this).create();
+        alertDialog.setTitle("Title");
+        alertDialog.setMessage("Message");
+        alertDialog.setButton("camera", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera_intent, CAMERA_PIC_REQUEST);
+
+
+            }
+
+        });
+        alertDialog.setButton2("gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                    }
+                }
+        );
+        alertDialog.show();
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CAMERA_PIC_REQUEST && resultCode == RESULT_OK) {
+
+
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            Bitmap Bitmap2 = getResizedBitmap(bitmap, 500);
+
+
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/synopsis");
+            myDir.mkdirs();
+            Random generator = new Random();
+            int n = 10000;
+            n = generator.nextInt(n);
+            String profilename = "Image-" + n + ".jpg";
+            File file = new File(myDir, profilename);
+            if (file.exists()) file.delete();
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                Bitmap2.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                out.flush();
+                out.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String url_to_profile = root + "/synopsis/" + profilename;
+
+
+            SharedPreferences prefs = this.getSharedPreferences(
+                    "image_processing_class", Context.MODE_PRIVATE);
+            prefs.edit().putString("class", "Dashboard").commit();
+
+            Intent I = new Intent(this, Camera_activity.class);
+            I.putExtra("url_to_profile", url_to_profile);
+
+
+            startActivity(I);
+            finish();
+        } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                //Getting the Bitmap from Gallery
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap Bitmap2 = getResizedBitmap(bitmap, 300);
+
+
+                String root = Environment.getExternalStorageDirectory().toString();
+                File myDir = new File(root + "/synopsis");
+                myDir.mkdirs();
+                Random generator = new Random();
+                int n = 10000;
+                n = generator.nextInt(n);
+                String profilename = "Image-" + n + ".jpg";
+                File file = new File(myDir, profilename);
+                if (file.exists()) file.delete();
+                try {
+
+                    FileOutputStream out = new FileOutputStream(file);
+                    Bitmap2.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    out.flush();
+                    out.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String url_to_profile = root + "/synopsis/" + profilename;
+                Intent I = new Intent(this, Camera_activity.class);
+                I.putExtra("url_to_profile", url_to_profile);
+                startActivity(I);
+                finish();
+
+            } catch (IOException e) {
+
+                Log.d("jobin", "exception in setting bitmap to imageview:" + e.toString());
+            }
+
+
+        }
+    }
+
+
+    ////////////////////////choose from gallery or from camera ends//////////////////////
+    ///////////////////////////resize image/////////////////////////////////////
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+
+    }
+
+    /////////////////////////////resize image ends///////////////////////////////////
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -223,8 +359,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    //    getApplicationContext().finishAffinity();
-
                     finish();
                 }
             });
@@ -247,10 +381,11 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         }
         else if(id == R.id.nav_share)
         {
-
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/html");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
+            startActivity(Intent.createChooser(sharingIntent, "Share using"));
         }
-
-
         else {
             switch (id) {
 
@@ -294,11 +429,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                 default:
                     fragment = new Nav_about_usFragment();
                     break;
-
-
             }
-
-
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

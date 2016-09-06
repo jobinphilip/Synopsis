@@ -1,7 +1,6 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Kumar on 8/19/2016.
- */
+
 public class CreditsList_View_Adapter extends BaseAdapter {
     Activity activity;
     TextView nameTv,dateTV;
@@ -25,7 +22,6 @@ public class CreditsList_View_Adapter extends BaseAdapter {
 
         this.activity=activity;
         this.list=list;
-        Log.d("jobin","in the listview adapter:"+ this.list+"");
     }
 
 
@@ -33,17 +29,14 @@ public class CreditsList_View_Adapter extends BaseAdapter {
     public int getCount() {
         return list.size();
     }
-
     @Override
     public Object getItem(int position) {
         return list.get(position);
     }
-
     @Override
     public long getItemId(int position) {
         return 0;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater=activity.getLayoutInflater();
