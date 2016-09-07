@@ -42,7 +42,7 @@ public class RegisterUserClass extends Activity {
     boolean visibility = false;
     Spinner self_or_refer_spinner;
     EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt;
-    String firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
+    String referror_string, firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,88 @@ public class RegisterUserClass extends Activity {
         passwordET = (EditText) findViewById(R.id.passwordET);
         country_codeET = (EditText) findViewById(R.id.Country_code_reg_user);
         referorIdEt = (EditText) findViewById(R.id.referorIdET);
+        referorIdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+
+                    referror_string = referorIdEt.getText().toString().trim();
+
+
+                    String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+                    CharSequence inputStr = referror_string;
+
+                    Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                    Matcher matcher = pattern.matcher(inputStr);
+                    if (!(matcher.matches())) {
+                        referorIdEt.setError("invalid referror Id");
+                    } else if (referror_string.matches("")) {
+                        referorIdEt.setError(null);
+                    } else {
+
+
+                        /////////////////////////////////////////////////server check phone number already registered//////////////////////
+                        RequestQueue requestQueue = Volley.newRequestQueue(RegisterUserClass.this);
+                        String url = Constants.baseUrl + "email_check.php";
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
+
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
+
+                                    if (result.equals("user_exists")) {
+                                        referorIdEt.setError(null);
+                                        return;
+
+                                    } else {
+                                        referorIdEt.setError("Invalid Referror Id ");
+                                        return;
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
+                                }
+
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "error response is : " + error);
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+
+                                parameters.put("email", referror_string);
+
+
+                                parameters.put("Action", "email_check_form");
+
+
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(stringrequest);
+
+
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                    }
+                    /////////////////////////////////////////////////server check phone number already registered ends//////////////////////
+
+                }
+            }
+        });
+
         referorIdEt.setEnabled(false);
         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
@@ -69,7 +151,7 @@ public class RegisterUserClass extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 referance_type = parent.getItemAtPosition(position).toString();
-                if (referance_type.matches("Referance")) {
+                if (referance_type.matches("Referred By Others")) {
                     referorIdEt.setEnabled(true);
                 } else {
                     referorIdEt.setEnabled(false);
@@ -347,23 +429,13 @@ public class RegisterUserClass extends Activity {
                 Toast toast = Toast.makeText(getApplicationContext(), "password length should be between 6 to 12 characters", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
-            }
-
-            /* else if (phone_string.length() < 10) {
-                Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG).show();
-            }
-            */
-            else if (!(phone_string.matches("[0-9]+"))) {
+            } else if (!(phone_string.matches("[0-9]+"))) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "invalid phone Number", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
             } else {
 
-           /*     if (phone_string.length() > 10) {
-                    phone_string = phone_string.substring(phone_string.length() - 10, phone_string.length());
-                }
-             */
 
                 if (country_code_string.matches("")) {
                     country_code_string = "+91";

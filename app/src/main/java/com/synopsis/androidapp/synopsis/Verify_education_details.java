@@ -193,14 +193,13 @@ public class Verify_education_details extends Activity {
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker arg0, int year, int month, int date) {
+        public void onDateSet(DatePicker arg0, int year, int month, int day) {
             Log.d("jobin", "datepick3");
-            // arg1 = year
-            // arg2 = month
-            month = month + 1;
-            // arg3 = day
 
-            verify_education_datepickerBtnET.setText("" + date + "/" + month + "/" + year);
+            month = month + 1;
+
+
+            verify_education_datepickerBtnET.setText(year + "/" + month + "/" + day);
         }
     };
 /////////////////////////////////date picker ends//////////////////////////////

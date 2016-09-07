@@ -33,15 +33,22 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-
-            <Spinner
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+
+                android:layout_gravity="bottom"
                 android:id="@+id/self_or_refer_spinner" />
 
             <android.support.design.widget.TextInputLayout
 
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -54,6 +61,7 @@
                     android:textColor="@drawable/text_colors" />
 
             </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
 
@@ -86,26 +94,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@drawable/text_colors" />
             </android.support.design.widget.TextInputLayout>
-            <!--
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/phone_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-
-                            <EditText
-                                android:id="@+id/phone_ET"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Mobile number"
-
-
-                                android:inputType="phone"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/synopsis_blue" />
-                        </android.support.design.widget.TextInputLayout>
-            -->
 
 
             <LinearLayout

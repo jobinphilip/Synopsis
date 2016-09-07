@@ -83,6 +83,7 @@ public class Verify_Employment_List extends Activity {
                             temp.put("working_from", obj.getString("emp_ver_tbl_working_from"));
                             temp.put("worked_till", obj.getString("emp_ver_tbl_worked_till"));
                             temp.put("designation", obj.getString("emp_ver_tbl_designation"));
+                            temp.put("currency", obj.getString("emp_ver_tbl_currency"));
                             temp.put("compensation", obj.getString("emp_ver_tbl_compensation"));
                             temp.put("location", obj.getString("emp_ver_tbl_location"));
 
