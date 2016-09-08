@@ -1,98 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="20dp"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
 
     <TextView
+        android:id="@+id/textView15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Verify User"
+        android:layout_gravity="center_horizontal"
 
         android:layout_margin="20dp"
+        android:text="Verify User"
         android:textAlignment="center"
-        android:id="@+id/textView15"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Download the form"
         android:id="@+id/textView7"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Download/Email Form"
-        android:paddingRight="20dp"
-        android:clickable="true"
-        android:onClick="download_form_fn"
-        android:layout_margin="10dp"
-        android:drawableRight="@drawable/drawable_edit"
-        android:textColor="@color/white"
-        android:paddingLeft="20dp"
-        android:drawableLeft="@drawable/nav_my_synopsis"
-        android:background="@drawable/gradient_blue"
-        android:id="@+id/button5"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="______  OR ______"
+        android:layout_gravity="center_horizontal"
+        android:text="Download the form"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/verify_main_download_emailBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/gradient_blue"
+        android:clickable="true"
+
+        android:onClick="download_form_fn"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Download/Email Form"
+        android:textColor="@color/white" />
+
+    <TextView
         android:id="@+id/textView19"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="______  OR ______"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
+        android:id="@+id/verify_main_id_verify_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Identity Verification"
-        android:drawableRight="@drawable/drawable_edit"
-        android:paddingRight="20dp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:paddingLeft="20dp"
-android:onClick="identity_verify_fn"
+        android:background="@drawable/gradient_blue"
         android:drawableLeft="@drawable/nav_my_synopsis"
-        android:background="@drawable/gradient_blue"
-        android:id="@+id/button"
+        android:drawableRight="@drawable/drawable_edit"
+        android:onClick="identity_verify_fn"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Identity Verification"
 
-        android:layout_gravity="center_horizontal" />
+        android:textColor="@color/white" />
+
     <Button
+        android:id="@+id/verify_main_edu_verifyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Education verification"
-android:onClick="education_verifiy_fn"
-        android:drawableRight="@drawable/drawable_edit"
-        android:paddingRight="20dp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:paddingLeft="20dp"
+        android:background="@drawable/gradient_blue"
         android:drawableLeft="@drawable/drawable_education"
-        android:textColor="@color/white"
-        android:background="@drawable/gradient_blue"
-        android:id="@+id/button2"
-        android:layout_gravity="center_horizontal" />
+        android:drawableRight="@drawable/drawable_edit"
+        android:onClick="education_verifiy_fn"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Education verification"
+        android:textColor="@color/white" />
 
     <Button
+        android:id="@+id/verify_main_emp_verifyBtn"
         android:layout_width="match_parent"
-        android:paddingLeft="20dp"
-        android:drawableRight="@drawable/drawable_edit"
-        android:paddingRight="20dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-      android:onClick="employment_verify_fn"
-        android:drawableLeft="@drawable/drawable_identity"
-        android:textColor="@color/white"
         android:background="@drawable/gradient_blue"
+        android:drawableLeft="@drawable/drawable_identity"
+        android:drawableRight="@drawable/drawable_edit"
+        android:onClick="employment_verify_fn"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Employment Verification"
-        android:id="@+id/button4"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/verify_main_pay_and_verifyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/gradient_blue"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Pay and get verified"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

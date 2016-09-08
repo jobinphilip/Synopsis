@@ -313,7 +313,15 @@ public class Verify_Identity extends Activity {
         //   email2 = emailET.getText().toString().trim();
         alternatemobile2 = alternate_mobileET.getText().toString().trim();
         dateofbirth2 = dobET.getText().toString().trim();
-        String year_ofbirth = dateofbirth2.substring(dateofbirth2.length() - 4, dateofbirth2.length());
+        if (!dateofbirth2.matches("")) {
+            String year_ofbirth = dateofbirth2.substring(dateofbirth2.length() - 4, dateofbirth2.length());
+            if (Integer.parseInt(year_ofbirth) > year - 16) {
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
+        }
         country_code2 = country_codeET.getText().toString().trim();
         alternate_country_code2 = alternate_country_codeET.getText().toString().trim();
         int selectedId = genderRadioGroup.getCheckedRadioButtonId();
@@ -321,17 +329,14 @@ public class Verify_Identity extends Activity {
         // find the radiobutton by returned id
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         gender2 = radioButton.getText().toString();
+       /*
         if (firstname2.equals("") || lastname2.equals("") || fathername2.equals("") || mobile2.equals("") || dateofbirth2.equals("")) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the missing fields", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
-        } else if (Integer.parseInt(year_ofbirth) > year - 16) {
-
-            Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-        } else {
+        }
+        */
 
             ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
             RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
@@ -393,7 +398,7 @@ public class Verify_Identity extends Activity {
             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        }
+
     }
 
 

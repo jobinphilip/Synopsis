@@ -174,7 +174,7 @@ public class Verify_Employment_Details extends Activity {
                     employment_verify_supervisor_contact = employment_verification_supervisor_contactET.getText().toString().trim();
                     employment_verify_reason_of_leaving = employment_verification_reason_for_leavingET.getText().toString().trim();
 
-
+/*
                     if (employment_verify_name.equals("") || employment_verify_date_ofjoin.equals("") || employment_verify_date_of_resign.equals("") || employment_verify_designation.equals("") || employment_verify_compensation.equals("") || employment_verify_location.equals("") || employment_verify_reason_of_leaving.equals("")) {
 
                         Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
@@ -182,7 +182,10 @@ public class Verify_Employment_Details extends Activity {
                         toast.show();
 
 
-                    } else {
+                    }
+                    */
+
+
                         SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
                         email = prefs.getString("email", "");
                         password = prefs.getString("password", "");
@@ -267,7 +270,6 @@ public class Verify_Employment_Details extends Activity {
                                 10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
-                    }
                 }
             });
         }

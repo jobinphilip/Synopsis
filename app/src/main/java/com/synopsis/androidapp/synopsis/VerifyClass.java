@@ -11,6 +11,7 @@ import android.util.Log;
 
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -31,11 +32,85 @@ import java.util.Map;
 
 
 public class VerifyClass extends Activity {
-
+    String email, password;
+    Button verify_main_id_verify_btn, verify_main_edu_verifyBtn, verify_main_emp_verifyBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verify_page);
+
+
+        SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
+        email = prefs.getString("email", "");
+        password = prefs.getString("password", "");
+        verify_main_id_verify_btn = (Button) findViewById(R.id.verify_main_id_verify_btn);
+        verify_main_edu_verifyBtn = (Button) findViewById(R.id.verify_main_edu_verifyBtn);
+        verify_main_emp_verifyBtn = (Button) findViewById(R.id.verify_main_emp_verifyBtn);
+        ///////////////////////////////volley//////////////////////////////
+        String url = Constants.baseUrl + "check_pending_verifications.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
+        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d("jobin", "string response is : " + response);
+
+                try {
+                    JSONObject edu_verify_check = new JSONObject(response);
+                    String identity_verification_status = edu_verify_check.getString("identity_verification_status");
+                    String employment_verification_status = edu_verify_check.getString("employment_verification_status");
+                    String education_verification_status = edu_verify_check.getString("education_verification_status");
+
+                    if (identity_verification_status.equals("complete")) {
+
+                        verify_main_id_verify_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_identity, 0, R.drawable.tick, 0);
+
+                    }
+
+                    if (employment_verification_status.equals("complete")) {
+
+                        verify_main_emp_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_employment, 0, R.drawable.tick, 0);
+
+                    }
+                    if (education_verification_status.equals("complete")) {
+
+
+                        verify_main_edu_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_education, 0, R.drawable.tick, 0);
+                    }
+
+                } catch (JSONException e) {
+                    Log.d("jobin", "json errror:" + e);
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("jobin", "error response is : " + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("email", email);
+                parameters.put("password", password);
+
+
+                parameters.put("Action", "check_pending_verifications");
+
+
+                return parameters;
+            }
+        };
+        requestQueue.add(stringrequest);
+
+
+        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
     }
 
     public void identity_verify_fn(View view) {
@@ -43,11 +118,9 @@ public class VerifyClass extends Activity {
     }
 
     public void education_verifiy_fn(View view) {
-        SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
-        final String email = prefs.getString("email", "");
-        final String password = prefs.getString("password", "");
 
-///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+
+        ///////////////////////////////volley//////////////////////////////
         String url = Constants.baseUrl + "education_verification.php";
         RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -108,10 +181,8 @@ public class VerifyClass extends Activity {
 
     public void employment_verify_fn(View view) {
 
-        SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
-        final String email = prefs.getString("email", "");
-        final String password = prefs.getString("password", "");
-        //////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+
+        //////////////////////////////volley ///////////////////////////////////////////////////////////////
         String url = Constants.baseUrl + "employment_verification_submit.php";
         RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -199,7 +270,7 @@ public class VerifyClass extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+///////////////////////////////volley //////////////////////////////////////////////////////////////
                         String url = Constants.baseUrl + "attach_verify_form.php";
                         RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
                         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -258,24 +329,6 @@ public class VerifyClass extends Activity {
                 }
         );
         alertDialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

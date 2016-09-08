@@ -125,7 +125,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
                     currency = "INR";
                 }
 
-
+/*
                 if (employment_verify_name.equals("") || employment_verify_date_ofjoin.equals("") || employment_verify_date_of_resign.equals("") || employment_verify_designation.equals("") || employment_verify_compensation.equals("") || employment_verify_location.equals("") || employment_verify_reason_of_leaving.equals("")) {
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
@@ -133,7 +133,7 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
                     toast.show();
 
 
-                } else {
+                }*/
                     SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
                     email = prefs.getString("email", "");
                     password = prefs.getString("password", "");
@@ -221,7 +221,6 @@ public class Verify_employment extends Activity implements AdapterView.OnItemCli
                             10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
-                }
             }
         });
 

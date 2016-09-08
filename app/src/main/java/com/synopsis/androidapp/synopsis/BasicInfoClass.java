@@ -157,21 +157,30 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
     public void submitbasicinfofn(View view) {
 
-        dateofbirth = datepickerBtnET.getText().toString().trim();
-        String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
-        if (Integer.parseInt(year_ofbirth) > year - 16) {
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-        } else {
+        dateofbirth = datepickerBtnET.getText().toString().trim();
+        if (!dateofbirth.matches("")) {
+            String year_ofbirth = dateofbirth.substring(dateofbirth.length() - 4, dateofbirth.length());
+            if (Integer.parseInt(year_ofbirth) > year - 16) {
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
+        }
             place = autoCompView.getText().toString();
             List<String> place_list = Arrays.asList(place.split(","));
             int length = place_list.size();
+        if (length <= 2) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Kindly select a city name or place name with more details", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
+        } else {
 
             country = place_list.get(length - 1).toString();
             state = place_list.get(length - 2).toString();
             city = place_list.get(length - 3).toString();
+
 
             int selectedId = genderRadioGroup.getCheckedRadioButtonId();
 
