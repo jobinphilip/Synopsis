@@ -19,6 +19,7 @@ public class Start_Application extends Activity
     public  void employer_intentFn(View v)
     {
         startActivity(new Intent(getApplicationContext(),Company_register.class));
+        finish();
 
     }
 
@@ -27,6 +28,14 @@ public class Start_Application extends Activity
     public  void individual_intentFn(View v)
     {
         startActivity(new Intent(getApplicationContext(),LoginClass.class));
+        finish();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+
+        finish();
     }
 }

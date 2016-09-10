@@ -3,14 +3,19 @@ package com.synopsis.androidapp.synopsis;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,36 +37,70 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by User on 7/21/2016.
  */
-public class Verify_Identity extends Activity {
+public class Verify_Identity extends Fragment {
     EditText firstnameET, LastnameET, fathernameET, mobileET, emailET, alternate_mobileET, dobET, country_codeET, alternate_country_codeET;
     String firstname2, lastname2, fathername2, country_code2, mobile2, alternate_country_code2, alternatemobile2, dateofbirth2, gender2, password, url, email;
     private Calendar calendar;
+    Button identityVerificationBtn;
 
     RadioGroup genderRadioGroup;
     public static final String Login_details = "Login_details";
     private int year, month, day;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.verify_identity_details, container, false);
+        firstnameET = (EditText) view.findViewById(R.id.identity_fnameET);
+        LastnameET = (EditText) view.findViewById(R.id.identity_lastnameET);
+        fathernameET = (EditText) view.findViewById(R.id.identity_fathernameET);
+        mobileET = (EditText) view.findViewById(R.id.identity_mobileET);
+        emailET = (EditText) view.findViewById(R.id.identity_emailET);
+        dobET = (EditText) view.findViewById(R.id.identity_dobET);
+        dobET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
 
-        super.onCreate(savedInstanceState);
+
+                DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+                    // when dialog box is closed, below method will be called.
+                    public void onDateSet(DatePicker view, int selectedYear,
+                                          int selectedMonth, int selectedDay) {
+                        String year1 = String.valueOf(selectedYear);
+                        String month1 = String.valueOf(selectedMonth + 1);
+                        String day1 = String.valueOf(selectedDay);
+
+                        dobET.setText(day1 + "/" + month1 + "/" + year1);
+
+                    }
+                };
 
 
-        setContentView(R.layout.verify_identity_details);
-        firstnameET = (EditText) findViewById(R.id.identity_fnameET);
-        LastnameET = (EditText) findViewById(R.id.identity_lastnameET);
-        fathernameET = (EditText) findViewById(R.id.identity_fathernameET);
-        mobileET = (EditText) findViewById(R.id.identity_mobileET);
-        emailET = (EditText) findViewById(R.id.identity_emailET);
-        dobET = (EditText) findViewById(R.id.identity_dobET);
-        country_codeET = (EditText) findViewById(R.id.country_code_id_verify);
-        alternate_country_codeET = (EditText) findViewById(R.id.alterate_country_code_id_verify);
-        alternate_mobileET = (EditText) findViewById(R.id.identity_alternate_phoneET);
-        genderRadioGroup = (RadioGroup) findViewById(R.id.identity_genderRG);
+// Create the DatePickerDialog instance
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(),
+                        R.style.AppTheme, datePickerListener,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH));
+                datePicker.setCancelable(false);
+                datePicker.setTitle("Select the date");
+                datePicker.show();
+
+// Listener
+
+            }
+        });
+        country_codeET = (EditText) view.findViewById(R.id.country_code_id_verify);
+        alternate_country_codeET = (EditText) view.findViewById(R.id.alterate_country_code_id_verify);
+        alternate_mobileET = (EditText) view.findViewById(R.id.identity_alternate_phoneET);
+        genderRadioGroup = (RadioGroup) view.findViewById(R.id.identity_genderRG);
         url = Constants.baseUrl + "identity_verification_submit.php";
 
         calendar = Calendar.getInstance();
@@ -70,13 +109,13 @@ public class Verify_Identity extends Activity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         dobET.setText("" + year + "/" + month + "/" + day);
 
-        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences(Login_details, getActivity().MODE_PRIVATE);
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
 
         //////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
         String url = Constants.baseUrl + "identity_verification_submit.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
@@ -100,8 +139,8 @@ public class Verify_Identity extends Activity {
                         country_codeET.setText(identity_detailsjobj.getString("country_code"));
                         alternate_country_codeET.setText(identity_detailsjobj.getString("alternate_country_code"));
                         String gender = identity_detailsjobj.getString("gender");
-                        RadioButton m = (RadioButton) findViewById(R.id.rdb_male);
-                        RadioButton f = (RadioButton) findViewById(R.id.rdb_female);
+                        RadioButton m = (RadioButton) view.findViewById(R.id.rdb_male);
+                        RadioButton f = (RadioButton) view.findViewById(R.id.rdb_female);
                         String s = m.getText().toString().trim();
                         if (s.equals(gender)) {
                             m.setChecked(true);
@@ -174,7 +213,7 @@ public class Verify_Identity extends Activity {
 
 
                         /////////////////////////////////////////////////server check phone number already registered//////////////////////
-                        RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
                         String url = Constants.baseUrl + "phone_number_check.php";
                         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -298,37 +337,34 @@ public class Verify_Identity extends Activity {
         });
 
 
+        identityVerificationBtn = (Button) view.findViewById(R.id.identityVerificationBtn);
 
+        identityVerificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstname2 = firstnameET.getText().toString().trim();
+                lastname2 = LastnameET.getText().toString().trim();
+                fathername2 = fathernameET.getText().toString().trim();
+                mobile2 = mobileET.getText().toString().trim();
+                //   email2 = emailET.getText().toString().trim();
+                alternatemobile2 = alternate_mobileET.getText().toString().trim();
+                dateofbirth2 = dobET.getText().toString().trim();
+                if (!dateofbirth2.matches("")) {
+                    String year_ofbirth = dateofbirth2.substring(dateofbirth2.length() - 4, dateofbirth2.length());
+                    if (Integer.parseInt(year_ofbirth) > year - 16) {
 
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    } else {
 
-
-    }
-
-
-    public void identity_verify_fn(View view) {
-        firstname2 = firstnameET.getText().toString().trim();
-        lastname2 = LastnameET.getText().toString().trim();
-        fathername2 = fathernameET.getText().toString().trim();
-        mobile2 = mobileET.getText().toString().trim();
-        //   email2 = emailET.getText().toString().trim();
-        alternatemobile2 = alternate_mobileET.getText().toString().trim();
-        dateofbirth2 = dobET.getText().toString().trim();
-        if (!dateofbirth2.matches("")) {
-            String year_ofbirth = dateofbirth2.substring(dateofbirth2.length() - 4, dateofbirth2.length());
-            if (Integer.parseInt(year_ofbirth) > year - 16) {
-
-                Toast toast = Toast.makeText(getApplicationContext(), "Minimum age should be 16", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                toast.show();
-            }
-        }
-        country_code2 = country_codeET.getText().toString().trim();
-        alternate_country_code2 = alternate_country_codeET.getText().toString().trim();
-        int selectedId = genderRadioGroup.getCheckedRadioButtonId();
-        Log.d("jobin", "radio id:" + selectedId);
-        // find the radiobutton by returned id
-        RadioButton radioButton = (RadioButton) findViewById(selectedId);
-        gender2 = radioButton.getText().toString();
+                        country_code2 = country_codeET.getText().toString().trim();
+                        alternate_country_code2 = alternate_country_codeET.getText().toString().trim();
+                        int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+                        Log.d("jobin", "radio id:" + selectedId);
+                        // find the radiobutton by returned id
+                        RadioButton radioButton = (RadioButton) view.findViewById(selectedId);
+                        gender2 = radioButton.getText().toString();
        /*
         if (firstname2.equals("") || lastname2.equals("") || fathername2.equals("") || mobile2.equals("") || dateofbirth2.equals("")) {
 
@@ -338,93 +374,75 @@ public class Verify_Identity extends Activity {
         }
         */
 
-            ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
-            RequestQueue requestQueue = Volley.newRequestQueue(Verify_Identity.this);
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
+                        String url2 = Constants.baseUrl + "identity_verification_submit.php";
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
 
-                @Override
-                public void onResponse(String response) {
-                    Log.d("jobin", "string response is : " + response);
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
 
-                    try {
-                        JSONObject person = new JSONObject(response);
-                        String result = person.getString("result");
-                        String error = person.getString("error");
-                        if (result.equals("success")) {
-                            startActivity(new Intent(getApplicationContext(), VerifyClass.class));
-                        } else {
-                            Log.d("jobin", "it happened again..! errror:" + error);
-                        }
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
+                                    String error = person.getString("error");
+                                    if (result.equals("success")) {
 
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
+
+                                        startActivity(new Intent(getActivity().getApplicationContext(), Dash_board.class));
+
+                                    } else {
+                                        Log.d("jobin", "it happened again..! errror:" + error);
+                                    }
+
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
+                                }
+
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "error response is : " + error);
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+                                parameters.put("email", email);
+                                parameters.put("password", password);
+                                parameters.put("first_name", firstname2);
+                                parameters.put("last_name", lastname2);
+                                parameters.put("father_name", fathername2);
+                                parameters.put("date_of_birth", dateofbirth2);
+                                parameters.put("gender", gender2);
+                                parameters.put("mobile", mobile2);
+                                parameters.put("alternate_mobile", alternatemobile2);
+                                parameters.put("country_code", country_code2);
+                                parameters.put("alternate_country_code", alternate_country_code2);
+
+
+                                parameters.put("Action", "identity_verification_form");
+
+
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(stringrequest);
+
+
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                     }
-
-
                 }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("jobin", "error response is : " + error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-                    parameters.put("first_name", firstname2);
-                    parameters.put("last_name", lastname2);
-                    parameters.put("father_name", fathername2);
-                    parameters.put("date_of_birth", dateofbirth2);
-                    parameters.put("gender", gender2);
-                    parameters.put("mobile", mobile2);
-                    parameters.put("alternate_mobile", alternatemobile2);
-                    parameters.put("country_code", country_code2);
-                    parameters.put("alternate_country_code", alternate_country_code2);
+            }
+        });
 
 
-
-                    parameters.put("Action", "identity_verification_form");
-
-
-                    return parameters;
-                }
-            };
-            requestQueue.add(stringrequest);
-
-
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
+        return view;
     }
-
-
-    public void identity_date_pickerfn(View v) {
-        showDialog(999);
-    }
-
-    @Nullable
-    @Override
-    protected Dialog onCreateDialog(int id, Bundle args) {
-        if (id == 999) {
-            return new DatePickerDialog(this, myDateListener, year, month, day);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker arg0, int year, int month, int date) {
-            month = month + 1;
-
-            dobET.setText("" + date + "/" + month + "/" + year);
-        }
-    };
-
-
-    ///////////////////////////date picker ends////////////////////////////////////////////////////////////
-
 }

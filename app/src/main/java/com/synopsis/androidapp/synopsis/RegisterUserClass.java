@@ -43,6 +43,7 @@ public class RegisterUserClass extends Activity {
     Spinner self_or_refer_spinner;
     EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt;
     String referror_string, firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,16 +172,15 @@ public class RegisterUserClass extends Activity {
                 final int DRAWABLE_RIGHT = 2;
 
 
-
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    if ((event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) && !visibility ) {
+                    if ((event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) && !visibility) {
 
                         passwordET.setTransformationMethod(null);
                         visibility = true;
                         passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide_password, 0);
                         return true;
-                    } else if ((event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) && visibility ) {
+                    } else if ((event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) && visibility) {
                         passwordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
                         passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.show_password, 0);
                         visibility = false;
@@ -199,7 +199,7 @@ public class RegisterUserClass extends Activity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
 
-                email_string=emailET.getText().toString().trim();
+                    email_string = emailET.getText().toString().trim();
 
 
                     String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -209,10 +209,7 @@ public class RegisterUserClass extends Activity {
                     Matcher matcher = pattern.matcher(inputStr);
                     if (!(matcher.matches())) {
                         emailET.setError("invalid email");
-                    }
-
-
-                   else {
+                    } else {
 
 
                         /////////////////////////////////////////////////server check phone number already registered//////////////////////
@@ -303,7 +300,7 @@ public class RegisterUserClass extends Activity {
                     } else {
                         phone_string = phoneET.getText().toString().trim();
                         country_code_string = country_codeET.getText().toString().trim();
-                        if ( country_code_string.matches("")) {
+                        if (country_code_string.matches("")) {
                             country_code_string = "+91";
                         }
 
@@ -354,7 +351,7 @@ public class RegisterUserClass extends Activity {
 
 
                                 return parameters;
-                                        }
+                            }
                         };
                         requestQueue.add(stringrequest);
 
@@ -470,15 +467,9 @@ public class RegisterUserClass extends Activity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LoginClass.class));
+        finish();
+    }
 }

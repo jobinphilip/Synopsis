@@ -2,10 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:background="@color/white"
+    android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
     <TextView
         android:id="@+id/textView15"
         android:layout_width="match_parent"
@@ -35,7 +42,7 @@
         android:background="@drawable/gradient_blue"
         android:clickable="true"
 
-        android:onClick="download_form_fn"
+
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Download/Email Form"
@@ -58,7 +65,7 @@
         android:background="@drawable/gradient_blue"
         android:drawableLeft="@drawable/nav_my_synopsis"
         android:drawableRight="@drawable/drawable_edit"
-        android:onClick="identity_verify_fn"
+
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Identity Verification"
@@ -74,7 +81,7 @@
         android:background="@drawable/gradient_blue"
         android:drawableLeft="@drawable/drawable_education"
         android:drawableRight="@drawable/drawable_edit"
-        android:onClick="education_verifiy_fn"
+
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Education verification"
@@ -89,14 +96,14 @@
         android:background="@drawable/gradient_blue"
         android:drawableLeft="@drawable/drawable_identity"
         android:drawableRight="@drawable/drawable_edit"
-        android:onClick="employment_verify_fn"
+
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Employment Verification"
         android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/verify_main_pay_and_verifyBtn"
+        android:id="@+id/verify_main_proceed_to_verifyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -104,8 +111,9 @@
         android:background="@drawable/gradient_blue"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Pay and get verified"
+        android:text="PROCEED TO VERIFY"
         android:textColor="@color/white" />
 
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

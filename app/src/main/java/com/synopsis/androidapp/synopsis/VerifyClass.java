@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,24 +35,276 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class VerifyClass extends Activity {
+public class VerifyClass extends Fragment {
     String email, password;
-    Button verify_main_id_verify_btn, verify_main_edu_verifyBtn, verify_main_emp_verifyBtn;
+    Button verify_main_id_verify_btn, verify_main_edu_verifyBtn, verify_main_emp_verifyBtn, verify_main_download_emailBtn, verify_main_proceed_to_verifyBtn;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.verify_page);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.verify_page, container, false);
 
-
-        SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("Login_details", this.getActivity().MODE_PRIVATE);
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
-        verify_main_id_verify_btn = (Button) findViewById(R.id.verify_main_id_verify_btn);
-        verify_main_edu_verifyBtn = (Button) findViewById(R.id.verify_main_edu_verifyBtn);
-        verify_main_emp_verifyBtn = (Button) findViewById(R.id.verify_main_emp_verifyBtn);
+        verify_main_id_verify_btn = (Button) view.findViewById(R.id.verify_main_id_verify_btn);
+
+
+        verify_main_id_verify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   startActivity(new Intent(getActivity().getApplicationContext(), Verify_Identity.class));
+                android.support.v4.app.Fragment fragment = new Verify_Identity();
+                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                //  fragmentTransaction.commit();
+            }
+        });
+
+        verify_main_proceed_to_verifyBtn = (Button) view.findViewById(R.id.verify_main_proceed_to_verifyBtn);
+        verify_main_proceed_to_verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v4.app.Fragment fragment = new Upload_verification_docsFragment();
+                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                ;
+                //   fragmentTransaction.commit();
+
+            }
+        });
+        verify_main_edu_verifyBtn = (Button) view.findViewById(R.id.verify_main_edu_verifyBtn);
+        verify_main_edu_verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ///////////////////////////////volley//////////////////////////////
+                String url = Constants.baseUrl + "education_verification.php";
+                RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("jobin", "string response is : " + response);
+
+                        try {
+                            JSONObject edu_verify_check = new JSONObject(response);
+                            String result = edu_verify_check.getString("result");
+
+                            if (result.equals("success")) {
+
+                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_Education_List.class);
+                                startActivity(I);
+
+
+                            } else {
+                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_educaton.class);
+                                startActivity(I);
+                            }
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("jobin", "error response is : " + error);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("email", email);
+                        parameters.put("password", password);
+
+
+                        parameters.put("Action", "check_education");
+
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(stringrequest);
+
+
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            }
+        });
+        verify_main_emp_verifyBtn = (Button) view.findViewById(R.id.verify_main_emp_verifyBtn);
+        verify_main_emp_verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //////////////////////////////volley ///////////////////////////////////////////////////////////////
+                String url = Constants.baseUrl + "employment_verification_submit.php";
+                RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("jobin", "string response is : " + response);
+
+                        try {
+                            JSONObject person = new JSONObject(response);
+                            String result = person.getString("result");
+
+                            if (result.equals("success")) {
+
+                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_Employment_List.class);
+
+
+                                startActivity(I);
+                            } else {
+
+                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_employment.class);
+
+
+                                startActivity(I);
+                            }
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("jobin", "error response is : " + error);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("email", email);
+                        parameters.put("password", password);
+
+
+                        parameters.put("Action", "check_employment");
+
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(stringrequest);
+
+
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            }
+        });
+
+
+        verify_main_download_emailBtn = (Button) view.findViewById(R.id.verify_main_download_emailBtn);
+        verify_main_download_emailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog ad = new AlertDialog.Builder(getActivity())
+                        .create();
+                ad.setCancelable(true);
+                ad.setTitle("Select an option");
+                ad.setMessage("choose to download form or email to your email id");
+                ad.setButton("download", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String chaturl = "http://synopsissolutions.com/mobile_api/Individual%20Background%20Verification%20Form%202016.docx";
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(chaturl));
+                        startActivity(i);
+
+
+                    }
+
+                });
+
+                ad.setButton2("Email", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+///////////////////////////////volley //////////////////////////////////////////////////////////////
+                                String url = Constants.baseUrl + "attach_verify_form.php";
+                                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.d("jobin", "string response is : " + response);
+
+                                        try {
+                                            JSONObject person = new JSONObject(response);
+                                            String result = person.getString("result");
+
+                                            if (result.equals("success")) {
+
+                                                Toast toast = Toast.makeText(getActivity(), "Kindly check your registered Email ", Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                toast.show();
+
+
+                                            }
+                                        } catch (JSONException e) {
+                                            Log.d("jobin", "json errror:" + e);
+                                        }
+
+
+                                    }
+                                }, new Response.ErrorListener() {
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("jobin", "error response is : " + error);
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> parameters = new HashMap<String, String>();
+                                        SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences("Login_details", getActivity().getApplicationContext().MODE_PRIVATE);
+                                        final String email = prefs.getString("email", "");
+                                        parameters.put("email", email);
+
+
+                                        parameters.put("Action", "Email_form_to_user");
+
+
+                                        return parameters;
+                                    }
+                                };
+                                requestQueue.add(stringrequest);
+
+
+                                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+                            }
+                        }
+
+
+                );
+                ad.show();
+
+
+            }
+        });
+
         ///////////////////////////////volley//////////////////////////////
         String url = Constants.baseUrl + "check_pending_verifications.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
@@ -63,13 +319,13 @@ public class VerifyClass extends Activity {
 
                     if (identity_verification_status.equals("complete")) {
 
-                        verify_main_id_verify_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_identity, 0, R.drawable.tick, 0);
+                        verify_main_id_verify_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.nav_my_synopsis, 0, R.drawable.tick, 0);
 
                     }
 
                     if (employment_verification_status.equals("complete")) {
 
-                        verify_main_emp_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_employment, 0, R.drawable.tick, 0);
+                        verify_main_emp_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_identity, 0, R.drawable.tick, 0);
 
                     }
                     if (education_verification_status.equals("complete")) {
@@ -110,227 +366,7 @@ public class VerifyClass extends Activity {
         stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-
+        return view;
     }
-
-    public void identity_verify_fn(View view) {
-        startActivity(new Intent(getApplicationContext(), Verify_Identity.class));
-    }
-
-    public void education_verifiy_fn(View view) {
-
-
-        ///////////////////////////////volley//////////////////////////////
-        String url = Constants.baseUrl + "education_verification.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
-
-                try {
-                    JSONObject edu_verify_check = new JSONObject(response);
-                    String result = edu_verify_check.getString("result");
-
-                    if (result.equals("success")) {
-
-                        Intent I = new Intent(getApplicationContext(), Verify_Education_List.class);
-                        startActivity(I);
-
-
-                    } else {
-                        Intent I = new Intent(getApplicationContext(), Verify_educaton.class);
-                        startActivity(I);
-                    }
-
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email);
-                parameters.put("password", password);
-
-
-                parameters.put("Action", "check_education");
-
-
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
-
-
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-    }
-
-    public void employment_verify_fn(View view) {
-
-
-        //////////////////////////////volley ///////////////////////////////////////////////////////////////
-        String url = Constants.baseUrl + "employment_verification_submit.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
-
-                try {
-                    JSONObject person = new JSONObject(response);
-                    String result = person.getString("result");
-
-                    if (result.equals("success")) {
-
-                        Intent I = new Intent(getApplicationContext(), Verify_Employment_List.class);
-
-
-                        startActivity(I);
-                    } else {
-
-                        Intent I = new Intent(getApplicationContext(), Verify_employment.class);
-
-
-                        startActivity(I);
-                    }
-
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email);
-                parameters.put("password", password);
-
-
-                parameters.put("Action", "check_employment");
-
-
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
-
-
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-    }
-
-    public void download_form_fn(View view) {
-
-
-        final AlertDialog alertDialog = new AlertDialog.Builder(VerifyClass.this).create();
-        alertDialog.setTitle("Message");
-        alertDialog.setMessage("Message");
-        alertDialog.setButton("download", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-                String chaturl = "http://synopsissolutions.com/mobile_api/Individual%20Background%20Verification%20Form%202016.docx";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(chaturl));
-                startActivity(i);
-                finish();
-
-
-            }
-
-        });
-
-
-        alertDialog.setButton2("Email", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-///////////////////////////////volley //////////////////////////////////////////////////////////////
-                        String url = Constants.baseUrl + "attach_verify_form.php";
-                        RequestQueue requestQueue = Volley.newRequestQueue(VerifyClass.this);
-                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("jobin", "string response is : " + response);
-
-                                try {
-                                    JSONObject person = new JSONObject(response);
-                                    String result = person.getString("result");
-
-                                    if (result.equals("success")) {
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Kindly check your registered Email ", Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                        toast.show();
-
-
-                                    }
-                                } catch (JSONException e) {
-                                    Log.d("jobin", "json errror:" + e);
-                                }
-
-
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("jobin", "error response is : " + error);
-                            }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> parameters = new HashMap<String, String>();
-                                SharedPreferences prefs = getSharedPreferences("Login_details", MODE_PRIVATE);
-                                final String email = prefs.getString("email", "");
-                                parameters.put("email", email);
-
-
-                                parameters.put("Action", "Email_form_to_user");
-
-
-                                return parameters;
-                            }
-                        };
-                        requestQueue.add(stringrequest);
-
-
-                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-                    }
-                }
-        );
-        alertDialog.show();
-
-    }
-
-
 }
+

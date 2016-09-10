@@ -26,6 +26,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +54,8 @@ import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV;
+public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV, toolbar_creditsTv;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
     private int PICK_IMAGE_REQUEST = 1;
@@ -61,6 +63,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     String email, password, url, image_base64string;
     RequestQueue requestQueue;
     public static final String Login_details = "Login_details";
+
+    LinearLayout toolbar_credits_layout, toolbar_chat_layout, toolbar_verify_layout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,12 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         requestQueue = Volley.newRequestQueue(Dash_board.this);
 
         setContentView(R.layout.home_layout);
+        toolbar_chat_layout = (LinearLayout) findViewById(R.id.toolbar_chat_layout);
+        toolbar_chat_layout.setOnClickListener(this);
+        toolbar_credits_layout = (LinearLayout) findViewById(R.id.toolbar_credits_layout);
+        toolbar_credits_layout.setOnClickListener(this);
+        toolbar_verify_layout = (LinearLayout) findViewById(R.id.toolbar_verify_layout);
+        toolbar_verify_layout.setOnClickListener(this);
         nameTV = (TextView) findViewById(R.id.dashboard_nameTV);
         synopsis_idTV = (TextView) findViewById(R.id.dashboard_synopsis_idTV);
         synopsis_idTV.setVisibility(View.INVISIBLE);
@@ -84,7 +94,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         designationTV = (TextView) findViewById(R.id.dashboard_designationTV);
         designationTV.setVisibility(View.INVISIBLE);
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
-
+        toolbar_creditsTv = (TextView) findViewById(R.id.toolbar_creditsTv);
         placeTV = (TextView) findViewById(R.id.dashboard_placeTV);
 
         emailTV = (TextView) findViewById(R.id.dashboard_emailTV);
@@ -111,6 +121,9 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     String country = jobj.getString("country");
                     String place = city + ", " + state + ", " + country;
                     String mobile = jobj.getString("mobile");
+                    String total_credits = jobj.getString("total_credits");
+                    Log.d("jobin", "credits at home:" + total_credits);
+
                     if (result.equals("success")) {
                         if (img_url.matches("")) {
                             Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
@@ -118,7 +131,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                             Picasso.with(Dash_board.this).load(img_url).into(profile_image);
                         }
                         nameTV.setText(first_name);
-
+                        toolbar_creditsTv.setText(total_credits);
                         placeTV.setText(place);
                         mobileTV.setText(mobile);
                         emailTV.setText(email);
@@ -167,29 +180,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         Toolbar bottom_toolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
 
         setSupportActionBar(toolbar1);
-
-
-        bottom_toolbar.inflateMenu(R.menu.toolbar_menu);
-
-
-        //toolbar2 menu items CallBack listener
-        bottom_toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem arg0) {
-                if (arg0.getItemId() == R.id.verify_user) {
-                    startActivity(new Intent(getApplicationContext(), VerifyClass.class));
-                } else if (arg0.getItemId() == R.id.credits) {
-                    startActivity(new Intent(getApplicationContext(), Credits.class));
-                } else if (arg0.getItemId() == R.id.chat) {
-                    String chaturl = "https://chatserver5.comm100.com/ChatWindow.aspx?siteId=107734&planId=2079&visitType=1&byHref=1&partnerId=-1";
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(chaturl));
-                    startActivity(i);
-                }
-                return false;
-            }
-        });
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -230,7 +221,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         );
         alertDialog.show();
     }
-
 
 
     @Override
@@ -340,32 +330,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-    /////////////////////////////resize image ends///////////////////////////////////
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-
-
-            String message = "Exit Synopsis?";
-
-
-            final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
-            builder.setTitle("Warning");
-            builder.setMessage(message);
-
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            builder.create().show();
-        }
-    }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -378,15 +342,12 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerLayout.closeDrawers();
 
-        }
-        else if(id == R.id.nav_share)
-        {
+        } else if (id == R.id.nav_share) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/html");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
             startActivity(Intent.createChooser(sharingIntent, "Share using"));
-        }
-        else {
+        } else {
             switch (id) {
 
                 case R.id.nav_about_us: {
@@ -400,7 +361,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                 case R.id.nav_faq: {
                     fragment = new Nav_FaqFragment();
                     break;
-                } case R.id.nav_contact_us: {
+                }
+                case R.id.nav_contact_us: {
                     fragment = new Nav_ContactUsFragment();
                     break;
                 }
@@ -433,13 +395,155 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment);
-            fragmentTransaction.commit();
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                fragmentManager.popBackStack();
+            }
+            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+            ;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.toolbar_verify_layout) {
+            android.support.v4.app.Fragment fragment = new VerifyClass();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                fragmentManager.popBackStack();
+            }
+            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+            //  fragmentTransaction.commit();
+
+            // startActivity(new Intent(getApplicationContext(), VerifyClass.class));
+        } else if (v.getId() == R.id.toolbar_credits_layout) {
+            android.support.v4.app.Fragment fragment = new Credits();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                fragmentManager.popBackStack();
+            }
+            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+            //fragmentTransaction.commit();
+
+
+            //startActivity(new Intent(getApplicationContext(), Credits.class));
+        } else if (v.getId() == R.id.toolbar_chat_layout) {
+
+            android.support.v4.app.Fragment fragment = new Chat_web_view_fragment();
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                fragmentManager.popBackStack();
+            }
+            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+            //   fragmentTransaction.commit();
+
+
+        }
+
+    }
+  /*  @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == -1) {
+            // super.onBackPressed();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+
+
+                String message = "Exit Synopsis?";
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+                builder.setTitle("Warning");
+                builder.setMessage(message);
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //    getApplicationContext().finishAffinity();
+
+                        finish();
+                    }
+                });
+                builder.create().show();
+            }
+
+        } else {
+            getFragmentManager().popBackStack();
+        }
+    }
+    */
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+
+
+                String message = "Exit Synopsis?";
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+                builder.setTitle("Warning");
+                builder.setMessage(message);
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //    getApplicationContext().finishAffinity();
+                        startActivity(new Intent(getApplicationContext(), LoginClass.class));
+                        finish();
+                    }
+                });
+                builder.create().show();
+            }
+
+        }
+    }
+
+
+/*
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+
+
+            String message = "Exit Synopsis?";
+
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+            builder.setTitle("Warning");
+            builder.setMessage(message);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //    getApplicationContext().finishAffinity();
+
+                    finish();
+                }
+            });
+            builder.create().show();
+        }
+    }
+  */
+
+
 
 }

@@ -7,9 +7,20 @@
 <include
     layout="@layout/logo_and_tagline"
     android:id="@+id/header"></include>
+
+    <TextView
+        android:layout_width="200dp"
+        android:id="@+id/tagline"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:textColor="@color/synopsis_blue"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+
+        android:text="Your Identity Has A Value" />
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_below="@+id/header"
+    android:layout_below="@+id/tagline"
 
     android:layout_height="wrap_content">
 <LinearLayout

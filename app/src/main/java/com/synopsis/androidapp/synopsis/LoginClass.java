@@ -319,4 +319,10 @@ public class LoginClass extends Activity {
         startActivity(new Intent(getApplicationContext(), Forgot_password.class));
 
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), Start_Application.class));
+        finish();
+    }
 }

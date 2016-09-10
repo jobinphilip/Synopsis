@@ -19,6 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:background="@drawable/center_gradient_blue"
             android:layout_height="match_parent">
 
             <android.support.design.widget.AppBarLayout
@@ -232,7 +233,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
 
-                            android:background="@drawable/tool_bar_verify"
+                            android:background="@drawable/toolbar_verify"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
