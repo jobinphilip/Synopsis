@@ -418,6 +418,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                 fragmentManager.popBackStack();
             }
+            fragmentTransaction.remove(fragment);
             fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
             //  fragmentTransaction.commit();
 
@@ -430,6 +431,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                 fragmentManager.popBackStack();
             }
+
             fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
             //fragmentTransaction.commit();
 
@@ -444,6 +446,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                 fragmentManager.popBackStack();
             }
+
             fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
             //   fragmentTransaction.commit();
 
@@ -451,38 +454,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         }
 
     }
-  /*  @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == -1) {
-            // super.onBackPressed();
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else {
-
-
-                String message = "Exit Synopsis?";
-
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
-                builder.setTitle("Warning");
-                builder.setMessage(message);
-
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //    getApplicationContext().finishAffinity();
-
-                        finish();
-                    }
-                });
-                builder.create().show();
-            }
-
-        } else {
-            getFragmentManager().popBackStack();
-        }
-    }
-    */
 
     @Override
     public void onBackPressed() {
@@ -515,34 +486,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-
-/*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-
-
-            String message = "Exit Synopsis?";
-
-
-            final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
-            builder.setTitle("Warning");
-            builder.setMessage(message);
-
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //    getApplicationContext().finishAffinity();
-
-                    finish();
-                }
-            });
-            builder.create().show();
-        }
-    }
-  */
 
 
 

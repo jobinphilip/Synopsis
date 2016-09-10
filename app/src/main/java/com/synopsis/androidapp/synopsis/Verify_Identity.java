@@ -389,8 +389,17 @@ public class Verify_Identity extends Fragment {
                                     String error = person.getString("error");
                                     if (result.equals("success")) {
 
+                                        android.support.v4.app.Fragment fragment = new VerifyClass();
+                                        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                                        startActivity(new Intent(getActivity().getApplicationContext(), Dash_board.class));
+                                        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+                                        fragmentTransaction.remove(fragment);
+                                        fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                                        //    startActivity(new Intent(getActivity().getApplicationContext(), Dash_board.class));
+
 
                                     } else {
                                         Log.d("jobin", "it happened again..! errror:" + error);

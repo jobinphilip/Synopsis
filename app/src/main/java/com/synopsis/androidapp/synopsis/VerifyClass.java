@@ -160,16 +160,36 @@ public class VerifyClass extends Fragment {
 
                             if (result.equals("success")) {
 
-                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_Employment_List.class);
+                                android.support.v4.app.Fragment fragment = new Verify_Employment_List();
+                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                    fragmentManager.popBackStack();
+                                }
+                                fragmentTransaction.remove(fragment);
+                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
 
 
-                                startActivity(I);
+                                //  Intent I = new Intent(getActivity().getApplicationContext(), Verify_Employment_List.class);
+
+//
+                                //     startActivity(I);
                             } else {
 
-                                Intent I = new Intent(getActivity().getApplicationContext(), Verify_employment.class);
+
+                                android.support.v4.app.Fragment fragment = new Verify_employment();
+                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                    fragmentManager.popBackStack();
+                                }
+                                fragmentTransaction.remove(fragment);
+                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+
+                                //  Intent I = new Intent(getActivity().getApplicationContext(), Verify_employment.class);
 
 
-                                startActivity(I);
+                                //startActivity(I);
                             }
 
                         } catch (JSONException e) {
