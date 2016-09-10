@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
+
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/logo_and_tagline"></include>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -105,7 +106,7 @@
                 android:clickable="true"
                 android:focusableInTouchMode="false"
                 android:hint="Date of passing course"
-                android:onClick="verify_edu_date_pickerfn"
+
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/synopsis_blue" />
             </android.support.design.widget.TextInputLayout>
@@ -136,7 +137,7 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-    </ScrollView>S
+    </ScrollView>
 
 
 </LinearLayout>
