@@ -37,6 +37,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -95,7 +97,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        datepickerBtnET.setText("" + day + "/" + month + "/" + year);
+       // datepickerBtnET.setText("" + day + "/" + month + "/" + year);
         RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
         try {
             ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
@@ -114,7 +116,9 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                             selfyButton.setVisibility(View.INVISIBLE);
                             basic_info_image.setVisibility(View.VISIBLE);
                             Log.d("jobin", "condition check is not right");
-                            Picasso.with(BasicInfoClass.this).load(img_url).into(basic_info_image);
+                            Picasso.with(BasicInfoClass.this).invalidate(img_url);
+                            Picasso.with(BasicInfoClass.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                    .networkPolicy(NetworkPolicy.NO_CACHE).into(basic_info_image);
                         } else {
 
                             selfyButton.setVisibility(View.VISIBLE);
@@ -215,6 +219,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
                         String error = person.getString("error");
                         if (result.equals("success")) {
                             startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                            finish();
                         }
 
                     } catch (JSONException e) {
@@ -318,8 +323,11 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
             String url_to_profile = root + "/synopsis/" + profilename;
 
-
+            SharedPreferences prefs = this.getSharedPreferences(
+                    "image_processing_class", Context.MODE_PRIVATE);
+            prefs.edit().putString("class", "BasicInfo").commit();
             Intent I = new Intent(this, Camera_activity.class);
+
             I.putExtra("url_to_profile", url_to_profile);
             startActivity(I);
             finish();

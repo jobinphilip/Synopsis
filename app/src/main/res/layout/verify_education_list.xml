@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
-        android:background="@drawable/rounded_rectangle_blue"
+        android:background="@drawable/gradient_blue"
 
         android:text="Add education"
         android:textColor="@color/white" />

@@ -43,8 +43,8 @@ import java.util.TimeZone;
  * Created by User on 7/21/2016.
  */
 public class Verify_Identity extends Fragment {
-    EditText firstnameET, LastnameET, fathernameET, mobileET, emailET, alternate_mobileET, dobET, country_codeET, alternate_country_codeET;
-    String firstname2, lastname2, fathername2, country_code2, mobile2, alternate_country_code2, alternatemobile2, dateofbirth2, gender2, password, url, email;
+    EditText firstnameET, LastnameET, fathernameET, mobileET, emailET, alternate_mobileET, dobET, country_codeET, alternate_country_codeET,MiddleNameET;
+    String firstname2,middleName2, lastname2, fathername2, country_code2, mobile2, alternate_country_code2, alternatemobile2, dateofbirth2, gender2, password, url, email;
     private Calendar calendar;
     Button identityVerificationBtn;
 
@@ -58,9 +58,11 @@ public class Verify_Identity extends Fragment {
         final View view = inflater.inflate(R.layout.verify_identity_details, container, false);
         firstnameET = (EditText) view.findViewById(R.id.identity_fnameET);
         LastnameET = (EditText) view.findViewById(R.id.identity_lastnameET);
+        MiddleNameET= (EditText) view.findViewById(R.id.identity_MnameET);
         fathernameET = (EditText) view.findViewById(R.id.identity_fathernameET);
         mobileET = (EditText) view.findViewById(R.id.identity_mobileET);
         emailET = (EditText) view.findViewById(R.id.identity_emailET);
+
         dobET = (EditText) view.findViewById(R.id.identity_dobET);
         dobET.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +132,7 @@ public class Verify_Identity extends Fragment {
 
                         LastnameET.setText(identity_detailsjobj.getString("last_name"));
                         firstnameET.setText(identity_detailsjobj.getString("first_name"));
+                        MiddleNameET.setText(identity_detailsjobj.getString("middle_name"));
                         fathernameET.setText(identity_detailsjobj.getString("father_name"));
                         mobileET.setText(identity_detailsjobj.getString("mobile"));
                         emailET.setText(email);
@@ -343,6 +346,7 @@ public class Verify_Identity extends Fragment {
             @Override
             public void onClick(View v) {
                 firstname2 = firstnameET.getText().toString().trim();
+                middleName2=MiddleNameET.getText().toString().trim();
                 lastname2 = LastnameET.getText().toString().trim();
                 fathername2 = fathernameET.getText().toString().trim();
                 mobile2 = mobileET.getText().toString().trim();
@@ -424,6 +428,7 @@ public class Verify_Identity extends Fragment {
                                 parameters.put("email", email);
                                 parameters.put("password", password);
                                 parameters.put("first_name", firstname2);
+                                parameters.put("middle_name", middleName2);
                                 parameters.put("last_name", lastname2);
                                 parameters.put("father_name", fathername2);
                                 parameters.put("date_of_birth", dateofbirth2);

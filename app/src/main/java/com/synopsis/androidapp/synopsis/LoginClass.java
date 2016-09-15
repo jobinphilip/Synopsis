@@ -117,7 +117,7 @@ public class LoginClass extends Activity {
 
         progress = new ProgressDialog(this);
         progress.setMessage("Please wait");
-        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.setProgress(0);
         progress.show();
@@ -141,7 +141,9 @@ public class LoginClass extends Activity {
                     JSONObject jobject = new JSONObject(response);
                     String result = jobject.getString("result");
                     String error = jobject.getString("error");
+                    Log.d("jobin", response.toString());
                     if (result.equals("success")) {
+
                         String status = jobject.getString("status").trim();
 
                         String transaction_id = jobject.getString("transaction_id").trim();

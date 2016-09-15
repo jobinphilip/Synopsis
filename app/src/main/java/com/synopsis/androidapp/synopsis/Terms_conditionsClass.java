@@ -1,6 +1,8 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
@@ -33,10 +35,13 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
     public static final String Login_details = "Login_details";
 
     Button accepttermsBtn;
-
+String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+          email = prefs.getString("email", "");
+          password = prefs.getString("password", "");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms_and_conditions);
@@ -51,9 +56,9 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
         if (v.getId() == accepttermsBtn.getId()) {
 
             SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
-            final String email = prefs.getString("email", "");
-            final String password = prefs.getString("password", "");
+
             final String firstname = prefs.getString("first_name", "");
+            final String middlename = prefs.getString("middle_name", "");
             final String lastname = prefs.getString("last_name", "");
             final String phone = prefs.getString("mobile", "");
             final String country_code = prefs.getString("country_code", "");
@@ -86,12 +91,27 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                         JSONObject person = new JSONObject(response);
                         String result = person.getString("result");
                         String error = person.getString("error");
-                        if (result.equals("success")) {
-
-                            Intent I=new Intent(getApplicationContext(), BasicInfoClass.class);
+                        if (result.equals("Success")) {
 
 
-                            startActivity(I);
+                            String message = " Kindly confirm your email Id and login using user id and password";
+
+
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(Terms_conditionsClass.this);
+                            builder.setTitle("Message");
+                            builder.setMessage(message);
+
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            builder.create().show();
+
+
+
                         } else if (error.equals("user_exists")) {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG);
@@ -122,6 +142,7 @@ public class Terms_conditionsClass extends Activity implements View.OnClickListe
                     parameters.put("ipAddress", ipAddress);
                     parameters.put("device", "mobile");
                     parameters.put("firstname", firstname);
+                    parameters.put("middlename", middlename);
                     parameters.put("lastname", lastname);
                     parameters.put("phone", phone);
                     parameters.put("country_code", country_code);

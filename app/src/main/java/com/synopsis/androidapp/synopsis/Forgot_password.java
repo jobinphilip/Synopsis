@@ -39,7 +39,7 @@ public class Forgot_password  extends Activity{
     }
     public void forgot_passwordfn (View v)
     {
-        uname=forgot_passET.getText().toString();
+        uname=forgot_passET.getText().toString().trim();
         if(uname.equals(""))
         {
 
@@ -53,7 +53,7 @@ public class Forgot_password  extends Activity{
 
         RequestQueue requestQueue2 = Volley.newRequestQueue(Forgot_password.this);
 ///////////////////////////////volley ///////////////////////////////////////////////////////////////
-        String url=Constants.baseUrl+"recover_password.php";
+        String url=Constants.baseUrl+"password_forgot.php";
 
         StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -65,13 +65,16 @@ public class Forgot_password  extends Activity{
                     JSONObject person = new JSONObject(response);
                     String result = person.getString("result");
                     String error = person.getString("error");
-                    if (result.equals("success")) {
+                    if (result.matches("Success")) {
 
-                        Toast toast = Toast.makeText(getApplicationContext(), "We have sent recovery link to your email", Toast.LENGTH_LONG);
+
+                        startActivity(new Intent(getApplicationContext(), Forgot_password_ResetClass.class));
+                    }
+                    else
+                    {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
-
-                        startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
                     }
 
                 } catch (JSONException e) {
@@ -109,5 +112,11 @@ public class Forgot_password  extends Activity{
 
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),LoginClass.class));
+        finish();
     }
 }

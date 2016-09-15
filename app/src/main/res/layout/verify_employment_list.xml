@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:text="Add Employer"
-        android:background="@drawable/rounded_rectangle_blue"
+        android:background="@drawable/gradient_blue"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
 

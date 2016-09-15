@@ -33,7 +33,7 @@ While thhe freedom of unlimited uploads on their packages as No Fair Usage Polic
         android:layout_margin="10dp"
 
         android:textColor="@color/white"
-        android:background="@drawable/rounded_rectangle_blue"
+        android:background="@drawable/gradient_blue"
         android:layout_centerHorizontal="true"
         android:id="@+id/agreeBtn"
         android:layout_gravity="center_horizontal" />

@@ -11,18 +11,21 @@
     </include>
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
+        android:id="@+id/employer_tagline"
         android:text="Your Identity Has A Value"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textColor="@color/synopsis_blue"
         android:layout_below="@+id/header"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content" />
 
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header">
+        android:layout_below="@id/employer_tagline">
 
         <LinearLayout
             android:id="@+id/relativeLayout2"
@@ -204,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_rectangle_blue"
+                android:background="@drawable/gradient_blue"
                 android:text="@string/Submit"
                 android:textColor="@color/white" />
 

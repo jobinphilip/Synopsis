@@ -20,7 +20,7 @@
         android:layout_gravity="center_horizontal"
 
         android:layout_margin="20dp"
-        android:text="Verify User"
+        android:text="Verify Resume Credentials"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:background="@drawable/gradient_blue"
+        android:background="@drawable/gradient_orange"
         android:clickable="true"
 
 
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:background="@drawable/gradient_blue"
+        android:background="@drawable/gradient_orange"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="PROCEED TO VERIFY"

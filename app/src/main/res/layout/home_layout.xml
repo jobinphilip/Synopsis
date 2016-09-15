@@ -32,19 +32,18 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/Toolbar_blue"
                     android:elevation="4dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </android.support.design.widget.AppBarLayout>
 
             <ImageView
                 android:layout_width="200dp"
-                android:layout_gravity="center"
-                android:src="@drawable/synopsis_white_logo"
                 android:layout_height="45dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:src="@drawable/synopsis_white_logo" />
 
 
             <RelativeLayout
@@ -78,6 +77,17 @@
                         android:onClick="camera_activityfn"
 
                         app:border_color="@color/light_blue" />
+
+                    <ImageButton
+                        android:id="@+id/edit_profile_btn"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/pencil_edit" />
                 </FrameLayout>
 
                 <ScrollView
@@ -98,17 +108,6 @@
 
                             android:orientation="vertical">
 
-
-                            <TextView
-                                android:id="@+id/dashboard_nameTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-
-                                android:layout_margin="10dp"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@color/white" />
-
                             <TextView
                                 android:id="@+id/dashboard_synopsis_idTV"
                                 android:layout_width="wrap_content"
@@ -122,23 +121,13 @@
 
 
                             <TextView
-                                android:id="@+id/dashboard_placeTV"
+                                android:id="@+id/dashboard_nameTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
 
-                                android:layout_margin="5dp"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="@color/white" />
-
-                            <TextView
-                                android:id="@+id/dashboard_emailTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-
-                                android:layout_margin="5dp"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:layout_margin="10dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -153,7 +142,7 @@
 
 
                             <TextView
-                                android:id="@+id/dashboard_designationTV"
+                                android:id="@+id/dashboard_emailTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -163,24 +152,17 @@
                                 android:textColor="@color/white" />
 
                             <TextView
-                                android:id="@+id/dashboard_companyTV"
+                                android:id="@+id/dashboard_placeTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_margin="5dp"
 
+                                android:layout_margin="5dp"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/white" />
 
-                            <TextView
-                                android:id="@+id/dashboard_educationTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_margin="5dp"
 
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="@color/white" />
+
 
                         </LinearLayout>
 
@@ -192,9 +174,9 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/bottom_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/gradient_blue"
+                android:background="@color/Toolbar_blue"
 
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_scrollFlags="scroll|enterAlways"
@@ -226,18 +208,21 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+
+
                                 android:text="VERIFY"
-                                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
 
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+                                android:text="RESUME"
 
                                 android:textColor="@color/white"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -273,8 +258,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="CREDITS"
-                                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/toolbar_creditsTv"
@@ -283,7 +268,7 @@
                                 android:gravity="center"
 
                                 android:textColor="@color/white"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -318,18 +303,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text=" LIVE CHAT"
-                                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                                android:textColor="@color/white" />
+                                android:text=" LIVE "
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
 
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-
+                                android:text="CHAT"
                                 android:textColor="@color/white"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView

@@ -106,6 +106,7 @@ public class Camera_activity extends Activity {
                                         } else {
                                             Intent I = new Intent(getApplicationContext(), Dash_board.class);
                                             startActivity(I);
+                                            finish();
                                         }
 
 

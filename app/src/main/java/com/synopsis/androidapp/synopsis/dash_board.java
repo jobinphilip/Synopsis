@@ -1,6 +1,7 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -56,6 +60,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV, toolbar_creditsTv;
+    ImageButton profile_edit_btn;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
     private int PICK_IMAGE_REQUEST = 1;
@@ -65,7 +70,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     public static final String Login_details = "Login_details";
 
     LinearLayout toolbar_credits_layout, toolbar_chat_layout, toolbar_verify_layout;
-
+    private ProgressDialog progress;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -78,6 +83,21 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         requestQueue = Volley.newRequestQueue(Dash_board.this);
 
         setContentView(R.layout.home_layout);
+        progress=new ProgressDialog(this);
+        progress.setMessage("Loading data");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
+
+        final int totalProgressTime = 100;
+        profile_edit_btn=(ImageButton)findViewById(R.id.edit_profile_btn);
+        profile_edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
+            }
+        });
         toolbar_chat_layout = (LinearLayout) findViewById(R.id.toolbar_chat_layout);
         toolbar_chat_layout.setOnClickListener(this);
         toolbar_credits_layout = (LinearLayout) findViewById(R.id.toolbar_credits_layout);
@@ -87,12 +107,13 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         nameTV = (TextView) findViewById(R.id.dashboard_nameTV);
         synopsis_idTV = (TextView) findViewById(R.id.dashboard_synopsis_idTV);
         synopsis_idTV.setVisibility(View.INVISIBLE);
-        companyTV = (TextView) findViewById(R.id.dashboard_companyTV);
+       /* companyTV = (TextView) findViewById(R.id.dashboard_companyTV);
         companyTV.setVisibility(View.INVISIBLE);
         educationTV = (TextView) findViewById(R.id.dashboard_educationTV);
         educationTV.setVisibility(View.INVISIBLE);
         designationTV = (TextView) findViewById(R.id.dashboard_designationTV);
         designationTV.setVisibility(View.INVISIBLE);
+        */
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
         toolbar_creditsTv = (TextView) findViewById(R.id.toolbar_creditsTv);
         placeTV = (TextView) findViewById(R.id.dashboard_placeTV);
@@ -122,13 +143,26 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     String place = city + ", " + state + ", " + country;
                     String mobile = jobj.getString("mobile");
                     String total_credits = jobj.getString("total_credits");
+                    String verification_status = jobj.getString("verification_status");
+
                     Log.d("jobin", "credits at home:" + total_credits);
 
                     if (result.equals("success")) {
                         if (img_url.matches("")) {
                             Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
+                            progress.dismiss();
                         } else {
-                            Picasso.with(Dash_board.this).load(img_url).into(profile_image);
+                        //    Picasso.with(Dash_board.this).load(img_url).into(profile_image);
+                          //  Picasso.with(getApplicationContext()).load(new File(img_url)).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile_image);
+                            //Picasso.with(profile_image.getContext()).load(img_url).networkP‌​olicy(NetworkPolicy.‌​NO_CACHE).into(image‌​View);
+                            Picasso.with(Dash_board.this).invalidate(img_url);
+                            Picasso.with(Dash_board.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                    .networkPolicy(NetworkPolicy.NO_CACHE).into(profile_image);
+                            progress.dismiss();
+                        }
+                        if(verification_status.matches("verified"))
+                        {
+                            profile_edit_btn.setEnabled(false);
                         }
                         nameTV.setText(first_name);
                         toolbar_creditsTv.setText(total_credits);
@@ -338,6 +372,12 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
         android.support.v4.app.Fragment fragment = null;
         if (id == R.id.nav_my_synopsis) {
+
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                fragmentManager.popBackStack();
+            }
             DrawerLayout mDrawerLayout;
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerLayout.closeDrawers();

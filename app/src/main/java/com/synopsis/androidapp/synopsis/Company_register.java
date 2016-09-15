@@ -280,4 +280,10 @@ public class Company_register extends Activity {
 
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),Start_Application.class));
+        finish();
+    }
 }

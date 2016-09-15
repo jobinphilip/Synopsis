@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,6 +43,8 @@ public class Credits extends Fragment {
     ArrayList<HashMap<String, String>> veriried_referals_list;
     ArrayList<HashMap<String, String>> referance_list;
     LinearLayout verified_referals_linear_layout, referral_bonus_linear_layout;
+    ImageButton google,fb,twitter,linkedin;
+
 
     @Nullable
     @Override
@@ -48,7 +53,46 @@ public class Credits extends Fragment {
         View view = inflater.inflate(R.layout.credits, container, false);
         //  setContentView(R.layout.credits);
         credits_self_verify_amnt_tv = (TextView) view.findViewById(R.id.credits_self_verify_amnt_tv);
-
+google=(ImageButton)view.findViewById(R.id.google_IB);
+        google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://plus.google.com/107175884091313665554";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        fb=(ImageButton)view.findViewById(R.id.fb_IB);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.facebook.com/pages/Synopsis-Solutions/272663012760030";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        linkedin=(ImageButton)view.findViewById(R.id.ln_IB);
+        linkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.linkedin.com/in/synopsissolutions";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        twitter=(ImageButton)view.findViewById(R.id.tw_IB);
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://twitter.com/Synopsisjobs";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
         credits_self_verify_total_tv = (TextView) view.findViewById(R.id.credits_self_verify_total_tv);
         credits_verified_referal_amount_tv = (TextView) view.findViewById(R.id.credits_verified_referal_amount_tv);
         credits_verified_referal_number_tv = (TextView) view.findViewById(R.id.credits_verified_referal_number_tv);

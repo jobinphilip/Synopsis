@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/white"
+
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/logo_and_tagline"></include>
+
 
     <TextView
         android:layout_width="match_parent"
+        android:layout_gravity="center"
+
         android:layout_height="wrap_content"
         android:text="Identity Verification"
         android:textAlignment="center"
-
+android:gravity="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="@color/darkblue" />
     <ScrollView
@@ -34,8 +37,21 @@
             android:inputType="textCapWords"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_height="wrap_content"
-            android:hint="First name,Middle name (Full Name)" />
+            android:hint="First Name" />
 </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/MnameLo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3">
+        <EditText
+            android:id="@+id/identity_MnameET"
+            android:layout_width="match_parent"
+            android:inputType="textCapWords"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_height="wrap_content"
+            android:hint="Middle name" />
+    </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:id="@+id/lastnameLo"
         android:layout_width="match_parent"
@@ -260,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
 
-                android:hint="@string/mobile_number"
+                android:hint="@string/alternate_mobile"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"

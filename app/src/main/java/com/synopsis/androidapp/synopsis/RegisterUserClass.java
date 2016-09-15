@@ -1,6 +1,7 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -41,8 +43,8 @@ public class RegisterUserClass extends Activity {
     public static final String Login_details = "Login_details";
     boolean visibility = false;
     Spinner self_or_refer_spinner;
-    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt;
-    String referror_string, firstname_string, lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
+    EditText emailET, confirmEmailET, passwordET, first_nameET, last_nameET, phoneET, country_codeET, referorIdEt,middlename_ET;
+    String referror_string, firstname_string, middle_name_string,lastname_string, email_string, confirm_email_string, password_string, phone_string, country_code_string, referorId, referance_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class RegisterUserClass extends Activity {
         setContentView(R.layout.register_user_page);
         self_or_refer_spinner = (Spinner) findViewById(R.id.self_or_refer_spinner);
         first_nameET = (EditText) findViewById(R.id.firstname_ET);
+        middlename_ET= (EditText) findViewById(R.id.middlename_ET);
         last_nameET = (EditText) findViewById(R.id.last_nameET);
         phoneET = (EditText) findViewById(R.id.phone_ET);
         emailET = (EditText) findViewById(R.id.email_Et);
@@ -70,9 +73,13 @@ public class RegisterUserClass extends Activity {
 
                     Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                     Matcher matcher = pattern.matcher(inputStr);
-                    if (!(matcher.matches())) {
+                    if (!(matcher.matches())&&!referror_string.matches("No One Referred Me")) {
                         referorIdEt.setError("invalid referror Id");
-                    } else if (referror_string.matches("")) {
+                    } else if (referror_string.matches("No One Referred Me")) {
+                        referorIdEt.setError(null);
+                    }
+
+                    else if (referror_string.matches("")) {
                         referorIdEt.setError(null);
                     } else {
 
@@ -154,9 +161,15 @@ public class RegisterUserClass extends Activity {
                 referance_type = parent.getItemAtPosition(position).toString();
                 if (referance_type.matches("Referred By Others")) {
                     referorIdEt.setEnabled(true);
+                    referorIdEt.requestFocus();
+                    referorIdEt.setText("");
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(referorIdEt, InputMethodManager.SHOW_IMPLICIT);
                 } else {
                     referorIdEt.setEnabled(false);
-                    referorIdEt.setText("");
+                    referorIdEt.setText("No One Referred Me");
+                    referorIdEt.setError(null);
+
                 }
                 Log.d("jobin", "selected referrance type :" + referance_type);
             }
@@ -393,16 +406,17 @@ public class RegisterUserClass extends Activity {
         confirm_email_string = confirmEmailET.getText().toString().trim();
         password_string = passwordET.getText().toString().trim();
         firstname_string = first_nameET.getText().toString().trim();
+        middle_name_string=middlename_ET.getText().toString().trim();
         lastname_string = last_nameET.getText().toString().trim();
         phone_string = phoneET.getText().toString().trim();
         country_code_string = country_codeET.getText().toString().trim();
         referorId = referorIdEt.getText().toString().trim();
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        String expression2 = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         CharSequence inputStr = email_string;
 
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (!(matcher.matches())) {
+        Pattern pattern2 = Pattern.compile(expression2, Pattern.CASE_INSENSITIVE);
+        Matcher matcher2 = pattern2.matcher(inputStr);
+        if (!(matcher2.matches())) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Invalid email id", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -445,6 +459,7 @@ public class RegisterUserClass extends Activity {
                 editor.putString("email", email_string);
                 editor.putString("password", password_string);
                 editor.putString("first_name", firstname_string);
+                editor.putString("middle_name", middle_name_string);
                 editor.putString("last_name", lastname_string);
                 editor.putString("mobile", phone_string);
                 editor.putString("country_code", country_code_string);
@@ -453,6 +468,7 @@ public class RegisterUserClass extends Activity {
 
                 editor.commit();
                 startActivity(new Intent(getApplicationContext(), Terms_conditionsClass.class));
+                finish();
 
 
             }

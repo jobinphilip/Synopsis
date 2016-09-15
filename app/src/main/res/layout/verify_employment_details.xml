@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="10dp">
+    >
 
 
 
@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="Employment Verification"
         android:textAlignment="center"
-
+android:gravity="center"
+        android:layout_marginBottom="10dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="@color/darkblue" />
 
@@ -66,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:hint="Employee ID (Optional)"
+                    android:hint="Employee ID (If Applicable)"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             </android.support.design.widget.TextInputLayout>
@@ -81,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
 
-                    android:hint="Joining date"
+                    android:hint="Joining Date"
                     android:focusableInTouchMode="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/synopsis_blue" />
@@ -98,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusableInTouchMode="false"
-                    android:hint="Resignation date"
+                    android:hint="Relieving Date"
 
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/synopsis_blue" />
@@ -114,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:hint="Last held designation"
+                    android:hint="Last Held Designation"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
             </android.support.design.widget.TextInputLayout>
 
@@ -143,7 +144,7 @@
                         android:maxLength="9"
                     android:inputType="number"
                     android:layout_gravity="center_horizontal"
-                        android:hint="Compensation per annum "
+                        android:hint="Compensation Per Annum "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
             </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -172,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="Supervisor name and designation (optional)"
+                    android:hint="Supervisor Name And Designation (optional)"
                     android:inputType="text"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
             </android.support.design.widget.TextInputLayout>
@@ -187,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="supervisor Contact Number (optional)"
+                    android:hint="Supervisor Contact Number (optional)"
                     android:inputType="phone"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
             </android.support.design.widget.TextInputLayout>
@@ -215,7 +216,7 @@
 
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="20dp"
-                android:background="@drawable/rounded_rectangle_blue"
+                android:background="@drawable/gradient_blue"
                 android:text="Save"
                 android:textColor="@color/white" />
 
