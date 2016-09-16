@@ -73,6 +73,12 @@
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden"></activity>
 
+        <activity
+            android:name=".Internet_ErrorMessage"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden"></activity>
+
 
 
     </application>

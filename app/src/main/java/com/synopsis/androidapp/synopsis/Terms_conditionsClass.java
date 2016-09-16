@@ -77,88 +77,98 @@ String email,password;
 
             // String url="http:// 192.168.1.19/test/login3.php";
 
+            if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+            {
+
 
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-            String url = Constants.baseUrl + "register_user.php";
-            RequestQueue requestQueue = Volley.newRequestQueue(Terms_conditionsClass.this);
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                String url = Constants.baseUrl + "register_user.php";
+                RequestQueue requestQueue = Volley.newRequestQueue(Terms_conditionsClass.this);
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                @Override
-                public void onResponse(String response) {
-                    Log.d("jobin", "string response is : " + response);
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("jobin", "string response is : " + response);
 
-                    try {
-                        JSONObject person = new JSONObject(response);
-                        String result = person.getString("result");
-                        String error = person.getString("error");
-                        if (result.equals("Success")) {
-
-
-                            String message = " Kindly confirm your email Id and login using user id and password";
+                        try {
+                            JSONObject person = new JSONObject(response);
+                            String result = person.getString("result");
+                            String error = person.getString("error");
+                            if (result.equals("Success")) {
 
 
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(Terms_conditionsClass.this);
-                            builder.setTitle("Message");
-                            builder.setMessage(message);
-
-                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    Intent intent = new Intent(getApplicationContext(), Start_Application.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            });
-                            builder.create().show();
+                                String message = " Kindly confirm your email Id and login using user id and password";
 
 
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(Terms_conditionsClass.this);
+                                builder.setTitle("Message");
+                                builder.setMessage(message);
 
-                        } else if (error.equals("user_exists")) {
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
+                                builder.create().show();
 
-                            Toast toast = Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                            toast.show();
 
-                            finish();
+
+                            } else if (error.equals("user_exists")) {
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "your email Id is already registered. Kindly login", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.show();
+
+                                finish();
+                            }
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
                         }
 
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
+
                     }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("jobin", "error response is : " + error);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("email", email);
+                        parameters.put("password", password);
+                        parameters.put("ipAddress", ipAddress);
+                        parameters.put("device", "mobile");
+                        parameters.put("firstname", firstname);
+                        parameters.put("middlename", middlename);
+                        parameters.put("lastname", lastname);
+                        parameters.put("phone", phone);
+                        parameters.put("country_code", country_code);
+                        parameters.put("referor_id", referor_id);
+
+                        parameters.put("Action", "registration_form");
 
 
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("jobin", "error response is : " + error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-                    parameters.put("ipAddress", ipAddress);
-                    parameters.put("device", "mobile");
-                    parameters.put("firstname", firstname);
-                    parameters.put("middlename", middlename);
-                    parameters.put("lastname", lastname);
-                    parameters.put("phone", phone);
-                    parameters.put("country_code", country_code);
-                    parameters.put("referor_id", referor_id);
-
-                    parameters.put("Action", "registration_form");
+                        return parameters;
+                    }
+                };
+                requestQueue.add(stringrequest);
 
 
-                    return parameters;
-                }
-            };
-            requestQueue.add(stringrequest);
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }
+            else
+            {
+                startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                finish();
+            }
 
-
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
 
     }

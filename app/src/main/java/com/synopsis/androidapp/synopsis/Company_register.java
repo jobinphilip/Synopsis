@@ -192,83 +192,95 @@ public class Company_register extends Activity {
                         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
                         final String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
-///////////////////////////////volley   ///////////////////////////////////////////////////////////////
-
-                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                            @Override
-                            public void onResponse(String response) {
-
-                                try {
-                                    JSONObject jobject = new JSONObject(response);
-                                    String result = jobject.getString("result").trim();
-                                    String error = jobject.getString("error").trim();
-                                    if (result.equals("success")) {
-                                        String message = "Thank you for registering with Synopsis. We will contact you soon.";
+                        if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+                        {
+//////////////////////////////volley   ///////////////////////////////////////////////////////////////
 
 
-                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Company_register.this);
-                                        builder.setTitle("Message");
-                                        builder.setMessage(message);
 
-                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent intent = new Intent(getApplicationContext(), Start_Application.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                        builder.create().show();
+                            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                                @Override
+                                public void onResponse(String response) {
+
+                                    try {
+                                        JSONObject jobject = new JSONObject(response);
+                                        String result = jobject.getString("result").trim();
+                                        String error = jobject.getString("error").trim();
+                                        if (result.equals("success")) {
+                                            String message = "Thank you for registering with Synopsis. We will contact you soon.";
 
 
-                                    } else {
-                                        String message = "Kindly check your internet settings";
-                                        new AlertDialog.Builder(Company_register.this)
-                                                .setTitle("Synopsis")
-                                                .setMessage(message)
-                                                .setPositiveButton("ok", null)
-                                                .show();
+                                            final AlertDialog.Builder builder = new AlertDialog.Builder(Company_register.this);
+                                            builder.setTitle("Message");
+                                            builder.setMessage(message);
+
+                                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                            builder.create().show();
+
+
+                                        } else {
+                                            String message = "Kindly check your internet settings";
+                                            new AlertDialog.Builder(Company_register.this)
+                                                    .setTitle("Synopsis")
+                                                    .setMessage(message)
+                                                    .setPositiveButton("ok", null)
+                                                    .show();
+                                        }
+
+                                    } catch (JSONException e) {
                                     }
 
-                                } catch (JSONException e) {
+
                                 }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    String message = "Kindly check your internet settings";
+                                    new AlertDialog.Builder(Company_register.this)
+                                            .setTitle("Synopsis")
+                                            .setMessage(message)
+                                            .setPositiveButton("ok", null)
+                                            .show();
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> parameters = new HashMap<String, String>();
+
+                                    parameters.put("company_name", company_name_string);
+                                    parameters.put("company_contact_person", company_contact_person_string);
+                                    parameters.put("company_email", company_email_string);
+                                    parameters.put("company_designation", company_designation_string);
+                                    parameters.put("company_mobile_country_code", company_country_code_string);
+                                    parameters.put("company_mobile", company_mobile_string);
+                                    parameters.put("company_employee_number", company_employee_number_string);
+                                    parameters.put("company_interested_in", company_interested_in_string);
+                                    parameters.put("company_type", company_type_string);
+                                    parameters.put("ipAddress", ipAddress);
+                                    parameters.put("Action", "company_registration_form");
+                                    return parameters;
+                                }
+                            };
+                            requestQueue.add(stringrequest);
+                            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                    10000,
+                                    1,
+                                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        }
+                        else
+                        {
+                            startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                            finish();
+                        }
 
 
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                String message = "Kindly check your internet settings";
-                                new AlertDialog.Builder(Company_register.this)
-                                        .setTitle("Synopsis")
-                                        .setMessage(message)
-                                        .setPositiveButton("ok", null)
-                                        .show();
-                            }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> parameters = new HashMap<String, String>();
-
-                                parameters.put("company_name", company_name_string);
-                                parameters.put("company_contact_person", company_contact_person_string);
-                                parameters.put("company_email", company_email_string);
-                                parameters.put("company_designation", company_designation_string);
-                                parameters.put("company_mobile_country_code", company_country_code_string);
-                                parameters.put("company_mobile", company_mobile_string);
-                                parameters.put("company_employee_number", company_employee_number_string);
-                                parameters.put("company_interested_in", company_interested_in_string);
-                                parameters.put("company_type", company_type_string);
-                                parameters.put("ipAddress", ipAddress);
-                                parameters.put("Action", "company_registration_form");
-                                return parameters;
-                            }
-                        };
-                        requestQueue.add(stringrequest);
-                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                10000,
-                                1,
-                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     }
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Kindly accept to contact you", Toast.LENGTH_LONG);

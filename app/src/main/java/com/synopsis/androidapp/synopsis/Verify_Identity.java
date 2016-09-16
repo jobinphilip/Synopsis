@@ -109,80 +109,91 @@ public class Verify_Identity extends Fragment {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        dobET.setText("" + year + "/" + month + "/" + day);
+    //    dobET.setText("" + year + "/" + month + "/" + day);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Login_details, getActivity().MODE_PRIVATE);
-        email = prefs.getString("email", "");
-        password = prefs.getString("password", "");
+        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+        {
 
-        //////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-        String url = Constants.baseUrl + "identity_verification_submit.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
+            SharedPreferences prefs = getActivity().getSharedPreferences(Login_details, getActivity().MODE_PRIVATE);
+            email = prefs.getString("email", "");
+            password = prefs.getString("password", "");
 
-                try {
-                    JSONObject identity_detailsjobj = new JSONObject(response);
-                    String result = identity_detailsjobj.getString("result");
-                    String error = identity_detailsjobj.getString("error");
-                    if (result.equals("success")) {
+            //////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
+            String url = Constants.baseUrl + "identity_verification_submit.php";
+            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                        LastnameET.setText(identity_detailsjobj.getString("last_name"));
-                        firstnameET.setText(identity_detailsjobj.getString("first_name"));
-                        MiddleNameET.setText(identity_detailsjobj.getString("middle_name"));
-                        fathernameET.setText(identity_detailsjobj.getString("father_name"));
-                        mobileET.setText(identity_detailsjobj.getString("mobile"));
-                        emailET.setText(email);
-                        emailET.setEnabled(false);
-                        alternate_mobileET.setText(identity_detailsjobj.getString("alternate_mobile"));
-                        dobET.setText(identity_detailsjobj.getString("date_of_birth"));
-                        country_codeET.setText(identity_detailsjobj.getString("country_code"));
-                        alternate_country_codeET.setText(identity_detailsjobj.getString("alternate_country_code"));
-                        String gender = identity_detailsjobj.getString("gender");
-                        RadioButton m = (RadioButton) view.findViewById(R.id.rdb_male);
-                        RadioButton f = (RadioButton) view.findViewById(R.id.rdb_female);
-                        String s = m.getText().toString().trim();
-                        if (s.equals(gender)) {
-                            m.setChecked(true);
-                        } else {
-                            f.setChecked(true);
+                @Override
+                public void onResponse(String response) {
+                    Log.d("jobin", "string response is : " + response);
+
+                    try {
+                        JSONObject identity_detailsjobj = new JSONObject(response);
+                        String result = identity_detailsjobj.getString("result");
+                        String error = identity_detailsjobj.getString("error");
+                        if (result.equals("success")) {
+
+                            LastnameET.setText(identity_detailsjobj.getString("last_name"));
+                            firstnameET.setText(identity_detailsjobj.getString("first_name"));
+                            MiddleNameET.setText(identity_detailsjobj.getString("middle_name"));
+                            fathernameET.setText(identity_detailsjobj.getString("father_name"));
+                            mobileET.setText(identity_detailsjobj.getString("mobile"));
+                            emailET.setText(email);
+                            emailET.setEnabled(false);
+                            alternate_mobileET.setText(identity_detailsjobj.getString("alternate_mobile"));
+                            dobET.setText(identity_detailsjobj.getString("date_of_birth"));
+                            country_codeET.setText(identity_detailsjobj.getString("country_code"));
+                            alternate_country_codeET.setText(identity_detailsjobj.getString("alternate_country_code"));
+                            String gender = identity_detailsjobj.getString("gender");
+                            RadioButton m = (RadioButton) view.findViewById(R.id.rdb_male);
+                            RadioButton f = (RadioButton) view.findViewById(R.id.rdb_female);
+                            String s = m.getText().toString().trim();
+                            if (s.equals(gender)) {
+                                m.setChecked(true);
+                            } else {
+                                f.setChecked(true);
+                            }
+
+
                         }
-
-
+                    } catch (JSONException e) {
+                        Log.d("jobin", "json errror:" + e);
                     }
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
+
+
                 }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("jobin", "error response is : " + error);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("email", email);
+                    parameters.put("password", password);
+
+                    parameters.put("Action", "check_identity_form");
 
 
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email);
-                parameters.put("password", password);
-
-                parameters.put("Action", "check_identity_form");
+                    return parameters;
+                }
+            };
+            requestQueue.add(stringrequest);
 
 
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        }
+        else
+        {
+            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
 
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        }
 
 
         mobileET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -369,87 +380,91 @@ public class Verify_Identity extends Fragment {
                         // find the radiobutton by returned id
                         RadioButton radioButton = (RadioButton) view.findViewById(selectedId);
                         gender2 = radioButton.getText().toString();
-       /*
-        if (firstname2.equals("") || lastname2.equals("") || fathername2.equals("") || mobile2.equals("") || dateofbirth2.equals("")) {
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the missing fields", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-        }
-        */
 
-                        ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
-                        String url2 = Constants.baseUrl + "identity_verification_submit.php";
-                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+                        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                        {
 
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("jobin", "string response is : " + response);
+                            ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
+                            String url2 = Constants.baseUrl + "identity_verification_submit.php";
+                            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                            StringRequest stringrequest = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
 
-                                try {
-                                    JSONObject person = new JSONObject(response);
-                                    String result = person.getString("result");
-                                    String error = person.getString("error");
-                                    if (result.equals("success")) {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("jobin", "string response is : " + response);
 
-                                        android.support.v4.app.Fragment fragment = new VerifyClass();
-                                        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    try {
+                                        JSONObject person = new JSONObject(response);
+                                        String result = person.getString("result");
+                                        String error = person.getString("error");
+                                        if (result.equals("success")) {
 
-                                        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                            fragmentManager.popBackStack();
+                                            android.support.v4.app.Fragment fragment = new VerifyClass();
+                                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                fragmentManager.popBackStack();
+                                            }
+                                            fragmentTransaction.remove(fragment);
+                                            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                                            //    startActivity(new Intent(getActivity().getApplicationContext(), Dash_board.class));
+
+
+                                        } else {
+                                            Log.d("jobin", "it happened again..! errror:" + error);
                                         }
-                                        fragmentTransaction.remove(fragment);
-                                        fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                                        //    startActivity(new Intent(getActivity().getApplicationContext(), Dash_board.class));
 
-
-                                    } else {
-                                        Log.d("jobin", "it happened again..! errror:" + error);
+                                    } catch (JSONException e) {
+                                        Log.d("jobin", "json errror:" + e);
                                     }
 
-                                } catch (JSONException e) {
-                                    Log.d("jobin", "json errror:" + e);
+
                                 }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("jobin", "error response is : " + error);
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> parameters = new HashMap<String, String>();
+                                    parameters.put("email", email);
+                                    parameters.put("password", password);
+                                    parameters.put("first_name", firstname2);
+                                    parameters.put("middle_name", middleName2);
+                                    parameters.put("last_name", lastname2);
+                                    parameters.put("father_name", fathername2);
+                                    parameters.put("date_of_birth", dateofbirth2);
+                                    parameters.put("gender", gender2);
+                                    parameters.put("mobile", mobile2);
+                                    parameters.put("alternate_mobile", alternatemobile2);
+                                    parameters.put("country_code", country_code2);
+                                    parameters.put("alternate_country_code", alternate_country_code2);
 
 
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("jobin", "error response is : " + error);
-                            }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> parameters = new HashMap<String, String>();
-                                parameters.put("email", email);
-                                parameters.put("password", password);
-                                parameters.put("first_name", firstname2);
-                                parameters.put("middle_name", middleName2);
-                                parameters.put("last_name", lastname2);
-                                parameters.put("father_name", fathername2);
-                                parameters.put("date_of_birth", dateofbirth2);
-                                parameters.put("gender", gender2);
-                                parameters.put("mobile", mobile2);
-                                parameters.put("alternate_mobile", alternatemobile2);
-                                parameters.put("country_code", country_code2);
-                                parameters.put("alternate_country_code", alternate_country_code2);
+                                    parameters.put("Action", "identity_verification_form");
 
 
-                                parameters.put("Action", "identity_verification_form");
+                                    return parameters;
+                                }
+                            };
+                            requestQueue.add(stringrequest);
 
 
-                                return parameters;
-                            }
-                        };
-                        requestQueue.add(stringrequest);
+                            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                        }
+                        else
+                        {
+                            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
 
-                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        }
+
 
                     }
                 }

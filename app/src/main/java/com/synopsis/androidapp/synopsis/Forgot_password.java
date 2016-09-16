@@ -50,65 +50,76 @@ public class Forgot_password  extends Activity{
        else
         {
 
+            if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+            {
 
-        RequestQueue requestQueue2 = Volley.newRequestQueue(Forgot_password.this);
+                RequestQueue requestQueue2 = Volley.newRequestQueue(Forgot_password.this);
 ///////////////////////////////volley ///////////////////////////////////////////////////////////////
-        String url=Constants.baseUrl+"password_forgot.php";
+                String url=Constants.baseUrl+"password_forgot.php";
 
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("jobin", "string response is : " + response);
 
-                try {
-                    JSONObject person = new JSONObject(response);
-                    String result = person.getString("result");
-                    String error = person.getString("error");
-                    if (result.matches("Success")) {
+                        try {
+                            JSONObject person = new JSONObject(response);
+                            String result = person.getString("result");
+                            String error = person.getString("error");
+                            if (result.matches("Success")) {
 
 
-                        startActivity(new Intent(getApplicationContext(), Forgot_password_ResetClass.class));
+                                startActivity(new Intent(getApplicationContext(), Forgot_password_ResetClass.class));
+                            }
+                            else
+                            {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.show();
+                            }
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
+                        }
+
+
                     }
-                    else
-                    {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Invalid Email Id", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                        toast.show();
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("jobin", "error response is : " + error);
                     }
-
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("uname", uname);
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("uname", uname);
 
 
 
 
 
 
-                return parameters;
-            }
-        };
-        requestQueue2.add(stringrequest);
+                        return parameters;
+                    }
+                };
+                requestQueue2.add(stringrequest);
 
 
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 ///////////////////////////////volley ends///////////////////////////////////////////////////////////////
+
+
+            }
+            else
+            {
+                startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                finish();
+            }
+
 
 
         }

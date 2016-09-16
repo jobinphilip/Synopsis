@@ -98,64 +98,77 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
        // datepickerBtnET.setText("" + day + "/" + month + "/" + year);
+
         RequestQueue requestQueue2 = Volley.newRequestQueue(BasicInfoClass.this);
-        try {
-            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
 
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                @Override
-                public void onResponse(String response) {
+        if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+        {
 
-                    try {
-                        JSONObject jobj = new JSONObject(response);
-                        String result = jobj.getString("result");
-                        String error = jobj.getString("error");
-                        String img_url = jobj.getString("img_url");
-                        if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
-                            selfyButton.setVisibility(View.INVISIBLE);
-                            basic_info_image.setVisibility(View.VISIBLE);
-                            Log.d("jobin", "condition check is not right");
-                            Picasso.with(BasicInfoClass.this).invalidate(img_url);
-                            Picasso.with(BasicInfoClass.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
-                                    .networkPolicy(NetworkPolicy.NO_CACHE).into(basic_info_image);
-                        } else {
+            try {
+                ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
 
-                            selfyButton.setVisibility(View.VISIBLE);
-                            basic_info_image.setVisibility(View.INVISIBLE);
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            String result = jobj.getString("result");
+                            String error = jobj.getString("error");
+                            String img_url = jobj.getString("img_url");
+                            if ((result.equals("success")) && img_url != null && !img_url.isEmpty() && !img_url.equals("null")) {
+                                selfyButton.setVisibility(View.INVISIBLE);
+                                basic_info_image.setVisibility(View.VISIBLE);
+                                Log.d("jobin", "condition check is not right");
+                                Picasso.with(BasicInfoClass.this).invalidate(img_url);
+                                Picasso.with(BasicInfoClass.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(basic_info_image);
+                            } else {
+
+                                selfyButton.setVisibility(View.VISIBLE);
+                                basic_info_image.setVisibility(View.INVISIBLE);
+                            }
+
+                        } catch (JSONException e) {
+                            Log.d("jobin", "json errror:" + e);
                         }
 
-                    } catch (JSONException e) {
-                        Log.d("jobin", "json errror:" + e);
+                        autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+                        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
+                        autoCompView.setOnItemClickListener(BasicInfoClass.this);
                     }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                    autoCompView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-                    autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(BasicInfoClass.this, R.layout.list_item));
-                    autoCompView.setOnItemClickListener(BasicInfoClass.this);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("email", email);
+                        parameters.put("password", password);
+                        parameters.put("Action", "image_download");
+                        return parameters;
+                    }
+                };
+                requestQueue2.add(stringrequest);
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            } catch (NullPointerException e) {
 
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("email", email);
-                    parameters.put("password", password);
-                    parameters.put("Action", "image_download");
-                    return parameters;
-                }
-            };
-            requestQueue2.add(stringrequest);
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        } catch (NullPointerException e) {
+                selfyButton.setVisibility(View.VISIBLE);
+                basic_info_image.setVisibility(View.INVISIBLE);
+            }
 
-            selfyButton.setVisibility(View.VISIBLE);
-            basic_info_image.setVisibility(View.INVISIBLE);
         }
+        else
+        {
+            startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+        }
+
 
     }
 
@@ -205,55 +218,66 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
             String url = Constants.baseUrl + "submit_basic_info.php";
 
+
+            if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+            {
+
 //////////////////////////////volley starts  ///////////////////////////////////////////////////////////////
-            RequestQueue requestQueue = Volley.newRequestQueue(BasicInfoClass.this);
-            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                RequestQueue requestQueue = Volley.newRequestQueue(BasicInfoClass.this);
+                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                @Override
-                public void onResponse(String response) {
+                    @Override
+                    public void onResponse(String response) {
 
 
-                    try {
-                        JSONObject person = new JSONObject(response);
-                        String result = person.getString("result");
-                        String error = person.getString("error");
-                        if (result.equals("success")) {
-                            startActivity(new Intent(getApplicationContext(), Dash_board.class));
-                            finish();
+                        try {
+                            JSONObject person = new JSONObject(response);
+                            String result = person.getString("result");
+                            String error = person.getString("error");
+                            if (result.equals("success")) {
+                                startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                finish();
+                            }
+
+                        } catch (JSONException e) {
                         }
 
-                    } catch (JSONException e) {
+
                     }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("dateofbirth", dateofbirth);
+
+                        parameters.put("gender", gender);
+                        parameters.put("country", country);
+                        parameters.put("state", state);
+                        parameters.put("city", city);
+                        parameters.put("email", email);
+                        parameters.put("Action", "basic_info_form");
 
 
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("dateofbirth", dateofbirth);
-
-                    parameters.put("gender", gender);
-                    parameters.put("country", country);
-                    parameters.put("state", state);
-                    parameters.put("city", city);
-                    parameters.put("email", email);
-                    parameters.put("Action", "basic_info_form");
+                        return parameters;
+                    }
+                };
+                requestQueue.add(stringrequest);
 
 
-                    return parameters;
-                }
-            };
-            requestQueue.add(stringrequest);
+                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }
+            else
+            {
+                startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                finish();
+            }
 
-
-            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
     }
 //////////////////////////volley ends////////////////////////////////////////////////

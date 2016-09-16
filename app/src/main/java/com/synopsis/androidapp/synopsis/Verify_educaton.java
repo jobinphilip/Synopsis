@@ -129,7 +129,10 @@ public class Verify_educaton extends Fragment {
 
                 } else {
                 */
-                    url = Constants.baseUrl + "education_verification.php";
+
+                if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                {
+
                     ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
                     RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
                     StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -196,6 +199,15 @@ public class Verify_educaton extends Fragment {
                     stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                             10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+
+                }
+                else
+                {
+                    startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+
+                }
+
+                url = Constants.baseUrl + "education_verification.php";
 
                 }
 

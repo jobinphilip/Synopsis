@@ -133,116 +133,119 @@ public class Verify_employment extends Fragment implements AdapterView.OnItemCli
                     currency = "INR";
                 }
 
-/*
-                if (employment_verify_name.equals("") || employment_verify_date_ofjoin.equals("") || employment_verify_date_of_resign.equals("") || employment_verify_designation.equals("") || employment_verify_compensation.equals("") || employment_verify_location.equals("") || employment_verify_reason_of_leaving.equals("")) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the fields", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
+                if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                {
 
+                    SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
+                    email = prefs.getString("email", "");
+                    password = prefs.getString("password", "");
+                    url = Constants.baseUrl + "employment_verification_submit.php";
+                    ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
+                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                }*/
-                SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
-                email = prefs.getString("email", "");
-                password = prefs.getString("password", "");
-                url = Constants.baseUrl + "employment_verification_submit.php";
-                ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
-                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("jobin", "string response is : " + response);
 
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("jobin", "string response is : " + response);
+                            try {
+                                JSONObject person = new JSONObject(response);
+                                String result = person.getString("result");
+                                String error = person.getString("error");
+                                if (result.equals("success")) {
 
-                        try {
-                            JSONObject person = new JSONObject(response);
-                            String result = person.getString("result");
-                            String error = person.getString("error");
-                            if (result.equals("success")) {
-
-                                final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("Title");
-                                alertDialog.setMessage("Message");
-                                alertDialog.setButton("exit", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        android.support.v4.app.Fragment fragment = new VerifyClass();
-                                        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                            fragmentManager.popBackStack();
-                                        }
-                                        fragmentTransaction.remove(fragment);
-                                        fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                                        // finish();
-                                    }
-
-                                });
-
-
-                                alertDialog.setButton2("Add Employment", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                android.support.v4.app.Fragment fragment = new Verify_employment();
-                                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                                    fragmentManager.popBackStack();
-                                                }
-                                                fragmentTransaction.remove(fragment);
-                                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-
-                                                //     startActivity(new Intent(getActivity(), Verify_employment.class));
+                                    final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                    alertDialog.setTitle("Title");
+                                    alertDialog.setMessage("Message");
+                                    alertDialog.setButton("exit", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            android.support.v4.app.Fragment fragment = new VerifyClass();
+                                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                fragmentManager.popBackStack();
                                             }
+                                            fragmentTransaction.remove(fragment);
+                                            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                                            // finish();
                                         }
-                                );
-                                alertDialog.show();
+
+                                    });
 
 
-                            } else {
-                                Log.d("jobin", "it happened again..! errror:" + error);
+                                    alertDialog.setButton2("Add Employment", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    android.support.v4.app.Fragment fragment = new Verify_employment();
+                                                    android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                                    for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                        fragmentManager.popBackStack();
+                                                    }
+                                                    fragmentTransaction.remove(fragment);
+                                                    fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+
+                                                    //     startActivity(new Intent(getActivity(), Verify_employment.class));
+                                                }
+                                            }
+                                    );
+                                    alertDialog.show();
+
+
+                                } else {
+                                    Log.d("jobin", "it happened again..! errror:" + error);
+                                }
+
+                            } catch (JSONException e) {
+                                Log.d("jobin", "json errror:" + e);
                             }
 
-                        } catch (JSONException e) {
-                            Log.d("jobin", "json errror:" + e);
+
                         }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("jobin", "error response is : " + error);
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> parameters = new HashMap<String, String>();
+                            parameters.put("employment_verify_name", employment_verify_name);
+                            parameters.put("employment_verify_contact_no", employment_verify_contact_no);
+                            parameters.put("employment_verify_employee_id", employment_verify_employee_id);
+                            parameters.put("employment_verify_date_ofjoin", employment_verify_date_ofjoin);
+                            parameters.put("employment_verify_date_of_resign", employment_verify_date_of_resign);
+                            parameters.put("employment_verify_designation", employment_verify_designation);
+                            parameters.put("employment_verify_compensation", employment_verify_compensation);
+                            parameters.put("employment_verify_currency", currency);
+                            parameters.put("employment_verify_location", employment_verify_location);
+                            parameters.put("employment_verify_supervisor_name", employment_verify_supervisor_name);
+                            parameters.put("employment_verify_supervisor_contact", employment_verify_supervisor_contact);
+                            parameters.put("employment_verify_reason_of_leaving", employment_verify_reason_of_leaving);
+                            parameters.put("email", email);
+                            parameters.put("password", password);
+                            parameters.put("Action", "employment_verification_form");
 
 
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("jobin", "error response is : " + error);
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("employment_verify_name", employment_verify_name);
-                        parameters.put("employment_verify_contact_no", employment_verify_contact_no);
-                        parameters.put("employment_verify_employee_id", employment_verify_employee_id);
-                        parameters.put("employment_verify_date_ofjoin", employment_verify_date_ofjoin);
-                        parameters.put("employment_verify_date_of_resign", employment_verify_date_of_resign);
-                        parameters.put("employment_verify_designation", employment_verify_designation);
-                        parameters.put("employment_verify_compensation", employment_verify_compensation);
-                        parameters.put("employment_verify_currency", currency);
-                        parameters.put("employment_verify_location", employment_verify_location);
-                        parameters.put("employment_verify_supervisor_name", employment_verify_supervisor_name);
-                        parameters.put("employment_verify_supervisor_contact", employment_verify_supervisor_contact);
-                        parameters.put("employment_verify_reason_of_leaving", employment_verify_reason_of_leaving);
-                        parameters.put("email", email);
-                        parameters.put("password", password);
-                        parameters.put("Action", "employment_verification_form");
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(stringrequest);
 
 
-                        return parameters;
-                    }
-                };
-                requestQueue.add(stringrequest);
+                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                }
+                else
+                {
+                    startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
 
-                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                }
+
 
 
             }
@@ -296,26 +299,31 @@ public class Verify_employment extends Fragment implements AdapterView.OnItemCli
                             } else {
                                 verify_emp_resigndateET.setError(null);
 
-                                SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
-                                final String email = prefs.getString("email", "");
-                                final String password = prefs.getString("password", "");
+
+                                if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                                {
+
+
+                                    SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
+                                    final String email = prefs.getString("email", "");
+                                    final String password = prefs.getString("password", "");
 
 
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-                                String url = Constants.baseUrl + "validate_employment_dates.php";
-                                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                    String url = Constants.baseUrl + "validate_employment_dates.php";
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("jobin", "string response is : " + response);
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Log.d("jobin", "string response is : " + response);
 
-                                        try {
-                                            JSONObject date_validation_jobj = new JSONObject(response);
-                                            String result = date_validation_jobj.getString("result");
+                                            try {
+                                                JSONObject date_validation_jobj = new JSONObject(response);
+                                                String result = date_validation_jobj.getString("result");
 
 
-                                            if (result.matches("invalid")) {
+                                                if (result.matches("invalid")) {
 /*
                                                 Fragment frg = null;
                                                 frg = getActivity().getSupportFragmentManager().findFragmentByTag("tag");
@@ -324,11 +332,11 @@ public class Verify_employment extends Fragment implements AdapterView.OnItemCli
                                                 ft.attach(frg);
                                                 ft.commit();
 */
-                                                verify_emp_joindateET.setError("Date mismatch with prevous employments");
+                                                    verify_emp_joindateET.setError("Date mismatch with prevous employments");
 
 
-                                                //          Toast.makeText(getActivity(),"Date mismatch with prevous employments",Toast.LENGTH_LONG).show();
-                                            } else {
+                                                    //          Toast.makeText(getActivity(),"Date mismatch with prevous employments",Toast.LENGTH_LONG).show();
+                                                } else {
                                            /*     Fragment frg = null;
                                                 frg = getActivity().getSupportFragmentManager().findFragmentByTag("tag");
                                                 final FragmentTransaction ft =getActivity(). getSupportFragmentManager().beginTransaction();
@@ -336,43 +344,50 @@ public class Verify_employment extends Fragment implements AdapterView.OnItemCli
                                                 ft.attach(frg);
                                                 ft.commit();
     */
-                                                verify_emp_joindateET.setError(null);
+                                                    verify_emp_joindateET.setError(null);
 
+                                                }
+
+                                            } catch (JSONException e) {
+                                                Log.d("jobin", "json errror:" + e);
                                             }
 
-                                        } catch (JSONException e) {
-                                            Log.d("jobin", "json errror:" + e);
+
                                         }
+                                    }, new Response.ErrorListener() {
+
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.d("jobin", "error response is : " + error);
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> parameters = new HashMap<String, String>();
+                                            parameters.put("email", email);
+                                            parameters.put("password", password);
+                                            parameters.put("join_date", employment_verify_date_ofjoin);
+                                            parameters.put("resign_date", employment_verify_date_of_resign);
 
 
-                                    }
-                                }, new Response.ErrorListener() {
-
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("jobin", "error response is : " + error);
-                                    }
-                                }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> parameters = new HashMap<String, String>();
-                                        parameters.put("email", email);
-                                        parameters.put("password", password);
-                                        parameters.put("join_date", employment_verify_date_ofjoin);
-                                        parameters.put("resign_date", employment_verify_date_of_resign);
+                                            parameters.put("Action", "validate_employment_dates");
 
 
-                                        parameters.put("Action", "validate_employment_dates");
+                                            return parameters;
+                                        }
+                                    };
+                                    requestQueue.add(stringrequest);
 
 
-                                        return parameters;
-                                    }
-                                };
-                                requestQueue.add(stringrequest);
+                                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+                                }
+                                else
+                                {
+                                    startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
 
-                                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                }
 
 
                             }
@@ -410,65 +425,75 @@ public class Verify_employment extends Fragment implements AdapterView.OnItemCli
                                 SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
                                 final String email = prefs.getString("email", "");
                                 final String password = prefs.getString("password", "");
+                                if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                                {
 
 
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-                                String url = Constants.baseUrl + "validate_employment_dates.php";
-                                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                                StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                    String url = Constants.baseUrl + "validate_employment_dates.php";
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("jobin", "string response is : " + response);
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Log.d("jobin", "string response is : " + response);
 
-                                        try {
-                                            JSONObject date_validation_jobj = new JSONObject(response);
-                                            String result = date_validation_jobj.getString("result");
-                                            if (result.matches("invalid")) {
+                                            try {
+                                                JSONObject date_validation_jobj = new JSONObject(response);
+                                                String result = date_validation_jobj.getString("result");
+                                                if (result.matches("invalid")) {
 
-                                                // Toast.makeText(getActivity(),"Date mismatch with prevous employments",Toast.LENGTH_LONG).show();
-                                                verify_emp_resigndateET.setError("Date mismatch with prevous employments");
+                                                    // Toast.makeText(getActivity(),"Date mismatch with prevous employments",Toast.LENGTH_LONG).show();
+                                                    verify_emp_resigndateET.setError("Date mismatch with prevous employments");
 
 
-                                            } else {
+                                                } else {
 
-                                                verify_emp_resigndateET.setError(null);
+                                                    verify_emp_resigndateET.setError(null);
+                                                }
+
+
+                                            } catch (JSONException e) {
+                                                Log.d("jobin", "json errror:" + e);
                                             }
 
 
-                                        } catch (JSONException e) {
-                                            Log.d("jobin", "json errror:" + e);
                                         }
+                                    }, new Response.ErrorListener() {
+
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.d("jobin", "error response is : " + error);
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> parameters = new HashMap<String, String>();
+                                            parameters.put("email", email);
+                                            parameters.put("password", password);
+                                            parameters.put("join_date", employment_verify_date_ofjoin);
+                                            parameters.put("resign_date", employment_verify_date_of_resign);
 
 
-                                    }
-                                }, new Response.ErrorListener() {
-
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("jobin", "error response is : " + error);
-                                    }
-                                }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> parameters = new HashMap<String, String>();
-                                        parameters.put("email", email);
-                                        parameters.put("password", password);
-                                        parameters.put("join_date", employment_verify_date_ofjoin);
-                                        parameters.put("resign_date", employment_verify_date_of_resign);
+                                            parameters.put("Action", "validate_employment_dates");
 
 
-                                        parameters.put("Action", "validate_employment_dates");
+                                            return parameters;
+                                        }
+                                    };
+                                    requestQueue.add(stringrequest);
 
 
-                                        return parameters;
-                                    }
-                                };
-                                requestQueue.add(stringrequest);
+                                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
-                                stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                                        10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                }
+                                else
+                                {
+                                    startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+
+                                }
 
 
                             }

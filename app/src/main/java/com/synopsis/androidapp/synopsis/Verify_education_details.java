@@ -160,89 +160,99 @@ public class Verify_education_details extends Fragment {
                     percentage = percentageET.getText().toString().trim();
                     courseName = courseNameET.getText().toString().trim();
                     courseType = courseTypeET.getText().toString().trim();
+                    if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                    {
+
+                        String url = Constants.baseUrl + "education_verification.php";
+                        ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("jobin", "string response is : " + response);
+
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
+                                    String error = person.getString("error");
+                                    if (result.equals("success")) {
 
 
-                    String url = Constants.baseUrl + "education_verification.php";
-                    ///////////////////////////////volley  ///////////////////////////////////////////////////////////////
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                        alertDialog.setTitle("Alert");
+                                        alertDialog.setMessage("Changes Saved");
+                                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //   finish();
 
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("jobin", "string response is : " + response);
-
-                            try {
-                                JSONObject person = new JSONObject(response);
-                                String result = person.getString("result");
-                                String error = person.getString("error");
-                                if (result.equals("success")) {
-
-
-                                    final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                    alertDialog.setTitle("Alert");
-                                    alertDialog.setMessage("Changes Saved");
-                                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //   finish();
-
-                                            android.support.v4.app.Fragment fragment = new VerifyClass();
-                                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                                fragmentManager.popBackStack();
+                                                android.support.v4.app.Fragment fragment = new VerifyClass();
+                                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                    fragmentManager.popBackStack();
+                                                }
+                                                fragmentTransaction.remove(fragment);
+                                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
                                             }
-                                            fragmentTransaction.remove(fragment);
-                                            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                                        }
 
-                                    });
+                                        });
 
 
-                                    alertDialog.show();
+                                        alertDialog.show();
 
-                                    // startActivity(new Intent(getActivity(), VerifyClass.class));
-                                } else {
-                                    Log.d("jobin", "it happened again..! errror:" + error);
+                                        // startActivity(new Intent(getActivity(), VerifyClass.class));
+                                    } else {
+                                        Log.d("jobin", "it happened again..! errror:" + error);
+                                    }
+
+                                } catch (JSONException e) {
+                                    Log.d("jobin", "json errror:" + e);
                                 }
 
-                            } catch (JSONException e) {
-                                Log.d("jobin", "json errror:" + e);
+
                             }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("jobin", "error response is : " + error);
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+                                parameters.put("register_number", register_number);
+                                parameters.put("collegename", collegename);
+                                parameters.put("university", university);
+                                parameters.put("month_and_year_of_pass", date_of_pass);
+                                parameters.put("percentage", percentage);
+                                parameters.put("course_name", courseName);
+                                parameters.put("course_type", courseType);
+                                parameters.put("email", email);
+                                parameters.put("password", password);
+
+                                parameters.put("random_code", random_code);
+                                parameters.put("Action", "education_verification_update");
 
 
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("jobin", "error response is : " + error);
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> parameters = new HashMap<String, String>();
-                            parameters.put("register_number", register_number);
-                            parameters.put("collegename", collegename);
-                            parameters.put("university", university);
-                            parameters.put("month_and_year_of_pass", date_of_pass);
-                            parameters.put("percentage", percentage);
-                            parameters.put("course_name", courseName);
-                            parameters.put("course_type", courseType);
-                            parameters.put("email", email);
-                            parameters.put("password", password);
-
-                            parameters.put("random_code", random_code);
-                            parameters.put("Action", "education_verification_update");
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(stringrequest);
 
 
-                            return parameters;
-                        }
-                    };
-                    requestQueue.add(stringrequest);
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                    }
+                    else
+                    {
+                        startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+
+                    }
 
 
-                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
                 }

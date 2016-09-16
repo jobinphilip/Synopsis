@@ -82,68 +82,80 @@ public class Camera_activity extends Activity {
 
                 //Showing the progress dialog
 
-                final ProgressDialog loading = ProgressDialog.show(Camera_activity.this, "Uploading...", "Please wait...", false, false);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String s) {
-                                loading.dismiss();
-                                try {
-                                    JSONObject resultobj = new JSONObject(s);
-                                    String result = resultobj.getString("result");
 
 
-                                    if (result.equals("success")) {
+                if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+                {
+                    final ProgressDialog loading = ProgressDialog.show(Camera_activity.this, "Uploading...", "Please wait...", false, false);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String s) {
+                                    loading.dismiss();
+                                    try {
+                                        JSONObject resultobj = new JSONObject(s);
+                                        String result = resultobj.getString("result");
 
-                                        SharedPreferences prefs = Camera_activity.this.getSharedPreferences("image_processing_class", Context.MODE_PRIVATE);
-                                        String prev_class_name = prefs.getString("class", "");
 
-                                        if (prev_class_name.matches("BasicInfo")) {
+                                        if (result.equals("success")) {
 
-                                            Intent I = new Intent(getApplicationContext(), BasicInfoClass.class);
-                                            startActivity(I);
-                                            finish();
+                                            SharedPreferences prefs = Camera_activity.this.getSharedPreferences("image_processing_class", Context.MODE_PRIVATE);
+                                            String prev_class_name = prefs.getString("class", "");
+
+                                            if (prev_class_name.matches("BasicInfo")) {
+
+                                                Intent I = new Intent(getApplicationContext(), BasicInfoClass.class);
+                                                startActivity(I);
+                                                finish();
+                                            } else {
+                                                Intent I = new Intent(getApplicationContext(), Dash_board.class);
+                                                startActivity(I);
+                                                finish();
+                                            }
+
+
                                         } else {
-                                            Intent I = new Intent(getApplicationContext(), Dash_board.class);
-                                            startActivity(I);
+
+                                            Toast toast = Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG);
+                                            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                            toast.show();
+
                                             finish();
                                         }
 
-
-                                    } else {
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), "There was an unexpected error. Kindly try again", Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                        toast.show();
-
-                                        finish();
+                                    } catch (JSONException e) {
+                                        Log.d("jobin", "error uploading image");
                                     }
-
-                                } catch (JSONException e) {
-                                    Log.d("jobin", "error uploading image");
                                 }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                loading.dismiss();
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    loading.dismiss();
 
 
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        String image = getStringImage(cropped);
-                        Map<String, String> params = new Hashtable<String, String>();
-                        params.put("image", image);
-                        params.put("email", email);
-                        return params;
-                    }
-                };
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            String image = getStringImage(cropped);
+                            Map<String, String> params = new Hashtable<String, String>();
+                            params.put("image", image);
+                            params.put("email", email);
+                            return params;
+                        }
+                    };
 
-                RequestQueue requestQueue = Volley.newRequestQueue(Camera_activity.this);
-                requestQueue.add(stringRequest);
+                    RequestQueue requestQueue = Volley.newRequestQueue(Camera_activity.this);
+                    requestQueue.add(stringRequest);
+                    //do something. loadwebview.
+                }
+                else
+                {
+                    startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                    finish();
+                }
+
 
 
             }

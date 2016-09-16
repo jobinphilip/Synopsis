@@ -105,13 +105,13 @@ public class VerifyClass extends Fragment {
                                 }
                                 fragmentTransaction.remove(fragment);
                                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                          //      Intent I = new Intent(getActivity().getApplicationContext(), Verify_Education_List.class);
-                             //   startActivity(I);
+                                //      Intent I = new Intent(getActivity().getApplicationContext(), Verify_Education_List.class);
+                                //   startActivity(I);
 
 
                             } else {
-                            //    Intent I = new Intent(getActivity().getApplicationContext(), Verify_educaton.class);
-                              //  startActivity(I);
+                                //    Intent I = new Intent(getActivity().getApplicationContext(), Verify_educaton.class);
+                                //  startActivity(I);
                                 android.support.v4.app.Fragment fragment = new Verify_educaton();
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

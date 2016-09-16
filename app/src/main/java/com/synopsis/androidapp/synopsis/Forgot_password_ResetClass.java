@@ -70,86 +70,100 @@ public class Forgot_password_ResetClass extends Activity {
                 }
                 else
                 {
-                    String url=Constants.baseUrl+"password_reset.php";
-                    /////////////////////////////volley starts  ///////////////////////////////////////////////////////////////
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                        @Override
-                        public void onResponse(String response) {
+                    if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+                    {
 
+                        String url=Constants.baseUrl+"password_reset.php";
+                        /////////////////////////////volley starts  ///////////////////////////////////////////////////////////////
+                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                            try {
-                                JSONObject person = new JSONObject(response);
-                                String result = person.getString("result");
-
-                                if (result.equals("success")) {
-                                    String message = "Password Reset Successfully. Kindly Login";
+                            @Override
+                            public void onResponse(String response) {
 
 
-                                    final AlertDialog.Builder builder = new AlertDialog.Builder(Forgot_password_ResetClass.this);
-                                    builder.setTitle("Message");
-                                    builder.setMessage(message);
+                                try {
+                                    JSONObject person = new JSONObject(response);
+                                    String result = person.getString("result");
 
-                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(getApplicationContext(), Start_Application.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
-                                    builder.create().show();
+                                    if (result.equals("success")) {
+                                        String message = "Password Reset Successfully. Kindly Login";
 
 
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Forgot_password_ResetClass.this);
+                                        builder.setTitle("Message");
+                                        builder.setMessage(message);
+
+                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(getApplicationContext(), Start_Application.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                                        builder.create().show();
+
+
+                                    }
+                                    else
+                                    {
+                                        String message = "Wrong Credentials entered";
+
+
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Forgot_password_ResetClass.this);
+                                        builder.setTitle("Message");
+                                        builder.setMessage(message);
+
+                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        builder.create().show();
+
+
+                                    }
+
+                                } catch (JSONException e) {
                                 }
-                                else
-                                {
-                                    String message = "Wrong Credentials entered";
 
 
-                                    final AlertDialog.Builder builder = new AlertDialog.Builder(Forgot_password_ResetClass.this);
-                                    builder.setTitle("Message");
-                                    builder.setMessage(message);
-
-                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    builder.create().show();
-
-
-                                }
-
-                            } catch (JSONException e) {
                             }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> parameters = new HashMap<String, String>();
+                                parameters.put("old_pass", password);
+                                parameters.put("new_pass", newpassword);
+
+                                parameters.put("email", username);
+                                parameters.put("Action", "edit_password");
 
 
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> parameters = new HashMap<String, String>();
-                            parameters.put("old_pass", password);
-                            parameters.put("new_pass", newpassword);
-
-                            parameters.put("email", username);
-                            parameters.put("Action", "edit_password");
+                                return parameters;
+                            }
+                        };
+                        requestQueue.add(stringrequest);
 
 
-                            return parameters;
-                        }
-                    };
-                    requestQueue.add(stringrequest);
+                        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    }
+                    else
+                    {
+                        startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                        finish();
+                    }
 
 
-                    stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                            10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
                 }
 
 

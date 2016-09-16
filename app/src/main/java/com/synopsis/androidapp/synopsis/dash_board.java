@@ -59,7 +59,7 @@ import java.util.Random;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    TextView nameTV, synopsis_idTV, companyTV, educationTV, designationTV, placeTV, emailTV, mobileTV, toolbar_creditsTv;
+    TextView nameTV, synopsis_idTV,placeTV, emailTV, mobileTV, toolbar_creditsTv;
     ImageButton profile_edit_btn;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
@@ -122,92 +122,105 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         mobileTV = (TextView) findViewById(R.id.dashboard_mobileTV);
 
 
-        ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
 
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
+        if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+        {
 
-                try {
-                    JSONObject jobj = new JSONObject(response);
-                    String result = jobj.getString("result");
-                    String error = jobj.getString("error");
-                    String img_url = jobj.getString("img_url");
-                    String first_name = jobj.getString("first_name");
-                    String synopsis_id = jobj.getString("synopsis_id");
-                    String city = jobj.getString("city");
-                    String state = jobj.getString("state");
-                    String country = jobj.getString("country");
-                    String place = city + ", " + state + ", " + country;
-                    String mobile = jobj.getString("mobile");
-                    String total_credits = jobj.getString("total_credits");
-                    String verification_status = jobj.getString("verification_status");
+            ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
 
-                    Log.d("jobin", "credits at home:" + total_credits);
+            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                    if (result.equals("success")) {
-                        if (img_url.matches("")) {
-                            Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
-                            progress.dismiss();
+                @Override
+                public void onResponse(String response) {
+                    Log.d("jobin", "string response is : " + response);
+
+                    try {
+                        JSONObject jobj = new JSONObject(response);
+                        String result = jobj.getString("result");
+                        String error = jobj.getString("error");
+                        String img_url = jobj.getString("img_url");
+                        String first_name = jobj.getString("first_name");
+                        String synopsis_id = jobj.getString("synopsis_id");
+                        String city = jobj.getString("city");
+                        String state = jobj.getString("state");
+                        String country = jobj.getString("country");
+                        String place = city + ", " + state + ", " + country;
+                        String mobile = jobj.getString("mobile");
+                        String total_credits = jobj.getString("total_credits");
+                        String verification_status = jobj.getString("verification_status");
+
+                        Log.d("jobin", "credits at home:" + total_credits);
+
+                        if (result.equals("success")) {
+                            if (img_url.matches("")) {
+                                Picasso.with(Dash_board.this).load(R.drawable.ic_menu_camera).into(profile_image);
+                                progress.dismiss();
+                            } else {
+                                //    Picasso.with(Dash_board.this).load(img_url).into(profile_image);
+                                //  Picasso.with(getApplicationContext()).load(new File(img_url)).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile_image);
+                                //Picasso.with(profile_image.getContext()).load(img_url).networkP‌​olicy(NetworkPolicy.‌​NO_CACHE).into(image‌​View);
+                                Picasso.with(Dash_board.this).invalidate(img_url);
+                                Picasso.with(Dash_board.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(profile_image);
+                                progress.dismiss();
+                            }
+                            if(verification_status.matches("verified"))
+                            {
+                                profile_edit_btn.setEnabled(false);
+                            }
+                            nameTV.setText(first_name);
+                            toolbar_creditsTv.setText(total_credits);
+                            placeTV.setText(place);
+                            mobileTV.setText(mobile);
+                            emailTV.setText(email);
+                            if (!(synopsis_id.equals("null"))) {
+                                synopsis_idTV.setVisibility(View.VISIBLE);
+                                synopsis_idTV.setText(synopsis_id);
+                            }
+
                         } else {
-                        //    Picasso.with(Dash_board.this).load(img_url).into(profile_image);
-                          //  Picasso.with(getApplicationContext()).load(new File(img_url)).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile_image);
-                            //Picasso.with(profile_image.getContext()).load(img_url).networkP‌​olicy(NetworkPolicy.‌​NO_CACHE).into(image‌​View);
-                            Picasso.with(Dash_board.this).invalidate(img_url);
-                            Picasso.with(Dash_board.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
-                                    .networkPolicy(NetworkPolicy.NO_CACHE).into(profile_image);
-                            progress.dismiss();
-                        }
-                        if(verification_status.matches("verified"))
-                        {
-                            profile_edit_btn.setEnabled(false);
-                        }
-                        nameTV.setText(first_name);
-                        toolbar_creditsTv.setText(total_credits);
-                        placeTV.setText(place);
-                        mobileTV.setText(mobile);
-                        emailTV.setText(email);
-                        if (!(synopsis_id.equals("null"))) {
-                            synopsis_idTV.setVisibility(View.VISIBLE);
-                            synopsis_idTV.setText(synopsis_id);
+                            Toast.makeText(getApplicationContext(), "Error fetching image", Toast.LENGTH_LONG).show();
+                            finish();
                         }
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Error fetching image", Toast.LENGTH_LONG).show();
-                        finish();
+                    } catch (JSONException e) {
+
+                    } catch (NullPointerException e) {
                     }
 
-                } catch (JSONException e) {
 
-                } catch (NullPointerException e) {
                 }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("email", email);
+                    parameters.put("password", password);
+                    parameters.put("Action", "image_download");
 
 
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email);
-                parameters.put("password", password);
-                parameters.put("Action", "image_download");
+                    return parameters;
+                }
+            };
+            requestQueue.add(stringrequest);
 
 
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
+            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        }
+        else
+        {
+            startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+            finish();
+        }
 
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
         Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar);
@@ -451,18 +464,27 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.toolbar_verify_layout) {
-            android.support.v4.app.Fragment fragment = new VerifyClass();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+            {
 
-            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                fragmentManager.popBackStack();
+                android.support.v4.app.Fragment fragment = new VerifyClass();
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                    fragmentManager.popBackStack();
+                }
+                fragmentTransaction.remove(fragment);
+                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
             }
-            fragmentTransaction.remove(fragment);
-            fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-            //  fragmentTransaction.commit();
+            else
+            {
+                startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+                finish();
+            }
 
-            // startActivity(new Intent(getApplicationContext(), VerifyClass.class));
+
+
         } else if (v.getId() == R.id.toolbar_credits_layout) {
             android.support.v4.app.Fragment fragment = new Credits();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();

@@ -2,6 +2,7 @@ package com.synopsis.androidapp.synopsis;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,14 +35,24 @@ public class Chat_web_view_fragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.chat_progressbar);
        // getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        chat_WebView.setWebViewClient(new myWebClient());
+        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+        {
 
-        chat_WebView.getSettings().setJavaScriptEnabled(true);
-        chat_WebView.loadUrl("https://chatserver5.comm100.com/ChatWindow.aspx?siteId=107734&planId=2079&visitType=1&byHref=1&partnerId=-1");
+            chat_WebView.setWebViewClient(new myWebClient());
+
+            chat_WebView.getSettings().setJavaScriptEnabled(true);
+            chat_WebView.loadUrl("https://chatserver5.comm100.com/ChatWindow.aspx?siteId=107734&planId=2079&visitType=1&byHref=1&partnerId=-1");
+
+
+//do something. loadwebview.
+        }
+        else
+        {
+            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+
+        }
 
         return view;
-
-
     }
 
     public class myWebClient extends WebViewClient
