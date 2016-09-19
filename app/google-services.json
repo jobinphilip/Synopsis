@@ -1,38 +1,28 @@
 {
   "project_info": {
-    "project_number": "19599541511",
-    "project_id": "firebase-synopsis"
+    "project_number": "337143392354",
+    "project_id": "synopsis-1470124191512"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:19599541511:android:4958bb8899066d48",
+        "mobilesdk_app_id": "1:337143392354:android:4958bb8899066d48",
         "android_client_info": {
           "package_name": "com.synopsis.androidapp.synopsis"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "19599541511-br1rbjpafb30n3a9mib93airunp22fl6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.synopsis.androidapp.synopsis",
-            "certificate_hash": "552F01911CEAA322F10D08A6E8252F13BE5F8EE5"
-          }
-        },
-        {
-          "client_id": "19599541511-u236e88sfckvrgqskokdkbqssmrsqfe0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAgSMI2qD-nsLbaDcrLmyRnQyJ-pxAY4og"
+          "current_key": "AIzaSyD20QFQu8qZI0TvJsLsoBWvQ1G-8DepOeI"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 1
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-84309568-1"
+          }
         },
         "appinvite_service": {
           "status": 1,

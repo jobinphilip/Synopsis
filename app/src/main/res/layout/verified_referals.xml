@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:clickable="true"
     android:layout_height="match_parent">
 
-    <include layout="@layout/logo_and_tagline"></include>
+    <include layout="@layout/logo_and_tagline"
+        android:layout_width="wrap_content"
+        android:id="@+id/verify_referalsHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"></include>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Verified Referrals"
+        android:gravity="center"
+        android:id="@+id/title_verified_referals_list"
+        android:layout_below="@+id/verify_referalsHeader"
+        android:layout_height="wrap_content" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
+android:layout_below="@+id/title_verified_referals_list"
+        android:layout_marginTop="5dp"
         android:id="@+id/verified_referals_LV"
         android:layout_gravity="center_horizontal" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textImeMultiLine"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="You do not have any verified referrance yet."
+        android:textAlignment="center"
+        android:id="@+id/no_verified_referalsWarning"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

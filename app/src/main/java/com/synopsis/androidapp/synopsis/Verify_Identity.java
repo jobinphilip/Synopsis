@@ -43,8 +43,8 @@ import java.util.TimeZone;
  * Created by User on 7/21/2016.
  */
 public class Verify_Identity extends Fragment {
-    EditText firstnameET, LastnameET, fathernameET, mobileET, emailET, alternate_mobileET, dobET, country_codeET, alternate_country_codeET,MiddleNameET;
-    String firstname2,middleName2, lastname2, fathername2, country_code2, mobile2, alternate_country_code2, alternatemobile2, dateofbirth2, gender2, password, url, email;
+    EditText firstnameET, LastnameET, fathernameET, mobileET, emailET, alternate_mobileET, dobET, country_codeET, alternate_country_codeET, MiddleNameET;
+    String firstname2, middleName2, lastname2, fathername2, country_code2, mobile2, alternate_country_code2, alternatemobile2, dateofbirth2, gender2, password, url, email;
     private Calendar calendar;
     Button identityVerificationBtn;
 
@@ -58,7 +58,7 @@ public class Verify_Identity extends Fragment {
         final View view = inflater.inflate(R.layout.verify_identity_details, container, false);
         firstnameET = (EditText) view.findViewById(R.id.identity_fnameET);
         LastnameET = (EditText) view.findViewById(R.id.identity_lastnameET);
-        MiddleNameET= (EditText) view.findViewById(R.id.identity_MnameET);
+        MiddleNameET = (EditText) view.findViewById(R.id.identity_MnameET);
         fathernameET = (EditText) view.findViewById(R.id.identity_fathernameET);
         mobileET = (EditText) view.findViewById(R.id.identity_mobileET);
         emailET = (EditText) view.findViewById(R.id.identity_emailET);
@@ -79,7 +79,7 @@ public class Verify_Identity extends Fragment {
                         String month1 = String.valueOf(selectedMonth + 1);
                         String day1 = String.valueOf(selectedDay);
 
-                        dobET.setText(day1 + "/" + month1 + "/" + year1);
+                        //     dobET.setText(day1 + "/" + month1 + "/" + year1);
 
                     }
                 };
@@ -109,9 +109,9 @@ public class Verify_Identity extends Fragment {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-    //    dobET.setText("" + year + "/" + month + "/" + day);
+        //    dobET.setText("" + year + "/" + month + "/" + day);
 
-        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+        if (CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
         {
 
 
@@ -126,7 +126,7 @@ public class Verify_Identity extends Fragment {
 
                 @Override
                 public void onResponse(String response) {
-                    Log.d("jobin", "string response is : " + response);
+
 
                     try {
                         JSONObject identity_detailsjobj = new JSONObject(response);
@@ -134,6 +134,7 @@ public class Verify_Identity extends Fragment {
                         String error = identity_detailsjobj.getString("error");
                         if (result.equals("success")) {
 
+                            Log.d("jobin", identity_detailsjobj.toString());
                             LastnameET.setText(identity_detailsjobj.getString("last_name"));
                             firstnameET.setText(identity_detailsjobj.getString("first_name"));
                             MiddleNameET.setText(identity_detailsjobj.getString("middle_name"));
@@ -141,6 +142,17 @@ public class Verify_Identity extends Fragment {
                             mobileET.setText(identity_detailsjobj.getString("mobile"));
                             emailET.setText(email);
                             emailET.setEnabled(false);
+
+                            String Status = identity_detailsjobj.getString("status");
+                            if (Status.matches("verified")) {
+                                firstnameET.setEnabled(false);
+                                LastnameET.setEnabled(false);
+                                fathernameET.setEnabled(false);
+                                emailET.setEnabled(false);
+                                dobET.setEnabled(false);
+                                genderRadioGroup.setEnabled(false);
+                                MiddleNameET.setEnabled(false);
+                            }
                             alternate_mobileET.setText(identity_detailsjobj.getString("alternate_mobile"));
                             dobET.setText(identity_detailsjobj.getString("date_of_birth"));
                             country_codeET.setText(identity_detailsjobj.getString("country_code"));
@@ -188,10 +200,8 @@ public class Verify_Identity extends Fragment {
             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        }
-        else
-        {
-            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+        } else {
+            startActivity(new Intent(getActivity(), Internet_ErrorMessage.class));
 
         }
 
@@ -357,7 +367,7 @@ public class Verify_Identity extends Fragment {
             @Override
             public void onClick(View v) {
                 firstname2 = firstnameET.getText().toString().trim();
-                middleName2=MiddleNameET.getText().toString().trim();
+                middleName2 = MiddleNameET.getText().toString().trim();
                 lastname2 = LastnameET.getText().toString().trim();
                 fathername2 = fathernameET.getText().toString().trim();
                 mobile2 = mobileET.getText().toString().trim();
@@ -382,7 +392,7 @@ public class Verify_Identity extends Fragment {
                         gender2 = radioButton.getText().toString();
 
 
-                        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                        if (CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
                         {
 
                             ///////////////////////////////volley   ///////////////////////////////////////////////////////////////
@@ -458,10 +468,8 @@ public class Verify_Identity extends Fragment {
                             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                        }
-                        else
-                        {
-                            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+                        } else {
+                            startActivity(new Intent(getActivity(), Internet_ErrorMessage.class));
 
                         }
 

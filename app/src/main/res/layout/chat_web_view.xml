@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:clickable="true"
     android:layout_height="match_parent">
 
     <WebView
@@ -14,6 +15,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/chat_progressbar"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Loading..."
+        android:id="@+id/chat_webviewLoadingTv"
+        android:layout_below="@+id/chat_progressbar"
         android:layout_centerHorizontal="true" />
 
 

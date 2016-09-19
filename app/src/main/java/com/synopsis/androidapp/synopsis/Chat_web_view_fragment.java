@@ -15,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * Created by Kumar on 9/8/2016.
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 public class Chat_web_view_fragment extends Fragment {
     WebView chat_WebView;
     ProgressBar progressBar;
+    TextView chat_webviewLoadingTv;
 
     @Nullable
     @Override
@@ -31,7 +33,8 @@ public class Chat_web_view_fragment extends Fragment {
         chat_WebView = (WebView) view.findViewById(R.id.chat_WebView);
 
         getActivity().getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-
+        chat_webviewLoadingTv=(TextView)view.findViewById(R.id.chat_webviewLoadingTv);
+        chat_webviewLoadingTv.setVisibility(View.VISIBLE);
         progressBar = (ProgressBar) view.findViewById(R.id.chat_progressbar);
        // getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -78,6 +81,7 @@ public class Chat_web_view_fragment extends Fragment {
             super.onPageFinished(view, url);
 
             progressBar.setVisibility(View.GONE);
+            chat_webviewLoadingTv.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -96,7 +96,13 @@ public class Nav_settingsFragment extends Fragment {
 
                                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
+
+                                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                fragmentManager.popBackStack();
+                                            }
+
                                         }
                                     });
                                     builder.create().show();

@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:layout_below="@+id/header_land_layout"
-        android:textColor="@color/synopsis_blue"
+
         android:text="Your Identity Has A Value"
         android:layout_height="wrap_content" />
 

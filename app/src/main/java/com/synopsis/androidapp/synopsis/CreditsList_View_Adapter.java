@@ -27,6 +27,7 @@ public class CreditsList_View_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+
         return list.size();
     }
     @Override

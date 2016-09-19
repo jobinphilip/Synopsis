@@ -49,6 +49,7 @@ public class LoginClass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
         unameET = (EditText) findViewById(R.id.uname_ET);
         passwordET = (EditText) findViewById(R.id.PassET);
         sessionCheckBox = (CheckBox) findViewById(R.id.sessioncheckBox);

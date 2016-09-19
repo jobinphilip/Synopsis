@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<include layout="@layout/logo_and_tagline"></include>
+<include layout="@layout/logo_and_tagline"
+    android:layout_alignParentTop="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/referals_Header"></include>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Referrals Details"
+        android:gravity="center"
+        android:id="@+id/referals_details_title"
+        android:layout_below="@+id/referals_Header"
+        android:layout_height="wrap_content" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/referals_details_title"
         android:id="@+id/referals_LV"
         android:layout_gravity="center_horizontal" />
-</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="No one accepted your referral"
+        android:gravity="center"
+        android:id="@+id/referals_no_one_refered_warningTV"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

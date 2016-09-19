@@ -1,6 +1,7 @@
 package com.synopsis.androidapp.synopsis;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Environment;
@@ -28,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +43,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -55,6 +60,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,16 +73,24 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     ImageButton profile_edit_btn;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
+    NavigationView navigationView ;
     private int PICK_IMAGE_REQUEST = 1;
     private int CAMERA_PIC_REQUEST = 0;
+    Tracker t;
     String email, password, url, image_base64string;
     RequestQueue requestQueue;
     public static final String Login_details = "Login_details";
-
     LinearLayout toolbar_credits_layout, toolbar_chat_layout, toolbar_verify_layout;
     private ProgressDialog progress;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        t = ((MyAnalytics)this.getApplication()).getTracker(MyAnalytics.TrackerName.APP_TRACKER);
+        t.setScreenName("Home");
+        t.send(new HitBuilders.AppViewBuilder().build());
+
+
 
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
         email = prefs.getString("email", "");
@@ -83,12 +101,17 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         requestQueue = Volley.newRequestQueue(Dash_board.this);
 
         setContentView(R.layout.home_layout);
+
+
         progress=new ProgressDialog(this);
         progress.setMessage("Loading data");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.setProgress(0);
         progress.show();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
 
         final int totalProgressTime = 100;
         profile_edit_btn=(ImageButton)findViewById(R.id.edit_profile_btn);
@@ -107,13 +130,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         nameTV = (TextView) findViewById(R.id.dashboard_nameTV);
         synopsis_idTV = (TextView) findViewById(R.id.dashboard_synopsis_idTV);
         synopsis_idTV.setVisibility(View.INVISIBLE);
-       /* companyTV = (TextView) findViewById(R.id.dashboard_companyTV);
-        companyTV.setVisibility(View.INVISIBLE);
-        educationTV = (TextView) findViewById(R.id.dashboard_educationTV);
-        educationTV.setVisibility(View.INVISIBLE);
-        designationTV = (TextView) findViewById(R.id.dashboard_designationTV);
-        designationTV.setVisibility(View.INVISIBLE);
-        */
+
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
         toolbar_creditsTv = (TextView) findViewById(R.id.toolbar_creditsTv);
         placeTV = (TextView) findViewById(R.id.dashboard_placeTV);
@@ -169,6 +186,15 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                             {
                                 profile_edit_btn.setEnabled(false);
                             }
+
+                            View hView =  navigationView.getHeaderView(0);
+                            TextView header_emailTV = (TextView)hView.findViewById(R.id.nav_drawer_header_email);
+                            header_emailTV.setText(email);
+                            TextView header_nameTV = (TextView) hView.findViewById(R.id.nav_drawer_headername);
+                            header_nameTV.setText(first_name);
+                            header_emailTV.setText(first_name);
+                            header_nameTV.setText(first_name);
+                            header_emailTV.setText(email);
                             nameTV.setText(first_name);
                             toolbar_creditsTv.setText(total_credits);
                             placeTV.setText(place);
@@ -236,7 +262,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -400,7 +426,37 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             sharingIntent.setType("text/html");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
             startActivity(Intent.createChooser(sharingIntent, "Share using"));
-        } else {
+        }
+        else if (id==R.id.nav_logout)
+        {
+
+
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                String message = "Logout";
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+                builder.setTitle("Warning");
+                builder.setMessage(message);
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //    getApplicationContext().finishAffinity();
+                        startActivity(new Intent(getApplicationContext(), LoginClass.class));
+                        finish();
+                    }
+                });
+                builder.create().show();
+
+
+
+
+
+
+        }
+        else {
             switch (id) {
 
                 case R.id.nav_about_us: {
@@ -419,10 +475,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     fragment = new Nav_ContactUsFragment();
                     break;
                 }
-                case R.id.nav_rate_us: {
-                    fragment = new Nav_Rate_usFragment();
-                    break;
-                }
+
                 case R.id.nav_testimonial: {
                     fragment = new Nav_Testimonial_Fragment();
                     break;
@@ -435,11 +488,34 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     startActivity(sendIntent);
                     break;
                 }
-                case R.id.nav_logout: {
-                    fragment = new Nav_LogoutFragment();
+           /*     case R.id.nav_logout: {
+
+
+                        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
+                        String message = "Exit Synopsis?";
+
+
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+                        builder.setTitle("Warning");
+                        builder.setMessage(message);
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //    getApplicationContext().finishAffinity();
+                                startActivity(new Intent(getApplicationContext(), LoginClass.class));
+                                finish();
+                            }
+                        });
+                        builder.create().show();
+
+
+
+
+
                     break;
                 }
-
+*/
 
                 default:
                     fragment = new Nav_about_usFragment();
@@ -452,7 +528,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                 fragmentManager.popBackStack();
             }
             fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-            ;
+
 
         }
 
@@ -547,7 +623,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
         }
     }
-
 
 
 

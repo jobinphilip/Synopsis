@@ -13,7 +13,6 @@
         android:id="@+id/tagline"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:textColor="@color/synopsis_blue"
         android:layout_centerHorizontal="true"
         android:gravity="center"
 
