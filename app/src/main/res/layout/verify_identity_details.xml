@@ -101,7 +101,7 @@ android:gravity="center"
 
             android:text="Date of Birth"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/synopsis_blue" />
+           />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/dobLO"
@@ -139,7 +139,7 @@ android:gravity="center"
             android:layout_weight="1"
             android:text="Gender"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/synopsis_blue" />
+ />
 
         <RadioGroup
             android:id="@+id/identity_genderRG"
@@ -207,7 +207,7 @@ android:gravity="center"
                 android:text="@string/default_countrycode"
                 android:inputType="phone"
                 android:maxLength="4"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@drawable/text_colors"
 
                 android:textColorHint="@color/text_color" />
@@ -228,7 +228,7 @@ android:gravity="center"
                 android:hint="@string/mobile_number"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@drawable/text_colors" />
         </android.support.design.widget.TextInputLayout>
 
@@ -258,7 +258,7 @@ android:gravity="center"
                 android:text="@string/default_countrycode"
                 android:inputType="phone"
                 android:maxLength="4"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@drawable/text_colors"
 
                 android:textColorHint="@color/text_color" />
@@ -279,7 +279,7 @@ android:gravity="center"
                 android:hint="@string/alternate_mobile"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@drawable/text_colors" />
         </android.support.design.widget.TextInputLayout>
 
@@ -293,7 +293,7 @@ android:gravity="center"
         android:layout_margin="20dp"
         android:background="@drawable/gradient_blue"
 
-        android:text="Next"
+        android:text="SAVE"
         android:textColor="@color/white" />
 </LinearLayout>
 

@@ -179,6 +179,7 @@ public class LoginClass extends Activity {
                             editor2.putString("mobile", mobile);
                             editor2.putString("transaction_id", transaction_id);
                             editor2.putString("status", status);
+
                             boolean sessioncheck = sessionCheckBox.isChecked();
                             if (sessioncheck) {
                                 editor2.putBoolean("session", true);
@@ -248,6 +249,13 @@ public class LoginClass extends Activity {
 
                                 {
                                     editor.putString("status", "verified");
+                                    startActivity(new Intent(getApplicationContext(), Dash_board.class));
+                                    break;
+                                }
+                                case ("verification_work_in_progress"):
+
+                                {
+                                    editor.putString("status", "verification_work_in_progress");
                                     startActivity(new Intent(getApplicationContext(), Dash_board.class));
                                     break;
                                 }

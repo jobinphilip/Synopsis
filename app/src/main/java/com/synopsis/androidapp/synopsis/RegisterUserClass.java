@@ -422,7 +422,12 @@ public class RegisterUserClass extends Activity {
             toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
 
-        } else if (email_string.matches("") || confirm_email_string.matches("") || password_string.matches("") || firstname_string.matches("") || lastname_string.matches("")) {
+        }
+        else if(email_string==referorId||email_string.matches(referorId))
+        {
+            referorIdEt.setError("Referror Id And User Email Cannot Be The Same");
+        }
+        else if (email_string.matches("") || confirm_email_string.matches("") || password_string.matches("") || firstname_string.matches("") || lastname_string.matches("")) {
 
             Toast toast = Toast.makeText(getApplicationContext(), "Kindly fill all the mandatory fields", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);

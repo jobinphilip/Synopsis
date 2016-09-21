@@ -89,6 +89,7 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
         String url = Constants.baseUrl + "basic_info_image.php";
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
         genderRadioGroup = (RadioGroup) findViewById(R.id.gender_radiogroup);
@@ -174,7 +175,18 @@ public class BasicInfoClass extends Activity implements AdapterView.OnItemClickL
 
     public void submitbasicinfofn(View view) {
 
+        SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        try {
+            editor.remove("Verify_tutorial_visited");
+        }
+        catch (NullPointerException e)
+        {
 
+        }
+
+       editor.putBoolean("Verify_tutorial_visited",false);// this value is reset to true on visiting the verify tutorial fragment to avoid further visits of the same.
+        editor.commit();
         dateofbirth = datepickerBtnET.getText().toString().trim();
 
 

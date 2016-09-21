@@ -52,8 +52,8 @@ android:gravity="center"
                     android:id="@+id/employment_verification_employer_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:hint="Employer Contact No (Landline/Website)"
+
+                    android:hint="Employer Contact (Landline/Website)"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             </android.support.design.widget.TextInputLayout>
@@ -174,6 +174,7 @@ android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
+        android:maxLength="25"
                     android:hint="Supervisor Name And Designation (optional)"
                     android:inputType="text"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
@@ -189,6 +190,7 @@ android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
+                    android:maxLength="13"
                     android:hint="Supervisor Contact Number (optional)"
                     android:inputType="phone"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />

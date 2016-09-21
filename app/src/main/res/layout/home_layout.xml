@@ -275,7 +275,7 @@
                             android:layout_width="wrap_content"
 
                             android:layout_height="wrap_content"
-                            android:background="@drawable/tool_bar_credits" />
+                            android:background="@drawable/toolbar_credits" />
 
                     </LinearLayout>
 

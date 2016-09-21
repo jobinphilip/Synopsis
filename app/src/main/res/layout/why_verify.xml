@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
     android:layout_height="match_parent">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="lkjflkjsahfdlkhfdslkflhfdsaljhdsaflkhsaflkjhdsaflkhdsaflkjhdsalfhsalkfhsadlkfhsalfdhsalkdfhsalkdfhaslkdfhldsafhldsafhldsakfhlsa
+        sajddlsahdlsadljsadGFAKSDHFGHGFKAJSFLJFDSLSADLFJGASDLJFGALDSKJF;KJHFDKJHDLFJGFDGAJDGFKADGFKHGDKJFHAKREGFKUEYGFSAHGEFKUE
+        s,JSDL"
+        android:id="@+id/textView" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Do Not Show This Again"
+        android:id="@+id/verify_tutorial_end_of_visitsCB" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/verify_tutorial_OkBtn" />
 </LinearLayout>

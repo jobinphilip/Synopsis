@@ -65,34 +65,33 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Dash_board extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    TextView nameTV, synopsis_idTV,placeTV, emailTV, mobileTV, toolbar_creditsTv;
+    TextView nameTV, synopsis_idTV, placeTV, emailTV, mobileTV, toolbar_creditsTv;
     ImageButton profile_edit_btn;
     CircleImageView profile_image;
     Bitmap profilebitmap = null;
-    NavigationView navigationView ;
+    NavigationView navigationView;
     private int PICK_IMAGE_REQUEST = 1;
     private int CAMERA_PIC_REQUEST = 0;
     Tracker t;
+
     String email, password, url, image_base64string;
     RequestQueue requestQueue;
     public static final String Login_details = "Login_details";
     LinearLayout toolbar_credits_layout, toolbar_chat_layout, toolbar_verify_layout;
     private ProgressDialog progress;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        t = ((MyAnalytics)this.getApplication()).getTracker(MyAnalytics.TrackerName.APP_TRACKER);
+        t = ((MyAnalytics) this.getApplication()).getTracker(MyAnalytics.TrackerName.APP_TRACKER);
         t.setScreenName("Home");
         t.send(new HitBuilders.AppViewBuilder().build());
-
-
-
         SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
+
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
         url = Constants.baseUrl + "dashboard_details.php";
@@ -103,7 +102,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.home_layout);
 
 
-        progress=new ProgressDialog(this);
+        progress = new ProgressDialog(this);
         progress.setMessage("Loading data");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
@@ -114,11 +113,11 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
 
         final int totalProgressTime = 100;
-        profile_edit_btn=(ImageButton)findViewById(R.id.edit_profile_btn);
+        profile_edit_btn = (ImageButton) findViewById(R.id.edit_profile_btn);
         profile_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),BasicInfoClass.class));
+                startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
             }
         });
         toolbar_chat_layout = (LinearLayout) findViewById(R.id.toolbar_chat_layout);
@@ -139,9 +138,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         mobileTV = (TextView) findViewById(R.id.dashboard_mobileTV);
 
 
-
-
-        if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+        if (CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
         {
 
             ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
@@ -178,17 +175,16 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                                 //  Picasso.with(getApplicationContext()).load(new File(img_url)).memoryPolicy(MemoryPolicy.NO_CACHE).into(profile_image);
                                 //Picasso.with(profile_image.getContext()).load(img_url).networkP‌​olicy(NetworkPolicy.‌​NO_CACHE).into(image‌​View);
                                 Picasso.with(Dash_board.this).invalidate(img_url);
-                                Picasso.with(Dash_board.this).load(img_url) .memoryPolicy(MemoryPolicy.NO_CACHE )
+                                Picasso.with(Dash_board.this).load(img_url).memoryPolicy(MemoryPolicy.NO_CACHE)
                                         .networkPolicy(NetworkPolicy.NO_CACHE).into(profile_image);
                                 progress.dismiss();
                             }
-                            if(verification_status.matches("verified"))
-                            {
+                            if (verification_status.matches("verified")) {
                                 profile_edit_btn.setEnabled(false);
                             }
 
-                            View hView =  navigationView.getHeaderView(0);
-                            TextView header_emailTV = (TextView)hView.findViewById(R.id.nav_drawer_header_email);
+                            View hView = navigationView.getHeaderView(0);
+                            TextView header_emailTV = (TextView) hView.findViewById(R.id.nav_drawer_header_email);
                             header_emailTV.setText(email);
                             TextView header_nameTV = (TextView) hView.findViewById(R.id.nav_drawer_headername);
                             header_nameTV.setText(first_name);
@@ -240,13 +236,10 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        }
-        else
-        {
-            startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+        } else {
+            startActivity(new Intent(getApplicationContext(), Internet_ErrorMessage.class));
             finish();
         }
-
 
 
         Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar);
@@ -426,37 +419,29 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             sharingIntent.setType("text/html");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
             startActivity(Intent.createChooser(sharingIntent, "Share using"));
-        }
-        else if (id==R.id.nav_logout)
-        {
+        } else if (id == R.id.nav_logout) {
 
 
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                String message = "Logout";
-
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
-                builder.setTitle("Warning");
-                builder.setMessage(message);
-
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //    getApplicationContext().finishAffinity();
-                        startActivity(new Intent(getApplicationContext(), LoginClass.class));
-                        finish();
-                    }
-                });
-                builder.create().show();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            String message = "Logout";
 
 
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
+            builder.setTitle("Warning");
+            builder.setMessage(message);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //    getApplicationContext().finishAffinity();
+                    startActivity(new Intent(getApplicationContext(), LoginClass.class));
+                    finish();
+                }
+            });
+            builder.create().show();
 
 
-
-
-        }
-        else {
+        } else {
             switch (id) {
 
                 case R.id.nav_about_us: {
@@ -540,25 +525,39 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.toolbar_verify_layout) {
-            if(CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
+            if (CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
             {
+                SharedPreferences prefs = getSharedPreferences(Login_details, MODE_PRIVATE);
 
-                android.support.v4.app.Fragment fragment = new VerifyClass();
-                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Boolean Verify_tutorial_visited = prefs.getBoolean("Verify_tutorial_visited", false);// this value is initialzed in the basic info page and reverted in the tutorial page
+                if (Verify_tutorial_visited) {
 
-                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                    fragmentManager.popBackStack();
+
+                    android.support.v4.app.Fragment fragment = new VerifyClass();
+                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                        fragmentManager.popBackStack();
+                    }
+                    fragmentTransaction.remove(fragment);
+                    fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                } else
+                {
+                    android.support.v4.app.Fragment fragment = new Verify_Benefits_Fragment();
+                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                        fragmentManager.popBackStack();
+                    }
+                    fragmentTransaction.remove(fragment);
+                    fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
                 }
-                fragmentTransaction.remove(fragment);
-                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-            }
-            else
-            {
-                startActivity(new Intent(getApplicationContext(),Internet_ErrorMessage.class));
+            } else {
+                startActivity(new Intent(getApplicationContext(), Internet_ErrorMessage.class));
                 finish();
             }
-
 
 
         } else if (v.getId() == R.id.toolbar_credits_layout) {
@@ -623,7 +622,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
         }
     }
-
 
 
 }

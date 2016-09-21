@@ -38,21 +38,31 @@ import java.util.Map;
 public class VerifyClass extends Fragment {
     String email, password;
     Button verify_main_id_verify_btn, verify_main_edu_verifyBtn, verify_main_emp_verifyBtn, verify_main_download_emailBtn, verify_main_proceed_to_verifyBtn;
+    Boolean Verification_employment_fresher;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.verify_page, container, false);
 
+
         SharedPreferences prefs = this.getActivity().getSharedPreferences("Login_details", this.getActivity().MODE_PRIVATE);
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
+        try {
+            Verification_employment_fresher = prefs.getBoolean("Verification_employment_fresher", false);
+        } catch (Exception E) {
+        }
+
+
         verify_main_id_verify_btn = (Button) view.findViewById(R.id.verify_main_id_verify_btn);
 
 
         verify_main_id_verify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 //   startActivity(new Intent(getActivity().getApplicationContext(), Verify_Identity.class));
                 android.support.v4.app.Fragment fragment = new Verify_Identity();
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -64,19 +74,8 @@ public class VerifyClass extends Fragment {
         });
 
         verify_main_proceed_to_verifyBtn = (Button) view.findViewById(R.id.verify_main_proceed_to_verifyBtn);
-        verify_main_proceed_to_verifyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.support.v4.app.Fragment fragment = new Upload_verification_docsFragment();
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                ;
-                //   fragmentTransaction.commit();
 
-            }
-        });
         verify_main_edu_verifyBtn = (Button) view.findViewById(R.id.verify_main_edu_verifyBtn);
         verify_main_edu_verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,25 +99,15 @@ public class VerifyClass extends Fragment {
                                 android.support.v4.app.Fragment fragment = new Verify_Education_List();
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                    fragmentManager.popBackStack();
-                                }
+
                                 fragmentTransaction.remove(fragment);
                                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
-                                //      Intent I = new Intent(getActivity().getApplicationContext(), Verify_Education_List.class);
-                                //   startActivity(I);
 
 
                             } else {
-                                //    Intent I = new Intent(getActivity().getApplicationContext(), Verify_educaton.class);
-                                //  startActivity(I);
                                 android.support.v4.app.Fragment fragment = new Verify_educaton();
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                             /*   for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                    fragmentManager.popBackStack();
-                                }
-                                */
                                 fragmentTransaction.remove(fragment);
                                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
                             }
@@ -180,33 +169,64 @@ public class VerifyClass extends Fragment {
                                 android.support.v4.app.Fragment fragment = new Verify_Employment_List();
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                    fragmentManager.popBackStack();
-                                }
+
                                 fragmentTransaction.remove(fragment);
                                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
 
-
-                                //  Intent I = new Intent(getActivity().getApplicationContext(), Verify_Employment_List.class);
-
-//
-                                //     startActivity(I);
                             } else {
 
 
-                                android.support.v4.app.Fragment fragment = new Verify_employment();
-                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                    fragmentManager.popBackStack();
-                                }
-                                fragmentTransaction.remove(fragment);
-                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                                final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle("Title");
+                                alertDialog.setMessage("Select an option");
+                                alertDialog.setButton("Fresher", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                //  Intent I = new Intent(getActivity().getApplicationContext(), Verify_employment.class);
+                                        SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = prefs.edit();
+                                        try {
+                                            editor.remove("Verification_employment_fresher");
+                                        } catch (NullPointerException e) {
+
+                                        }
+                                        Verification_employment_fresher=true;
+                                        editor.putBoolean("Verification_employment_fresher", true);// this value is reset to true on visiting the verify tutorial fragment to avoid further visits of the same.
+                                        editor.commit();
+
+                                        verify_main_emp_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_identity, 0, R.drawable.tick, 0);
+                                        alertDialog.dismiss();
+                                    }
+
+                                });
 
 
-                                //startActivity(I);
+                                alertDialog.setButton2("Experienced", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                SharedPreferences prefs = getActivity().getSharedPreferences("Login_details", getActivity().MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = prefs.edit();
+                                                try {
+                                                    editor.remove("Verification_employment_fresher");
+                                                } catch (NullPointerException e) {
+
+                                                }
+                                                Verification_employment_fresher=false;
+                                                editor.putBoolean("Verification_employment_fresher", false);// this value is reset to true on visiting the verify tutorial fragment to avoid further visits of the same.
+                                                editor.commit();
+
+                                                android.support.v4.app.Fragment fragment = new Verify_employment();
+                                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                                fragmentTransaction.remove(fragment);
+                                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                                            }
+                                        }
+                                );
+                                alertDialog.show();
+
+
                             }
 
                         } catch (JSONException e) {
@@ -350,9 +370,9 @@ public class VerifyClass extends Fragment {
 
                 try {
                     JSONObject edu_verify_check = new JSONObject(response);
-                    String identity_verification_status = edu_verify_check.getString("identity_verification_status");
-                    String employment_verification_status = edu_verify_check.getString("employment_verification_status");
-                    String education_verification_status = edu_verify_check.getString("education_verification_status");
+                    final String identity_verification_status = edu_verify_check.getString("identity_verification_status");
+                    final String employment_verification_status = edu_verify_check.getString("employment_verification_status");
+                    final String education_verification_status = edu_verify_check.getString("education_verification_status");
 
                     if (identity_verification_status.equals("complete")) {
 
@@ -360,7 +380,7 @@ public class VerifyClass extends Fragment {
 
                     }
 
-                    if (employment_verification_status.equals("complete")) {
+                    if (employment_verification_status.equals("complete") || Verification_employment_fresher) {
 
                         verify_main_emp_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_identity, 0, R.drawable.tick, 0);
 
@@ -370,6 +390,30 @@ public class VerifyClass extends Fragment {
 
                         verify_main_edu_verifyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.drawable_education, 0, R.drawable.tick, 0);
                     }
+                    verify_main_proceed_to_verifyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            if (!identity_verification_status.equals("complete") || (!employment_verification_status.equals("complete") && !Verification_employment_fresher) || !education_verification_status.equals("complete"))
+
+                            {
+
+                                Toast toast = Toast.makeText(getActivity(), "Please fill up all the verification details before you proceed to verify", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.show();
+
+                            } else {
+
+                                android.support.v4.app.Fragment fragment = new Upload_verification_docsFragment();
+                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
+                            }
+
+                        }
+                    });
 
                 } catch (JSONException e) {
                     Log.d("jobin", "json errror:" + e);

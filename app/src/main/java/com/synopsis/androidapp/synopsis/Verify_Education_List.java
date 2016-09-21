@@ -56,9 +56,10 @@ public class Verify_Education_List extends Fragment {
                 android.support.v4.app.Fragment fragment = new Verify_educaton();
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+           /*     for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
                     fragmentManager.popBackStack();
                 }
+                */
                 fragmentTransaction.remove(fragment);
                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
             }

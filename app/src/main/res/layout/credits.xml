@@ -259,7 +259,10 @@ android:clickable="true"
             android:text="100"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
-
+<ImageView
+    android:layout_width="wrap_content"
+    android:src="@drawable/info_icon"
+    android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/credits_verified_referal_total_tv"
@@ -326,7 +329,10 @@ android:clickable="true"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@color/white" />
 
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/info_icon"
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/credits_referal_bonus_total_tv"
             android:layout_width="0dp"
@@ -382,6 +388,16 @@ android:clickable="true"
     </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Redeem"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/gradient_blue"
+        android:id="@+id/redeem_credit_button"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
