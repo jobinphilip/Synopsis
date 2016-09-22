@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -34,7 +35,7 @@ import java.util.Map;
 public class Terms_conditionsClass extends Activity implements View.OnClickListener {
     public static final String Login_details = "Login_details";
 
-    Button accepttermsBtn;
+    Button accepttermsBtn,read_terms_and_conditionsBtn,read_privacyPolicyBtn;
 String email,password;
 
     @Override
@@ -47,7 +48,24 @@ String email,password;
         setContentView(R.layout.terms_and_conditions);
         accepttermsBtn = (Button) findViewById(R.id.agreeBtn);
         accepttermsBtn.setOnClickListener(Terms_conditionsClass.this);
-
+        read_terms_and_conditionsBtn=(Button)findViewById(R.id.read_terms_and_conditionsBtn);
+        read_terms_and_conditionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://synopsissolutions.com/termsandconditions.php");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        read_privacyPolicyBtn=(Button)findViewById(R.id.read_privacyPolicyBtn);
+        read_privacyPolicyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://synopsissolutions.com/privacypolicy.html");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="About us"
-        android:id="@+id/textView11" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Synopsis Solutions provides verification services to help establish and foster trust between job seekers and companies. Our research and reporting processes blend the technological and the traditional. Synopsis combines internet-fast database searching with direct-to-source investigating, to deliver the highest-caliber technical professionals in the market.
+Synopsis ID is a unique initiative aimed to simplify the process of verification and recruitment for those registered with Synopsis Solutions. This saves significant expenditure and time for companies looking to hire verified individuals as well as for job seekers who would like to present verified credentials.
+Go beyond outdated routines of posting resumes and credential verification’s, it's time to enter into an innovative world.
+
+Be with Synopsis so that we try to eliminate the unemployment buy giving you so many benefits like skill training, intern job with us and encourage and will try eliminate to pay the expenses occur related to job search even you are employed or unemployed.
+
+Having Synopsis ID means YOUR IDENTITY HAS A VALUE.
+
+"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="About us"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="We are a human resource management company that endeavors to serve as a bridge between industry and India's thriving work force. We tirelessly strive to enable strategic and efficient processes in all aspects of personnel management with special emphasis on background screening and hiring.
+
+With a customer centric business model Synopsis aims to provide service that is both comprehensive and uniquely designed to not just meet, but exceed expectations. By placing the customer as the sole stakeholder we aspire to build long-term relationships, be it with an employer or the employee.
+
+We are an Indian Private Limited Company registered with the Ministry of Corporate Affairs.
+" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Our story"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Synopsis was founded by a team with several years of experience in a variety of establishments ranging from multi-million dollar businesses to energetic start-up companies. Our work has given us the opportunity to have a broad spectrum of interactions with employees that include academia, pure recruitment, rigorous background screening and core HR management.
+
+All these experiences have given us a keen understanding of both business motivations as well as employee aspirations. Armed with passion and knowledge of current market demands, Synopsis was started to streamline and ultimately enhance the employee-employer relationship
+" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Mission"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Our mission is to attain and sustain excellence in human resource management, while upholding our core values of quality and integrity. Every job seeker gets paid with certain terms and conditions coming soon with all your cooperation." />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

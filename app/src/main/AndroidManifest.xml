@@ -83,6 +83,12 @@
             android:windowSoftInputMode="stateHidden"></activity>
 
         <activity
+            android:name=".Credit_Redeems_Details"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden"></activity>
+
+        <activity
             android:name=".Internet_ErrorMessage"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:noHistory="true"

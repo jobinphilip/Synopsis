@@ -1,11 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
-    android:text="faq"
-    android:layout_height="wrap_content" />
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="FAQ's" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Why should I register with Synopsis Solutions?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis Solutions cares for your career. You will feel the difference once you join with us. You are not far away to get value for the  Identity and right job at the right time to get settled with a good career. This website is an important link between employers and job seekers who get more benefits if you get verified your credentials."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="What is Synopsis ID?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis ID can be quoted in the resume, email signature, blogs, and web sites etc which direct anyone to synopsis solutions to verify your information such as your identity, education, experience, references, certifications etc as applicable.
+Impress acquaintances and companies simply by using Synopsis ID or by showing the Synopsis Report provided after verification of the credentials. So Hurry up and Sign up free today.
+"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Credentials Verified by Synopsis Solutions? What is the use?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis ID which is mentioned in the Synopsis Report lends you instant reliability where people have grown doubtful of the people they meet. With your Synopsis report you can: Improve your prospects, Stand out from the crowd and get identified easily and quicker.
+Also you get more benefits when verified only which leads to get amount in different denominations shown as credits in the account which further can be used in various situations like learning skills, recharges, internet related to job seekers etc. Even there is a possibility that an unemployed get PAID.
+"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Why do not I see jobs in synopsis APP and in the synopsissolutions.com website?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="As Verification is done by the separate department and keeping in view the job seeker we have segregated jobs to www.synopsisjobs.com and www.synopsissolutions.com limited to credentials verification but the websites are inter linked.
+We are in process of developing jobs app and will be launching soon however present app in Google android play store named synopsis is functional used for individual credentials verification's first of its kind in the market.
+"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Who needs to get verified?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fresher looking for a job, Experienced people, Freelancers and Any Individual above 10th class at present and legal age to work.
+In a survey, 95% of HR screening professionals said that they would prefer to interview someone whose credentials have been verified already. Synopsis ID which is mentioned in the Synopsis Report can help you get that job you've been looking for more easily and faster. Differentiate yourself with transparency and trust.
+"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="How does Synopsis Solutions verify credentials?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="As a leading provider of background checking services, Synopsis Solutions has developed a sophisticated system of database connections and processes to derive both qualitative and quantitative verification conclusions based on the information with which we are provided. In many instances we have direct links to universities and employers to enable real time education background check and experience verification. For reference verification, we obtain information from references directly and may authenticate references themselves. Through these and other means, Synopsis Solutions is able to authenticate credential information. Synopsis Solutions respects individual privacy, complies with Government regulations and industry best practices. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Does it cost to post my Resume?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No, posting a Resume with Synopsis Solutions is absolutely Free of Cost. One person can have only one Synopsis ID or the Synopsis Report which has the Synopsis ID, With the same credentials you can get verified without disturbing the unique Synopsis ID provided. However, information which gets verified or which is under the process of verification cannot be edited for lifetime * and are charged for verification services as this is an additional service.  Terms and conditions apply."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="What sort of credentials and information will Synopsis Solutions verify for individuals?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis Solutions will verify Education and Employment Verification for an individual. Only at present in keeping a view as where there is a gap in the industry to be filled and not to charge unnecessarily for other checks like address, reference, drug test etc even we do for the companies and not to be a burden for the employees or the job seekers."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="How secure is the information, and how is privacy treated at Synopsis Solutions?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The safety and security of information is our top concern at Synopsis Solutions, and we take a number of measures to safeguard the information we process and present. Please review our privacy policy for more information. Synopsis Solutions believes that individual privacy is extremely important and has created a privacy policy and has taken other measures to ensure that privacy concerns are addressed. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="How much does Synopsis Solutions cost for registration?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis Solutions registration is absolutely free to sign up for. Synopsis Solutions must disburse resources to effectively and thoroughly verify information submitted for verification, we must charge a nominal fee to verify information only. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Who all have access to my Resume?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Once you have posted your Resume, all the recruiters from companies, consultancies who are registered with synopsis Solutions can access it. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="How much will it cost us for a company to verify their employee?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Our solutions are cost-effective for your organization, compared with the costs involved in advertising, investigation, recruitment, and training. With Synopsis Solutions, you have the option of choosing and tailoring a screening program that best suits your requirement and budget. An approx 75% of your time and money can be saved. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="What is the Refund Policy?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="All background check services ordered are final and no refunds will be given. You pay for our background verification service, not the results. We will not grant a refund after background verification has been conducted, except in the following instances ONLY: (1) In the event you were charged more than once for a single order. All such claims require submission of valid proof of purchase reflecting the charges. Refunds granted may take up to three to four weeks to show a credit on your statement. (2) In the event you did not receive your verification information"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="What is the turnaround time for the verification process?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="For Individual verification, Education details are verified within 23 working days, however synopsis solutions is not responsible for the delay from the universities or from the colleges as our process is formal by paying Demand Draft or Cheque or Amount Transfer where ever required. Employment details are verified as per the response from the Human resource or the concerned from the company where the candidate worked earlier."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="If Synopsis Solutions remarks are not literally correct, how can I get it corrected? "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If the remarks provided by Synopsis Solutions are not factually correct, you may approach Synopsis Solutions with clarifications / additional documentation etc. If such circumstances if required, Synopsis Solutions will re-verify its report and get the report corrected. Synopsis Solutions will charge for the verification again if there is no change in the re-verification. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Can anyone view Individual/Employee information? "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Yes with the permission of the individual. Please refer Terms and Conditions. Requester organizations must complete a proprietary screening process and be identified as a legitimate organization or to anyone if the verified person authorize approves to share the data to the requester."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="What if Employees/Individuals do not want anyone to see their information on Synopsis Solutions? "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synopsis Solutions offers Employees/Individuals vigorous access controls. Employees/Individuals can approve or deny access to their data, as well as monitor who is accessing their data right now in beta stage, however without your permission no one can access your credentials. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="How can I use the Synopsis Solutions Verification Process? "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Once you have registered for Credentials Verification at Synopsis Solutions you will obtain an identification number called Synopsis ID after verification of any one credential and Synopsis Report with the Synopsis ID and you will be provided an access to your profile on the database. You may then use the structure to authorize any entity - say prospective employer - to view your Verified credentials and Verified resume. You may also view the status of your authorizations, i.e. whether the employer you have permitted to view your data has viewed your data or not. You can modify or change your data as and when events that lead to a change in the data occur. The results of the background check will be registered in the database, which will enhance the value of your resume. "
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="Why should I use Synopsis Solutions to conduct background screening or help in the recruitment process when there are companies who has resume database, recruitment process and work on verification process individually?"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If you are the company, the answer is that you are getting a resume which is been screened, filtered and verified already and the first level of verification is done and we do follow a formal process only which helps to recruit the right candidate and the chances are 99.9% accurate resumes, Thus saving a huge expenditure and precious time for the consultancy and direct recruiting companies across all industries of any size. Further queries please send us the mail to info@synopsissolutions.com without any hesitation. We feel proud and happy to answer your queries."
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

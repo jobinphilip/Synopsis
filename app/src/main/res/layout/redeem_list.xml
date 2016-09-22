@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:clickable="true"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/logo_and_tagline"
+        android:layout_width="wrap_content"
+        android:id="@+id/verify_referalsHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"></include>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Redeem Details"
+        android:gravity="center"
+        android:id="@+id/title_verified_referals_list"
+        android:layout_below="@+id/verify_referalsHeader"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_verified_referals_list"
+        android:layout_marginTop="5dp"
+        android:id="@+id/redeem_details_LV"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textImeMultiLine"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="You have not redeemed anything yet."
+        android:textAlignment="center"
+        android:id="@+id/no_redeems_messageTv"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

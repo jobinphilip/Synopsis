@@ -1,6 +1,5 @@
 package com.synopsis.androidapp.synopsis;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -405,7 +404,7 @@ public class VerifyClass extends Fragment {
 
                             } else {
 
-                                android.support.v4.app.Fragment fragment = new Upload_verification_docsFragment();
+                                android.support.v4.app.Fragment fragment = new Verification_Terms_And_Authorization();
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

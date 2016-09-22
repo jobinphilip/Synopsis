@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@color/light_blue"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linearlayout1"
+        android:weightSum="4"
+        android:orientation="horizontal"
+
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:text="Claimed Amount:"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:id="@+id/redeem_root_claimed_amountTV"
+            android:textColor="@color/white"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:id="@+id/linearlayout2"
+    android:weightSum="4"
+    android:layout_marginTop="5dp"
+    android:layout_below="@+id/linearlayout1"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="0dp"
+        android:text="Granted Amount: "
+        android:layout_weight="2"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:id="@+id/redeem_root_granted_amountTV"
+        android:layout_weight="2"
+        android:textColor="@color/white"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linearlayout4"
+        android:weightSum="4"
+
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/linearlayout2"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Date of transaction "
+            android:layout_weight="2"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/redeem_root_date_of_transactionTV"
+            android:layout_weight="2"
+            android:textColor="@color/white"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linearlayout5"
+        android:weightSum="4"
+
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/linearlayout4"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Remarks"
+            android:layout_weight="2"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/redeem_root_remarksTV"
+            android:layout_weight="2"
+            android:textColor="@color/white"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

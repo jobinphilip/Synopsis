@@ -42,14 +42,16 @@ import java.util.Map;
 
 
 public class Credits extends Fragment {
-    TextView credits_self_verify_amnt_tv, credits_self_verify_total_tv, credits_verified_referal_amount_tv, credits_verified_referal_number_tv, credits_verified_referal_total_tv, credits_referal_bonus_amount_tv, credits_referal_bonus_number_tv, credits_referal_bonus_total_tv, credits_total_tv;
+    TextView credits_self_verify_amnt_tv, balance_total_tv, redeemed_total_tv, credits_self_verify_total_tv, credits_verified_referal_amount_tv, credits_verified_referal_number_tv, credits_verified_referal_total_tv, credits_referal_bonus_amount_tv, credits_referal_bonus_number_tv, credits_referal_bonus_total_tv, credits_total_tv;
     String email, password;
     Button redeem_credit_button;
+    int redeem_total;
     float credits_self_verify_amnt, credits_verified_referal_number, credits_verified_referal_total, credits_referal_bonus_number, credits_referal_bonus_total, credits_total;
     ArrayList<HashMap<String, String>> veriried_referals_list;
     ArrayList<HashMap<String, String>> referance_list;
-    LinearLayout verified_referals_linear_layout, referral_bonus_linear_layout;
-    ImageButton google,fb,twitter,linkedin;
+    ArrayList<HashMap<String, String>> redeem_list;
+    LinearLayout verified_referals_linear_layout, referral_bonus_linear_layout,redeemed_LinearLayout;
+    ImageButton google, fb, twitter, linkedin;
 
 
     @Nullable
@@ -59,7 +61,7 @@ public class Credits extends Fragment {
         View view = inflater.inflate(R.layout.credits, container, false);
         //  setContentView(R.layout.credits);
         credits_self_verify_amnt_tv = (TextView) view.findViewById(R.id.credits_self_verify_amnt_tv);
-google=(ImageButton)view.findViewById(R.id.google_IB);
+        google = (ImageButton) view.findViewById(R.id.google_IB);
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +71,7 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                 startActivity(i);
             }
         });
-        fb=(ImageButton)view.findViewById(R.id.fb_IB);
+        fb = (ImageButton) view.findViewById(R.id.fb_IB);
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +81,7 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                 startActivity(i);
             }
         });
-        linkedin=(ImageButton)view.findViewById(R.id.ln_IB);
+        linkedin = (ImageButton) view.findViewById(R.id.ln_IB);
         linkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +91,7 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                 startActivity(i);
             }
         });
-        twitter=(ImageButton)view.findViewById(R.id.tw_IB);
+        twitter = (ImageButton) view.findViewById(R.id.tw_IB);
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,13 +102,16 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
             }
         });
         credits_self_verify_total_tv = (TextView) view.findViewById(R.id.credits_self_verify_total_tv);
+        redeemed_total_tv = (TextView) view.findViewById(R.id.redeemed_total_tv);
+        balance_total_tv = (TextView) view.findViewById(R.id.balance_total_tv);
         credits_verified_referal_amount_tv = (TextView) view.findViewById(R.id.credits_verified_referal_amount_tv);
         credits_verified_referal_number_tv = (TextView) view.findViewById(R.id.credits_verified_referal_number_tv);
         credits_verified_referal_total_tv = (TextView) view.findViewById(R.id.credits_verified_referal_total_tv);
         credits_referal_bonus_amount_tv = (TextView) view.findViewById(R.id.credits_referal_bonus_amount_tv);
         credits_referal_bonus_number_tv = (TextView) view.findViewById(R.id.credits_referal_bonus_number_tv);
         credits_referal_bonus_total_tv = (TextView) view.findViewById(R.id.credits_referal_bonus_total_tv);
-        credits_total_tv = (TextView) view.findViewById(R.id.credits_total_tv);
+        credits_total_tv = (TextView) view.findViewById(R.id.earned_total_tv);
+        redeemed_LinearLayout = (LinearLayout) view.findViewById(R.id.redeemed_LinearLayout);
         verified_referals_linear_layout = (LinearLayout) view.findViewById(R.id.verified_referals_linear_layout);
         verified_referals_linear_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +133,7 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
             }
         });
 
-        redeem_credit_button=(Button)view.findViewById(R.id.redeem_credit_button);
+        redeem_credit_button = (Button) view.findViewById(R.id.redeem_credit_button);
 
 
         credits_self_verify_amnt = 0;
@@ -136,7 +141,7 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
         credits_verified_referal_total = 0;
 
 
-        if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+        if (CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
         {
             String url = Constants.baseUrl + "credits.php";
 
@@ -152,13 +157,18 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                 public void onResponse(String response) {
 
                     try {
+
+                        int credits_self_verify_amnt2, credits_verified_referal_total2, credits_referal_bonus_number2, credits_referal_bonus_total2;
                         JSONObject credits_jobj = new JSONObject(response);
                         String result = credits_jobj.getString("result");
                         String error = credits_jobj.getString("error");
-
+                        redeem_total = credits_jobj.getInt("total_redeem");
+                        Log.d("jobin", "redeem total is:" + redeem_total+"");
+                        Log.d("jobin", "credits jobj is:" + credits_jobj.toString());
                         if (result.equals("success")) {
+                            Log.d("jobin", "success");
+                            final String verification_status = credits_jobj.getString("verification_status");
 
-                        final    String verification_status = credits_jobj.getString("verification_status");
                             float self_verification_rate = credits_jobj.getInt("self_verification_rate");
 
                             if (!verification_status.equals("verified")) {
@@ -169,6 +179,11 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                             }
                             String referal_details = credits_jobj.getString("referaldetails");
                             String verified_referals = credits_jobj.getString("verified_referals");
+                            Log.d("jobin", "here");
+                            String redeem_details = credits_jobj.getString("redeem_details");
+                            Log.d("jobin", "redeem details"+redeem_details);
+
+
 
                             referance_list = new ArrayList<HashMap<String, String>>();
                             JSONArray referals_jsonarray = new JSONArray(referal_details);
@@ -201,15 +216,48 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
 
                             }
 
-                            int  credits_self_verify_amnt2,  credits_verified_referal_total2, credits_referal_bonus_number2, credits_referal_bonus_total2;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            redeem_list = new ArrayList<HashMap<String, String>>();
+                            JSONArray redeem_details_jsonarray = new JSONArray(redeem_details);
+
+
+                            for (int i = 0; i < redeem_details_jsonarray.length(); i++) {
+                                JSONObject obj = redeem_details_jsonarray.getJSONObject(i);
+                                HashMap<String, String> temp = new HashMap<String, String>();
+                                temp.put("redeem_tbl_claimed_amout", obj.getString("redeem_tbl_claimed_amout"));
+                                temp.put("redeem_tbl_granted_amount", obj.getString("redeem_tbl_granted_amount"));
+                                temp.put("redeem_tbl_transaction_timestamp", obj.getString("redeem_tbl_transaction_timestamp"));
+                                temp.put("redeem_tbl_granted_prize", obj.getString("redeem_tbl_granted_prize"));
+                                redeem_list.add(temp);
+
+                            }
+
+
+                            redeemed_LinearLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = getActivity().getIntent();
+                                    intent.putExtra("redeem_details_list", (ArrayList<HashMap<String, String>>) redeem_list);
+                                    intent.setClass(getActivity().getApplicationContext(), Credit_Redeems_Details.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
                             credits_total = 50 + credits_self_verify_amnt + credits_referal_bonus_total + credits_verified_referal_total;
-                         final int   credits_total2 = Math.round(credits_total);
+                            final int credits_total2 = Math.round(credits_total);
+                            int balance_total = credits_total2 -redeem_total;
+
                             credits_self_verify_amnt2 = Math.round(credits_self_verify_amnt);
-                         final int  credits_verified_referal_number2 = Math.round(credits_verified_referal_number);
+                            final int credits_verified_referal_number2 = Math.round(credits_verified_referal_number);
                             credits_verified_referal_total2 = Math.round(credits_verified_referal_total);
                             credits_referal_bonus_number2 = Math.round(credits_referal_bonus_number);
                             credits_referal_bonus_total2 = Math.round(credits_referal_bonus_total);
+                            redeemed_total_tv.setText(redeem_total + "");
+                            balance_total_tv.setText(balance_total + "");
                             credits_self_verify_amnt_tv.setText(credits_self_verify_amnt2 + "");
                             credits_self_verify_total_tv.setText(credits_self_verify_amnt2 + "");
                             credits_verified_referal_number_tv.setText(credits_verified_referal_number2 + "");
@@ -220,125 +268,118 @@ google=(ImageButton)view.findViewById(R.id.google_IB);
                             redeem_credit_button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-if((credits_total2>=1000&&credits_verified_referal_number2>0)||(credits_total2>=1000&&verification_status.matches("verified")))
-{
+                                    if ((credits_total2 >= 1000 && credits_verified_referal_number2 > 0) || (credits_total2 >= 1000 && verification_status.matches("verified"))) {
 
-    if(CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
-    {
+                                        if (CheckNetwork.isInternetAvailable(getActivity())) //returns true if internet available
+                                        {
 
 
 ///////////////////////////////volley 5 by me  ///////////////////////////////////////////////////////////////
-        String url = Constants.baseUrl + "credits.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                            String url = Constants.baseUrl + "credits.php";
+                                            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                            StringRequest stringrequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("jobin", "string response is : " + response);
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Log.d("jobin", "string response is : " + response);
 
-                try {
-                    JSONObject person = new JSONObject(response);
-                    String result = person.getString("result");
-                    String error = person.getString("error");
-                    if (result.equals("success")) {
-
-
-                        String message = "Your request to redeem the balance is submitted. Our agent will contact you within 24 hours";
+                                                    try {
+                                                        JSONObject person = new JSONObject(response);
+                                                        String result = person.getString("result");
+                                                        String error = person.getString("error");
+                                                        if (result.equals("success")) {
 
 
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Message");
-                        builder.setMessage(message);
-
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                                                            String message = "Your request to redeem the balance is submitted. Our agent will contact you within 24 hours";
 
 
-                               dialog.dismiss();
+                                                            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                            builder.setTitle("Message");
+                                                            builder.setMessage(message);
 
-                            }
-                        });
-                        builder.create().show();
-
-
-
-                    } else  {
-
-                        Toast toast = Toast.makeText(getActivity(), "There was an error while processing your request. Kindly try later", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                        toast.show();
+                                                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
 
 
-                    }
+                                                                    dialog.dismiss();
 
-                } catch (JSONException e) {
-                    Log.d("jobin", "json errror:" + e);
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("jobin", "error response is : " + error);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email);
-                parameters.put("password", password);
+                                                                }
+                                                            });
+                                                            builder.create().show();
 
 
-                parameters.put("Action", "redeem_credit");
+                                                        } else {
+
+                                                            Toast toast = Toast.makeText(getActivity(), "There was an error while processing your request. Kindly try later", Toast.LENGTH_LONG);
+                                                            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                            toast.show();
 
 
-                return parameters;
-            }
-        };
-        requestQueue.add(stringrequest);
+                                                        }
+
+                                                    } catch (JSONException e) {
+                                                        Log.d("jobin", "json errror:" + e);
+                                                    }
 
 
-        stringrequest.setRetryPolicy(new DefaultRetryPolicy(
-                10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    }
-    else
-    {
-        startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+                                                }
+                                            }, new Response.ErrorListener() {
 
-    }
-    //message:
-    //we will recieva a message
-
-
-    //email, phone number ,chat
-
-
-
-}
- else
-{
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Log.d("jobin", "error response is : " + error);
+                                                }
+                                            }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> parameters = new HashMap<String, String>();
+                                                    parameters.put("email", email);
+                                                    parameters.put("password", password);
 
 
-    String message = "You do not have INR1000 balance or none of your referred users are verified";
+                                                    parameters.put("Action", "redeem_credit");
 
 
-    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle("Message");
-    builder.setMessage(message);
-
-    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int id) {
+                                                    return parameters;
+                                                }
+                                            };
+                                            requestQueue.add(stringrequest);
 
 
-            dialog.dismiss();
+                                            stringrequest.setRetryPolicy(new DefaultRetryPolicy(
+                                                    10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                        } else {
+                                            startActivity(new Intent(getActivity(), Internet_ErrorMessage.class));
 
-        }
-    });
-    builder.create().show();
+                                        }
+                                        //message:
+                                        //we will recieva a message
 
-}
+
+                                        //email, phone number ,chat
+
+
+                                    } else {
+
+
+                                        String message = "You do not have INR1000 balance or none of your referred users are verified";
+
+
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setTitle("Message");
+                                        builder.setMessage(message);
+
+                                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+                                        builder.create().show();
+
+                                    }
                                 }
                             });
 
@@ -365,10 +406,8 @@ if((credits_total2>=1000&&credits_verified_referal_number2>0)||(credits_total2>=
             requestQueue.add(stringrequest);
             stringrequest.setRetryPolicy(new DefaultRetryPolicy(
                     10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        }
-        else
-        {
-            startActivity(new Intent(getActivity(),Internet_ErrorMessage.class));
+        } else {
+            startActivity(new Intent(getActivity(), Internet_ErrorMessage.class));
 
         }
 

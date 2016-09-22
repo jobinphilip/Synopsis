@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TableLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_above="@+id/agreeBtn"
-        android:layout_height="match_parent"
-        android:stretchColumns="1"
-        >
-    <ScrollView
-        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="TERMS AND CONDITIONS AND PRIVACY POLICY" />
 
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView">
 
-       <TextView
-            android:layout_width="wrap_content"
-             android:textSize="15sp"
-            android:layout_height="wrap_content"
-            android:text="Why a Fair Usage Policy?
-While thhe freedom of unlimited uploads on their packages as No Fair Usage Policy has been applied on Uploads.
-"
-            android:id="@+id/textView2" />
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="63dp"
+        android:text="By clicking the NEXT button you agree to the terms and conditions and privacy policy of SYNOPSIS SOLUTIONS, India Pvt Ltd" />
 
-    </ScrollView>
-</TableLayout>
+
     <Button
+        android:id="@+id/read_terms_and_conditionsBtn"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"
+        android:text="Read Terms and Conditions" />
+    <Button
+        android:id="@+id/read_privacyPolicyBtn"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"
+        android:text="Read Privacy Policy" />
+
+
+    <Button
+        android:id="@+id/agreeBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/agreement2"
-        android:layout_margin="10dp"
-
-        android:textColor="@color/white"
-        android:background="@drawable/gradient_blue"
         android:layout_centerHorizontal="true"
-        android:id="@+id/agreeBtn"
-        android:layout_gravity="center_horizontal" />
 
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/gradient_blue"
+        android:text="Next"
+        android:textColor="@color/white" />
 
-</RelativeLayout>
+</LinearLayout>

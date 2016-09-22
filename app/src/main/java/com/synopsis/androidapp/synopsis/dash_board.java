@@ -461,10 +461,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     break;
                 }
 
-                case R.id.nav_testimonial: {
-                    fragment = new Nav_Testimonial_Fragment();
-                    break;
-                }
+
                 case R.id.nav_share: {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
