@@ -181,9 +181,7 @@ public class Verify_Employment_List extends Fragment {
                 fragment.setArguments(args);
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                    fragmentManager.popBackStack();
-                }
+
 
                 fragmentTransaction.replace(R.id.dashboard_content_layout, fragment).addToBackStack("tag").commit();
 

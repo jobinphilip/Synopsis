@@ -15,7 +15,7 @@
         android:id="@+id/employer_tagline"
         android:text="Your Identity Has A Value"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
+       android:gravity="center"
         android:textColor="@color/synopsis_blue"
         android:layout_below="@+id/header"
         android:layout_margin="10dp"

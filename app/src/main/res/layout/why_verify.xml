@@ -7,12 +7,26 @@
 
 
     <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Why Us?"
+        android:id="@+id/textView16"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
 
-        android:text="lkjflkjsahfdlkhfdslkflhfdsaljhdsaflkhsaflkjhdsaflkhdsaflkjhdsalfhsalkfhsadlkfhsalfdhsalkdfhsalkdfhaslkdfhldsafhldsafhldsakfhlsa
-        sajddlsahdlsadljsadGFAKSDHFGHGFKAJSFLJFDSLSADLFJGASDLJFGALDSKJF;KJHFDKJHDLFJGFDGAJDGFKADGFKHGDKJFHAKREGFKUEYGFSAHGEFKUE
-        s,JSDL"
+        android:text="
+\u2022 Get Verified and get a Synopsis ID
+\u2022 Get paid for your referrals
+\u2022 Sharing is Earning
+\u2022 View Your own report on background verification
+\u2022 Reliable and Safe
+\u2022 Job may be offered if 100 referrals resumes get verified
+  and many more benefits"
         android:id="@+id/textView" />
 
     <CheckBox
@@ -22,8 +36,11 @@
         android:id="@+id/verify_tutorial_end_of_visitsCB" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
+        android:background="@drawable/gradient_blue"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
         android:text="OK"
         android:id="@+id/verify_tutorial_OkBtn" />
 </LinearLayout>

@@ -476,6 +476,7 @@ public class RegisterUserClass extends Activity {
                 finish();
 
 
+
             }
 
         }

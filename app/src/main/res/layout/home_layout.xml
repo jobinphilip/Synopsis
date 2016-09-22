@@ -79,10 +79,11 @@
                         app:border_color="@color/light_blue" />
 
                     <ImageButton
-                        android:id="@+id/edit_profile_btn"
+                        android:id="@+id/edit_profile_btn_dash"
                         android:layout_width="wrap_content"
-
+                        android:clickable="true"
                         android:layout_height="wrap_content"
+
                         android:layout_gravity="right|top"
                         android:layout_marginEnd="30dp"
                         android:layout_marginRight="30dp"

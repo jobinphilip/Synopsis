@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class MyAnalytics extends Application {
 
     // The following line should be changed to include the correct property id.
-    private static final String PROPERTY_ID = "UA-84309568-1";
+    private static final String PROPERTY_ID = "UA-25403208-3";
 
     public static int GENERAL_TRACKER = 0;
     public enum TrackerName {

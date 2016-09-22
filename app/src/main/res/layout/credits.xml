@@ -380,7 +380,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
 
-                    android:gravity="center"
+                    android:gravity="start"
                     android:text="INR"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@color/white" />
@@ -403,7 +403,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:id="@+id/redeemed_LinearLayout"
-                android:background="@color/orange"
+                android:background="@color/light_blue"
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:weightSum="7">
@@ -417,10 +417,7 @@
                     android:text=" Redeemed "
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@color/white" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/info_icon" />
+
                 <TextView
                     android:id="@+id/creditredeemedINRTXT"
                     android:layout_width="0dp"
@@ -431,7 +428,10 @@
                     android:text="INR"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@color/white" />
-
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/info_icon" />
                 <TextView
                     android:id="@+id/redeemed_total_tv"
                     android:layout_width="0dp"
@@ -449,7 +449,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:background="@color/orange"
+                android:background="@color/green"
 
                 android:orientation="horizontal"
                 android:padding="10dp"
@@ -468,10 +468,11 @@
                 <TextView
                     android:id="@+id/creditINRTXT"
                     android:layout_width="0dp"
+
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
 
-                    android:gravity="center"
+                    android:gravity="start"
                     android:text="INR"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@color/white" />

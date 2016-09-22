@@ -116,13 +116,8 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
 
         final int totalProgressTime = 100;
-        profile_edit_btn = (ImageButton) findViewById(R.id.edit_profile_btn);
-        profile_edit_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), BasicInfoClass.class));
-            }
-        });
+
+
         toolbar_chat_layout = (LinearLayout) findViewById(R.id.toolbar_chat_layout);
         toolbar_chat_layout.setOnClickListener(this);
         toolbar_credits_layout = (LinearLayout) findViewById(R.id.toolbar_credits_layout);
@@ -140,6 +135,13 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
         emailTV = (TextView) findViewById(R.id.dashboard_emailTV);
         mobileTV = (TextView) findViewById(R.id.dashboard_mobileTV);
 
+        profile_edit_btn = (ImageButton) findViewById(R.id.edit_profile_btn_dash);
+        profile_edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dash_board.this, BasicInfoClass.class));
+            }
+        });
 
         if (CheckNetwork.isInternetAvailable(getApplicationContext())) //returns true if internet available
         {
@@ -184,6 +186,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                             }
                             if (verification_status.matches("verified")) {
                                 profile_edit_btn.setEnabled(false);
+                                profile_edit_btn.setVisibility(View.INVISIBLE);
                             }
 
                             View hView = navigationView.getHeaderView(0);
@@ -419,22 +422,15 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
         }
 
-     /*   else if (id == R.id.nav_share) {
+       else if (id == R.id.nav_share) {
 
-         Intent   shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setComponent(new ComponentName("com.facebook.katana",
-                    "com.facebook.katana.activity.composer.ImplicitShareIntentHandler"));
+            String message = "Register with Synopsis and get your resume verified, Also you get lots of benefits like earning for referrals etc. Get a Synopsis ID if you get Verified. My referral Email ID is : "+email+"";
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.putExtra(Intent.EXTRA_TEXT, message);
 
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT,  "www.synopsissolutions.com");
+            startActivity(Intent.createChooser(share, "Share to earn"));
                 }
-    */
-         /*
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("text/html");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
-            startActivity(Intent.createChooser(sharingIntent, "Share using"));
-            */
 
 
             else if (id == R.id.nav_logout) {
@@ -479,11 +475,6 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
                     break;
                 }
 
-
-                case R.id.nav_share: {
-                    fragment = new Nav_shareFragment();
-                    break;
-                }
 
 
                 default:
@@ -606,6 +597,7 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
         }
     }
+
 
 
 }

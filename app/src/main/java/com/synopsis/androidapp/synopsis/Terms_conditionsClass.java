@@ -115,7 +115,7 @@ String email,password;
                             if (result.equals("Success")) {
 
 
-                                String message = " Kindly confirm your email Id and login using user id and password";
+                                String message = "Kindly confirm your email Id and login using email or mobile number and password";
 
 
                                 final AlertDialog.Builder builder = new AlertDialog.Builder(Terms_conditionsClass.this);
@@ -163,7 +163,7 @@ String email,password;
                         parameters.put("ipAddress", ipAddress);
                         parameters.put("device", "mobile");
                         parameters.put("firstname", firstname);
-                        parameters.put("middlename", middlename);
+                        parameters.put("middle_name", middlename);
                         parameters.put("lastname", lastname);
                         parameters.put("phone", phone);
                         parameters.put("country_code", country_code);

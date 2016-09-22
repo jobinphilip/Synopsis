@@ -151,6 +151,8 @@ public class Verify_Identity extends Fragment {
                                 emailET.setEnabled(false);
                                 dobET.setEnabled(false);
                                 genderRadioGroup.setEnabled(false);
+                                identityVerificationBtn.setEnabled(false);
+                                identityVerificationBtn.setVisibility(View.INVISIBLE);
                                 MiddleNameET.setEnabled(false);
                             }
                             alternate_mobileET.setText(identity_detailsjobj.getString("alternate_mobile"));

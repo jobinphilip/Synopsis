@@ -24,7 +24,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="63dp"
-        android:text="By clicking the NEXT button you agree to the terms and conditions and privacy policy of SYNOPSIS SOLUTIONS, India Pvt Ltd" />
+        android:text="By clicking the I Agree button you agree to the terms and conditions and privacy policy of SYNOPSIS SOLUTIONS, India Pvt Ltd" />
 
 
     <Button
@@ -57,7 +57,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/gradient_blue"
-        android:text="Next"
+        android:text="I Agreee"
         android:textColor="@color/white" />
 
 </LinearLayout>

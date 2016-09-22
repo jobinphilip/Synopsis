@@ -1,12 +1,12 @@
 {
   "project_info": {
-    "project_number": "337143392354",
-    "project_id": "synopsis-1470124191512"
+    "project_number": "461598564751",
+    "project_id": "synopsis-e07d6"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:337143392354:android:4958bb8899066d48",
+        "mobilesdk_app_id": "1:461598564751:android:4958bb8899066d48",
         "android_client_info": {
           "package_name": "com.synopsis.androidapp.synopsis"
         }
@@ -14,14 +14,14 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD20QFQu8qZI0TvJsLsoBWvQ1G-8DepOeI"
+          "current_key": "AIzaSyCSWSwNHYaklHNoMuqlQ6ozb0U-eNr328g"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-84309568-1"
+            "tracking_id": "UA-25403208-2"
           }
         },
         "appinvite_service": {

@@ -51,7 +51,7 @@ public class Verification_Terms_And_Authorization extends Fragment {
         email = prefs.getString("email", "");
         password = prefs.getString("password", "");
 
-        String agreeement="I have registered with synopsis solutions through one of the channel used to fill the details for verification either in www.synopsissolutions.com or Synopsis APP hereby authorize Synopsis Solutions to investigate my credentials. I understand that Synopsis Solutions may utilize internal verification team or an outside firm or firms to assist it in checking such information, and I specifically authorize such an investigation by information services and outside entities of the company's choice. I also understand that I may withhold my permission and that in such a case, no investigation will be done, I am authorizing  after reading and understood the terms and conditions mentioned in the website www.synopsissolutions.com and when registered. I further authorize any individual, Institute, University, company, firm, corporation, or public agency (including the government and law enforcement agencies) to divulge any and all information, verbal or written, pertaining to me to Synopsis Solutions representatives, or assigned agencies related to both individually and collectively. I also knew that Synopsis Solutions acts as an mediator agency to get verified my credentials from the respective units. However Synopsis Solutions is not responsible for any errors occurred in providing details either by me or the verified company or the institution.<br> Authorization is valid till it gets verified all credentials or if it is required to do again or for any additional checks required or re-verification request in the future from the registered Email ID.<br> Does not require any signature as this is filled online, if you have any queries can be contacted to my Registered Email Id";
+        String agreeement="I have registered with synopsis solutions through one of the channel used to fill the details for credentials verification ( www.synopsissolutions.com / Synopsis APP ) hereby authorize Synopsis Solutions to investigate my credentials. I understand that Synopsis Solutions may utilize internal verification team or an outside firm or firms to assist it in checking such information, and I specifically authorize such an investigation by information services and outside entities of the company's choice. I also understand that I may withhold my permission and that in such a case, no investigation will be done, I am authorizing  after reading and understood the terms and conditions mentioned in the website www.synopsissolutions.com and when registered. I further authorize any individual, Institute, University, company, firm, corporation, or public agency (including the government and law enforcement agencies) to divulge any and all information, verbal or written, pertaining to me to Synopsis Solutions representatives, or assigned agencies related to both individually and collectively. I also knew that Synopsis Solutions acts as an mediator agency to get verified my credentials from the respective units. However Synopsis Solutions is not responsible for any errors occurred in providing details either by me or the verified company or the institution.<br> Authorization is valid till it gets verified all credentials or if it is required to do again or for any additional checks required or re-verification request in the future from the registered Email ID.<br> Does not require any signature as this is filled online, if you have any queries can be contacted to my Registered Email Id";
 
                 terms_and_conditionsTV=(TextView)view.findViewById(R.id.terms_and_conditionsTV);
         registered_emailTV=(TextView)view.findViewById(R.id.registered_emailTV);
@@ -91,7 +91,7 @@ public class Verification_Terms_And_Authorization extends Fragment {
                                     if (result.equals("success")) {
 
 
-                                        String message = "Your verification request is submittd.Our agent will contact you within 24 hours. Kindly send the qualification documents to info@synopsissolutions.com. ";
+                                        String message = "Your verification request is submitted.Our agent will contact you within 24 hours. Kindly send your identity,education and employment documents (if applicable) to verify@synopsissolutions.com ";
 
 
                                         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -101,7 +101,12 @@ public class Verification_Terms_And_Authorization extends Fragment {
                                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
 
+                                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
+
+                                                for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                                    fragmentManager.popBackStack();
+                                                }
                                             }
                                         });
                                         builder.create().show();
