@@ -3,7 +3,9 @@ package com.synopsis.androidapp.synopsis;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ResolveInfo;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -57,6 +59,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -414,12 +417,27 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerLayout.closeDrawers();
 
-        } else if (id == R.id.nav_share) {
+        }
+
+     /*   else if (id == R.id.nav_share) {
+
+         Intent   shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setComponent(new ComponentName("com.facebook.katana",
+                    "com.facebook.katana.activity.composer.ImplicitShareIntentHandler"));
+
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,  "www.synopsissolutions.com");
+                }
+    */
+         /*
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/html");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
             startActivity(Intent.createChooser(sharingIntent, "Share using"));
-        } else if (id == R.id.nav_logout) {
+            */
+
+
+            else if (id == R.id.nav_logout) {
 
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -463,41 +481,10 @@ public class Dash_board extends AppCompatActivity implements NavigationView.OnNa
 
 
                 case R.id.nav_share: {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
+                    fragment = new Nav_shareFragment();
                     break;
                 }
-           /*     case R.id.nav_logout: {
 
-
-                        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                        drawer.closeDrawer(GravityCompat.START);
-                        String message = "Exit Synopsis?";
-
-
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(Dash_board.this);
-                        builder.setTitle("Warning");
-                        builder.setMessage(message);
-
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //    getApplicationContext().finishAffinity();
-                                startActivity(new Intent(getApplicationContext(), LoginClass.class));
-                                finish();
-                            }
-                        });
-                        builder.create().show();
-
-
-
-
-
-                    break;
-                }
-*/
 
                 default:
                     fragment = new Nav_about_usFragment();

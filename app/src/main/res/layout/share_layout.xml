@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:clickable="true"
+    android:background="#80444444"
     android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="100dp"
+        android:background="@drawable/fb_icon"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:id="@+id/fbIconIV" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:background="@drawable/tw_icon"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:id="@+id/twitterIconIV" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:background="@drawable/ln_icon"
+        android:id="@+id/inIconIV" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:clickable="true"
+        android:layout_height="100dp"
+        android:background="@drawable/google_icon"
+        android:id="@+id/googleIconIV" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:background="@drawable/watsapp"
+        android:clickable="true"
+        android:layout_height="100dp"
+        android:id="@+id/whatsapIconIV" />
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
